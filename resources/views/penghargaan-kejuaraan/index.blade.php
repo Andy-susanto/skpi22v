@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Penghargaan Kejuaraan {{Helper::hitung_bobot()}}</h1>
+            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Penghargaan Kejuaraan</h1>
         </div>
         <div class="col-12">
             <div class="card">
@@ -20,8 +20,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>100</td>
-                                <td>100</td>
+                                <td>0</td>
+                                <td>0</td>
                                 <td>0</td>
                             </tr>
                             <tr>
