@@ -24,7 +24,7 @@ class MasterBobotNilaiController extends Controller
                         return $row->penyelenggara->nama;
                     })
                     ->addColumn('kategori',function($row){
-                        return $row->kategori->nama_kategori;
+                        return $row->kategori;
                     })
                     ->addColumn('tingkat',function($row){
                         return $row->tingkat->nama;
