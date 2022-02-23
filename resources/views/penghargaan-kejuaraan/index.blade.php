@@ -9,7 +9,7 @@
         </div>
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-bordered">
                         <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
                             <tr>
@@ -70,12 +70,12 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama_kegiatan" id=""
                                                     aria-describedby="helpId" placeholder="Nama Kegiatan">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Penyelenggara Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control" name="penyelenggara_kegiatan"
@@ -87,7 +87,7 @@
                                                     @endforelse
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="tingkat_kegiatan" id="tingkat"
                                                     onchange="load_bobot();">
@@ -100,19 +100,19 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Tanggal Mulai Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <input type="date" class="form-control" name="tanggal_mulai_kegiatan"
                                                     id="" aria-describedby="helpId" placeholder="">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Tanggal Selesai Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <input type="date" class="form-control" name="tanggal_selesai_kegiatan"
                                                     id="" aria-describedby="helpId" placeholder="">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="prestasi" id="prestasi"
                                                     onchange="load_bobot();">
@@ -125,18 +125,18 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Dosen Pembimbing</label>
                                                 <select class="form-control" name="dosen_pembimbing"
                                                     id="dosen_pembimbing">
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
                                                     placeholder="" aria-describedby="fileHelpId">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bobot Nilai Kegiatan :</label>
                                                 <div id="bobot"></div>
                                             </div>
