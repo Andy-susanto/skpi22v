@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Magang;
 use App\Models\Beasiswa;
-use App\Models\KaryaMahasiswa;
+use App\Models\Organisasi;
 use Illuminate\Http\Request;
+use App\Models\Kewirausahaan;
+use App\Models\PenerimaHibah;
+use App\Models\KaryaMahasiswa;
+use App\Models\SeminarPelatihan;
 use Yajra\DataTables\DataTables;
 use App\Models\KegiatanMahasiswa;
 use App\Models\KemampuanBahasaAsing;
-use App\Models\Kewirausahaan;
-use App\Models\Magang;
-use App\Models\Organisasi;
-use App\Models\PenerimaHibah;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
-use App\Models\SeminarPelatihan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class ValidasiRekamKegiatanController extends Controller
 {
@@ -306,6 +308,7 @@ class ValidasiRekamKegiatanController extends Controller
                     ->rawColumns(['action','nama_mahasiswa','nim','program_studi','jenis_kegiatan','nama_kegiatan','bukti_kegiatan'])
                     ->make(true);
                 }
+
         return view('validasi-rekam-kegiatan.index');
     }
 
@@ -336,9 +339,31 @@ class ValidasiRekamKegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$jenis)
     {
-        //
+        $data = [];
+        if ($jenis == 'penghargaan') {
+            $data = PenghargaanKejuaraan::find($id);
+        }elseif($jenis == 'seminar'){
+            $data = SeminarPelatihan::find($id);
+        }elseif($jenis == 'hibah'){
+            $data = PenerimaHibah::find($id);
+        }elseif($jenis == 'pengabdian'){
+            $data = PengabdianMasyarakat::find($id);
+        }elseif($jenis == 'organisasi'){
+            $data = Organisasi::find($id);
+        }elseif($jenis == 'magang'){
+            $data = Magang::find($id);
+        }elseif($jenis == 'beasiswa'){
+            $data = Beasiswa::find($id);
+        }elseif($jenis == 'bahasa'){
+            $data = KemampuanBahasaAsing::find($id);
+        }elseif($jenis == 'kewirausahaan'){
+            $data = Kewirausahaan::find($id);
+        }elseif($jenis == 'karya'){
+            $data = KaryaMahasiswa::find($id);
+        }
+        return view('validasi-rekam-kegiatan.detail',compact('data','jenis'));
     }
 
     /**

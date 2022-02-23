@@ -18,7 +18,7 @@ try {
     $('select').select2();
 } catch (e) {
     console.log(error);
-}
+}   
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

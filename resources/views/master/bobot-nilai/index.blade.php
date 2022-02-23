@@ -26,6 +26,32 @@
                     <button type="button" data-toggle="modal" data-target="#modalTambah"
                         class="mb-2 btn btn-outline-primary btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Tambah Data</button>
+                    <div class="mt-2 mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Jenis Kegiatan</label>
+                                    <select class="form-control" name="" id="jenis_kegiatan" onchange="load_data()">
+                                        <option value="">Semua</option>
+                                        @foreach (Helper::jenis_kegiatan() as $jenis_kegiatan)
+                                            <option value="{{ $jenis_kegiatan->id_ref_jenis_kegiatan }}">{{ $jenis_kegiatan->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                  </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Penyelenggara</label>
+                                    <select class="form-control" name="" id="penyelenggara" onchange="load_data()">
+                                        <option value="">Semua</option>
+                                        @foreach (Helper::penyelenggara() as $penyelenggara)
+                                            <option value="{{ $penyelenggara->id_ref_penyelenggara }}">{{ $penyelenggara->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table" id="table-bobot">
                         <thead class="thead-dark">
                             <tr>
@@ -40,41 +66,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data['bobot'] as $dataBobot)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $dataBobot->jenis_kegiatan->nama }}</td>
-                                    <td>
-                                        @if ($dataBobot->kategori()->exists())
-                                            {{$dataBobot->kategori->nama_kategori}}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td>{{ $dataBobot->penyelenggara->nama }}</td>
-                                    <td>{{ $dataBobot->tingkat->nama }}</td>
-                                    <td>{{ $dataBobot->prestasi->nama }}</td>
-                                    <td>{{ $dataBobot->bobot }}</td>
-                                    <td>
-                                        <div class="dropdown open">
-                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-tasks" aria-hidden="true"></i> Proses
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                <a class="dropdown-item ubah-data" href="#modalUbah" data-toggle="modal" data-update="{{route('bobot-nilai.update',encrypt($dataBobot->id_bobot_nilai))}}" data-edit="{{route('bobot-nilai.edit',encrypt($dataBobot->id_bobot_nilai))}}"><i class="fa fa-edit"aria-hidden="true"></i> Ubah</a>
 
-                                                <a class="dropdown-item" onclick="confirmation('bobot_{{$dataBobot->id_bobot_nilai}}')"><i class="fa fa-trash" aria-hidden="true" ></i> Hapus
-                                                    <form action="{{route('bobot-nilai.destroy',encrypt($dataBobot->id_bobot_nilai))}}" method="post" id="bobot_{{$dataBobot->id_bobot_nilai}}">
-                                                        @csrf
-                                                        @method('delete')
-                                                    </form>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -98,7 +90,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="">Jenis Kegiatan</label>
-                            <select class="form-control " style="width: 100%" name="ref_jenis_kegiatan_id" id="jenis_kegiatan" required>
+                            <select class="form-control " style="width: 100%" name="ref_jenis_kegiatan_id" required>
                                 @forelse (Helper::jenis_kegiatan() as $jenis_kegiatan)
                                     <option value="{{ $jenis_kegiatan->id_ref_jenis_kegiatan }}">
                                         {{ $jenis_kegiatan->nama }}
@@ -194,21 +186,74 @@
 @include('plugins.alertify')
 @section('js')
     <script>
-        $(document).ready(function(){
-            $('#table-bobot').DataTable({
-            bLengthChange: true,
-            iDisplayLength: 10,
-            searching: true,
-            processing: false,
-            serverSide: false,
-            aLengthMenu: [
-                [5, 10, 15, 25, 35, 50, 100, -1],
-                [5, 10, 15, 25, 35, 50, 100, "All"]
+         function load_data(){
+            var table = $('#table-bobot').DataTable({
+                bAutoWidth: false,
+                bLengthChange: true,
+                iDisplayLength: 20,
+                searching: true,
+                processing: true,
+                serverSide: true,
+                bDestroy: true,
+                bStateSave: true,
+                ajax: {
+                    data: {
+                        jenis_kegiatan: $('#jenis_kegiatan').val(),
+                        penyelenggara: $('#penyelenggara').val()
+                    },
+                    url: "{{ route('bobot-nilai.index') }}",
+                },
+                columns:[{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable:false,searchable:false
+                },
+                    {
+                        data:'jenis_kegiatan',
+                        name:'jenis_kegiatan'
+                    },
+                    {
+                        data:'kategori',
+                        name:'kategori'
+                    },
+                    {
+                        data:'penyelenggara',
+                        name:'penyelenggara'
+                    },
+                    {
+                        data:'tingkat',
+                        name:'tingkat'
+                    },
+                    {
+                        data:'prestasi',
+                        name:'prestasi'
+                    },
+                    {
+                        data:'bobot',
+                        name:'bobot'
+                    },
+                    {
+                        data:'aksi',
+                        name:'aksi',
+                        orderable:false,searchable:false
+                    }
             ],
-            responsive: !0,
-            bStateSave: true
-            });
+            aLengthMenu: [
+                    [10, 15, 25, 35, 50, 100, -1],
+                    [10, 15, 25, 35, 50, 100, "All"]
+                ],
+                responsive: !0,
+                drawCallback: function() {
+                    this.api().state.clear();
+                }
+            })
+        }
+        $(document).ready(function(){
+            $('#jenis_kegiatan,#penyelenggara').select2();
+            load_data();
         });
+
+
         $('#jenis_kegiatan').select2({
             dropdownParent : $('#modalTambah')
         });

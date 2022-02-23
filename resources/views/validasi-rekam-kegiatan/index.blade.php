@@ -30,7 +30,7 @@
                                 <label for="">Status Kegiatan</label>
                                 <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
                                     <option value="" selected>Semua</option>
-                                    <option value="0">di Ajukan</option>
+                                    <option value="3">di Ajukan</option>
                                     <option value="1">di Validasi</option>
                                     <option value="2">di Tolak</option>
                                 </select>

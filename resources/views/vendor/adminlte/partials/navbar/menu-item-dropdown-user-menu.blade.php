@@ -24,7 +24,7 @@
                 src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
                 @endif
             @else
-                src=""
+                src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
             @endif
                  class="user-image float-left img-circle elevation-2"
                  alt="
@@ -57,7 +57,7 @@
                 src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
                 @endif
                     @else
-                        src=""
+                        src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
                     @endif
                          class="img-circle elevation-2"
                 @endif

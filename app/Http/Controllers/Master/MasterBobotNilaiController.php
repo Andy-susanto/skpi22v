@@ -8,9 +8,42 @@ use Illuminate\Http\Request;
 
 class MasterBobotNilaiController extends Controller
 {
-    public function index(){
-        $data['bobot'] = BobotNilai::latest()->get();
-        return view('master.bobot-nilai.index',compact('data'));
+    public function index(Request $request){
+        if($request->ajax()){
+            $data = BobotNilai::when($request->penyelenggara,function($q)use($request){
+                                $q->where('ref_penyelenggara_id',$request->penyelenggara);
+                            })
+                            ->when($request->jenis_kegiatan,function($q)use($request){
+                                $q->where('ref_jenis_kegiatan_id',$request->jenis_kegiatan);
+                            })
+                            ->latest()->get();
+
+            return datatables()->of($data)
+                    ->addIndexColumn()
+                    ->addColumn('penyelenggara',function($row){
+                        return $row->penyelenggara->nama;
+                    })
+                    ->addColumn('kategori',function($row){
+                        return $row->kategori->nama_kategori;
+                    })
+                    ->addColumn('tingkat',function($row){
+                        return $row->tingkat->nama;
+                    })
+                    ->addColumn('prestasi',function($row){
+                        return $row->prestasi->nama;
+                    })
+                    ->addColumn('bobot',function($row){
+                        return $row->bobot;
+                    })
+                    ->addColumn('jenis_kegiatan',function($row){
+                        return $row->jenis_kegiatan->nama;
+                    })
+                    ->addColumn('aksi',function($row){
+                        return view('master.bobot-nilai.aksi',compact('row'));
+                    })
+                    ->toJson();
+        }
+        return view('master.bobot-nilai.index');
     }
 
     public function store(Request $request){

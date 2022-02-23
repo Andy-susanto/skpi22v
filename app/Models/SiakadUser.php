@@ -15,4 +15,5 @@ class SiakadUser extends Model
     public function siakad_file(){
         return $this->hasOne(SiakadFiles::class,'user','id')->latestOfMany();
     }
+
 }

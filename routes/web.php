@@ -73,6 +73,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('user', UserController::class);
 
+
+    // Validasi Rekam Kegiatan
+
+    // show detail validasi
+    Route::get('validasi-rekam-kegiatan/{id}/{jenis}', [ValidasiRekamKegiatanController::class, 'show'])->name('validasi.show');
+
     Route::put('validasi-rekam-kegiatan/{type}/{id}/update', [ValidasiRekamKegiatanController::class, 'update'])->name('validasi.update');
 
     Route::delete('validasi-rekam-kegiatan/{type}/{id}/destroy', [ValidasiRekamKegiatanController::class, 'destroy'])->name('validasi.destroy');

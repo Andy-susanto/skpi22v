@@ -1,4 +1,4 @@
-@if ($row['validasi'] == 0)
+@if ($row['validasi'] == 3)
     <span class="text-white badge badge-warning"><i>di Ajukan</i></span>
 @elseif ($row['validasi'] == 1)
     <span class="text-white badge badge-success"><i>di Validasi</i></span>
