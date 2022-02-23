@@ -70,7 +70,7 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-4">
                                               <label for="">Jenis</label>
                                               <select class="form-control" name="" id="">
                                                 @foreach (Helper::jenis() as $jenis)
