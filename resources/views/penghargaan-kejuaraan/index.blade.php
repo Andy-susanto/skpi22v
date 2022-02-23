@@ -72,7 +72,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
                                               <label for="">Jenis</label>
-                                              <select class="form-control" name="" id="">
+                                              <select class="form-control" name="jenis" id="">
                                                 @foreach (Helper::jenis() as $jenis)
                                                     <option value="{{$jenis->id_ref_jenis}}">{{$jenis->nama}}</option>
                                                 @endforeach

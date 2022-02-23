@@ -94,7 +94,7 @@ class PenghargaanKejuaraanController extends Controller
             'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
             'file_kegiatan_id'                    => $files->id_file,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-            'status_validasi' => '0'
+            'ref_jenis_id'                        => $request->jenis,
         ]);
 
         toastr()->success('Berhasil Tambah Data');
