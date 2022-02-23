@@ -33,4 +33,8 @@ class BobotNilai extends Model
         return $this->belongsTo(Kategori::class,'ref_kategori_id');
     }
 
+    public function penghargaan_kejuaraan(){
+        return $this->hasMany(PenghargaanKejuaraan::class,'bobot_nilai_id','id_bobot_nilai');
+    }
+
 }

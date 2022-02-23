@@ -4,6 +4,7 @@ namespace App\Helper;
 
 use App\Models\Bahasa;
 use App\Models\Bidang;
+use App\Models\BobotNilai;
 use App\Models\CakupanBeasiswa;
 use App\Models\Divisi;
 use App\Models\Jenis;
@@ -12,6 +13,7 @@ use App\Models\JenisTes;
 use App\Models\Kategori;
 use App\Models\LevelPenguasaan;
 use App\Models\LogAktifitas;
+use App\Models\PenghargaanKejuaraan;
 use App\Models\Penyelenggara;
 use App\Models\Peran;
 use App\Models\Prestasi;
@@ -197,5 +199,13 @@ class Helpers
     {
         $now = date('Y');
         return $now;
+    }
+
+    public static function hitung_bobot(){
+        $penghargaan = BobotNilai::whereHas('penghargaan_kejuaraan',function($q){
+                            $q->where('status_validasi',1);
+                            //   ->where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id);
+                        })->sum('bobot');
+        return $penghargaan;
     }
 }
