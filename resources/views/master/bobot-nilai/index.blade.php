@@ -256,7 +256,7 @@
             $('#jenis_kegiatan').select2();
             $("#jenis_kegiatan").on("change", function (evt) {
                 var jen_keg = $(evt.target).val();
-                localStorage.setItem("jenkeg", selval);
+                localStorage.setItem("jenkeg", jen_keg);
             })
             var penye = localStorage.getItem("penye");
             if(penye){
@@ -264,7 +264,7 @@
             }
             $('#penyelenggara').select2();
             $("#penyelenggara").on("change", function (evt) {
-                var jen_keg = $(evt.target).val();
+                var penye = $(evt.target).val();
                 localStorage.setItem("penye", penye);
             })
             load_data();
