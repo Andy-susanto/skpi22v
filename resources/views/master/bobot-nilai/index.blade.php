@@ -249,7 +249,7 @@
             })
         }
         $(document).ready(function(){
-            $('#jenis_kegiatan,#penyelenggara').select2();
+            $('#jenis_kegiatan,#penyelenggara').select2('data', null, false);
             load_data();
         });
 
