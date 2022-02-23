@@ -70,6 +70,16 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
+                                            <div class="form-group">
+                                              <label for="">Jenis</label>
+                                              <select class="form-control" name="" id="">
+                                                @foreach (Helper::jenis() as $jenis)
+                                                    <option value="{{$jenis->id_ref_jenis}}">{{$jenis->nama}}</option>
+                                                @endforeach
+                                              </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
                                             <div class="form-group col-lg-4">
                                                 <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama_kegiatan" id=""
