@@ -202,10 +202,7 @@ class Helpers
     }
 
     public static function hitung_bobot(){
-        $penghargaan = BobotNilai::whereHas('penghargaan_kejuaraan',function($q){
-                            $q->where('status_validasi',1);
-                            //   ->where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id);
-                        })->sum('bobot');
-        return $penghargaan;
+       $penghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhspt)->has('bobot_nilai')->sum('bobot_nilai.bobot');
+       return $penghargaan;
     }
 }
