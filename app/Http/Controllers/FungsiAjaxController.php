@@ -14,10 +14,10 @@ class FungsiAjaxController extends Controller
                     $q->where('ref_kategori_id',$request->kategori);  // Kategori
                 })
                 ->when($request->penyelenggara,function($q) use($request) {
-                    $q->where('ref_penyelenggara_id',$request->penyelenggara_kegiatan);}) // Penyelenggara
+                    $q->where('ref_penyelenggara_id',$request->penyelenggara);}) // Penyelenggara
 
                 ->when($request->tingkat,function($q) use ($request){
-                    $q->where('ref_tingkat_id',$request->tingkat_kegiatan);}) // Tingkat Kegiatan
+                    $q->where('ref_tingkat_id',$request->tingkat);}) // Tingkat Kegiatan
 
                 ->when($request->prestasi,function($q) use ($request){
                     $q->where('ref_peran_prestasi_id',$request->prestasi);}) // Prestasi
