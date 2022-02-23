@@ -202,7 +202,11 @@ class Helpers
     }
 
     public static function hitung_bobot(){
-       $penghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhspt)->has('bobot_nilai')->sum('bobot_nilai.bobot');
-       return $penghargaan;
+       $penghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhspt)->where('status_validasi',1)->get();
+       $data = 0;
+       foreach ($penghargaan as $value) {
+           $data += $value->bobot_nilai->bobot;
+       }
+       return auth()->user()->siakad_mhspt->id_mhspt;
     }
 }
