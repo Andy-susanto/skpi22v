@@ -249,7 +249,24 @@
             })
         }
         $(document).ready(function(){
-            $('#jenis_kegiatan,#penyelenggara').select2('data', null, false);
+            var jen_keg = localStorage.getItem("jenkeg");
+            if(jen_keg){
+                $('#jenis_kegiatan').val(jen_keg)
+            }
+            $('#jenis_kegiatan').select2();
+            $("#jenis_kegiatan").on("change", function (evt) {
+                var jen_keg = $(evt.target).val();
+                localStorage.setItem("jenkeg", selval);
+            })
+            var penye = localStorage.getItem("penye");
+            if(penye){
+                $('#penyelenggara').val(penye)
+            }
+            $('#penyelenggara').select2();
+            $("#penyelenggara").on("change", function (evt) {
+                var jen_keg = $(evt.target).val();
+                localStorage.setItem("penye", penye);
+            })
             load_data();
         });
 
