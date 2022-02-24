@@ -19,6 +19,7 @@ class BeasiswaController extends Controller
     public function index()
     {
         $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->id)->get();
+            return view('beasiswa.index', $data);
         return view('beasiswa.index',compact('data'));
     }
 

@@ -91,10 +91,11 @@ class UserController extends Controller
             ->first();
         $cek = User::where('id', $peg->id_pegawai)->first();
         if (!$cek) {
-            $cek = new User();
-            $cek->id = $peg->id_pegawai;
-            $cek->username = $peg->username;
-            $cek->nip = $peg->nip;
+            $cek             = new User();
+            $cek->id         = $peg->id_pegawai;
+            $cek->username   = $peg->username;
+            $cek->nip        = $peg->nip;
+            $cek->level_akun = $request->level_akun;
             $cek->save();
         }
         $cek->roles()->sync($request->roles);
@@ -132,8 +133,6 @@ class UserController extends Controller
         foreach ($user->roles as $role) {
             $user_roles[] = $role->id_role;
         }
-
-
         foreach ($user->instansi as $instansi) {
             $user_instansi[] = $instansi->id_unit_kerja;
         }
@@ -150,6 +149,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::where('id', $id);
+        User::where('id',$id)->update([
+            'level_akun' => $request->level_akun
+        ]);
         $rolesupdate = $user->first()->roles()->sync($request->roles);
         $instansiupdate = $user->first()->instansi()->sync($request->id_unit_kerja);
         toastr()->success('Berhasil update data');
