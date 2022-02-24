@@ -23,13 +23,11 @@ class SiakadMhspt extends Model
     public function scopeFilterUnit($query)
     {
         $unit = [];
-        if (auth()->user()->level_akun == 1){
             $unit[] = auth()->user()->kepeg_pegawai->unit_kerja->id_unit_kerja_siakad;
             foreach (auth()->user()->instansi as $v) {
                 $unit[] = (int) $v->id_unit_kerja_siakad;
             }
             return $query->whereIn('id_prodi',$unit);
-        }
     }
 
 }

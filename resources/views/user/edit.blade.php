@@ -25,7 +25,6 @@
 
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Level Akses</label>
-
                                 <div class="col-sm-7">
                                     <select class="form-control" name="level_akun" id="level_akun">
                                         <option value="0" {{($user->level_akun == '0') ? 'selected' : ''}} > Universitas (All)</option>
@@ -37,7 +36,7 @@
                                 <label for="inputEmail3" class="col-sm-2 control-label">Unit Kerja</label>
 
                                 <div class="col-sm-7">
-                                    <select class="form-control select2" multiple="" name="id_unit_kerja[]" multiple=""
+                                    <select class="form-control" multiple="" name="id_unit_kerja[]" multiple=""
                                         style="width: 100%">
                                         @foreach ($unitKerja as $unit)
                                             <option value="{{ $unit->id_unit_kerja }}" {{ ( in_array($unit->id_unit_kerja,$user_instansi) ? 'selected':'')}}>
@@ -62,8 +61,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-7">
-                                    <button class="btn btn-sm btn-primary" type="submit"><i
-                                            class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                    <button class="btn btn-sm btn-secondary bg-slate-500" type="submit"><i
+                                            class="glyphicon glyphicon-floppy-disk"></i> Simpan Data</button>
                                 </div>
                             </div>
                         </div>
@@ -89,9 +88,6 @@
 
             });
         }
-        $(".select2").select2();
-
-
 
         $("#level_akun").on("change",function(){
         if ($(this).val()=='0') $("#unit_kerja").css('display','none');

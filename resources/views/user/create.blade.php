@@ -13,6 +13,7 @@
                 <div class="card-body">
                     <form class="form-horizontal" method="post" action="{{ url('user') }}">
                         @csrf
+                        @method('put')
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-2 control-label">Pilih User</label>
@@ -39,7 +40,7 @@
                                 <label for="inputEmail3" class="col-sm-2 control-label">Unit Kerja</label>
 
                                 <div class="col-sm-7">
-                                    <select class="form-control select2" multiple="" name="id_unit_kerja[]" multiple=""
+                                    <select class="form-control" multiple="" name="id_unit_kerja[]" multiple=""
                                         style="width: 100%">
                                         @foreach ($unitKerja as $unit)
                                             <option value="{{ $unit->id_unit_kerja }}">
@@ -91,7 +92,6 @@
 
             });
         }
-        $(".select2").select2();
         $("#id_pegawai").select2({
             placeholder: "Tentukan dosen atau pegawai..",
             ajax: {
