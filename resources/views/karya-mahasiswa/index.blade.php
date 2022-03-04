@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="col-12">
                             <nav>
-                                <div class="nav nav-tabs" id="nav-tab2" role="tabelist">
+                                <div class="nav nav-tabs" id="nav-tab2" role="tablist">
                                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab"
                                         href="#nav-home2" role="tab">HKI</a>
                                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab"
@@ -218,64 +218,10 @@
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <table class="table table-bordered table-stripped" id="table">
-                                        <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Judul / Nama Hasil Karya</th>
-                                                <th>Kategori Hasil karya</th>
-                                                <th>HaKI / Hak Cipta / Paten</th>
-                                                <th>Status</th>
-                                                <th>Detail</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse ($data['utama'] as $loopUtama)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $loopUtama->judul_hasil_karya }}</td>
-                                                    <td>{{ $loopUtama->kategori->nama_kategori }}</td>
-                                                    <td>{{ $loopUtama->no_hki }}</td>
-                                                    <td>
-                                                        @if ($loopUtama->status_validasi == '0')
-                                                            <span class="badge badge-warning"><i>Sedang di
-                                                                    Ajukan</i></span>
-                                                        @elseif($loopUtama->status_validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($loopUtama->status_validasi == '2')
-                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-info btn-sm dropdown-toggle"
-                                                                type="button" id="triggerId" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i>
-                                                                Proses
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('karya-mahasiswa.show', encrypt($loopUtama->id_karya_mahasiswa)) }}"><i
-                                                                        class="fa fa-info" aria-hidden="true"></i>
-                                                                    Detail</a>
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('karya-mahasiswa.edit', encrypt($loopUtama->id_karya_mahasiswa)) }}"><i
-                                                                        class="fas fa-edit" aria-hidden="true"></i>
-                                                                    Ubah</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div class="col-md-12">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab3" role="tablist"></div>
+                            </nav>
                         </div>
                     </div>
                 </div>
