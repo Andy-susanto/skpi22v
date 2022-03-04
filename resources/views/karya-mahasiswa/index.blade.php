@@ -220,69 +220,137 @@
                     <div class="row">
                         <div class="col-md-12">
                             <nav>
-                                <div class="nav nav-tabs" id="nav-tab3" role="tablist"></div>
+                                <div class="nav nav-tabs" id="nav-tab3" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                        href="#nav-home3" role="tab" aria-controls="nav-home" aria-selected="true">HKI</a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile3"
+                                        role="tab" aria-controls="nav-profile" aria-selected="false">Publikasi</a>
+                                </div>
                             </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home3" role="tabpanel"
+                                    aria-labelledby="nav-home-tab">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <table class="table table-bordered table-stripped" id="table">
+                                                        <thead
+                                                            class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Nama HKI</th>
+                                                                <th>Nomor Sertifikat</th>
+                                                                <th>Tanggal Mulai Berlaku</th>
+                                                                <th>Tanggal Berakhir</th>
+                                                                <th>Jenis HKI</th>
+                                                                <th>Jenis Ciptaan</th>
+                                                                <th>Tingkat</th>
+                                                                <th>File Bukti</th>
+                                                                <th>Status</th>
+                                                                <th>Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile3" role="tabpanel"
+                                    aria-labelledby="nav-profile-tab">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <table class="table table-bordered table-stripped" id="tabelPublikasi">
+                                                        <thead
+                                                            class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Nama Publikasi</th>
+                                                                <th>Tanggal Terbit</th>
+                                                                <th>Penerbit</th>
+                                                                <th>Jenis Publikasi</th>
+                                                                <th>Kategori Capaian</th>
+                                                                <th>Link Publikasi</th>
+                                                                <th>File Bukti</th>
+                                                                <th>Status</th>
+                                                                <th>Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-@endsection
-@include('plugins.select2')
-@include('plugins.alertify')
-@section('plugins.Datatables', true)
-@section('js')
-    <script>
-        $('#table').DataTable();
-        $('#penyelenggara,#tingkat,#prestasi').select2();
-        $("#dosen_pembimbing").select2({
-            placeholder: "Cari Dosen Pembimbing..",
-            ajax: {
-                url: "{{ route('load.dosen') }}",
-                dataTyper: "json",
-                data: function(param) {
-                    var value = {
-                        search: param.term,
-                    }
-                    return value;
-                },
-                processResults: function(hasil) {
+    @endsection
+    @include('plugins.select2')
+    @include('plugins.alertify')
+    @section('plugins.Datatables', true)
+    @section('js')
+        <script>
+            $('#table,#tabelPublikasi').DataTable();
+            $('#penyelenggara,#tingkat,#prestasi').select2();
+            $("#dosen_pembimbing").select2({
+                placeholder: "Cari Dosen Pembimbing..",
+                ajax: {
+                    url: "{{ route('load.dosen') }}",
+                    dataTyper: "json",
+                    data: function(param) {
+                        var value = {
+                            search: param.term,
+                        }
+                        return value;
+                    },
+                    processResults: function(hasil) {
 
-                    return {
-                        results: hasil,
+                        return {
+                            results: hasil,
+                        }
                     }
                 }
+            });
+
+            load_bobot()
+
+            function load_bobot() {
+                $.ajax({
+                    url: "{{ route('fungsi.load-bobot') }}",
+                    data: {
+                        'jenis_kegiatan': 1,
+                        'penyelenggara': $('#penyelenggara').val(),
+                        'tingkat': $('#tingkat').val(),
+                        'prestasi': $('#prestasi').val()
+                    },
+                    beforeSend: function() {
+                        $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
+                    },
+                    success: function(data) {
+                        $('#bobot').text(data);
+                    }
+                })
             }
-        });
 
-        load_bobot()
+            function confirmation(id) {
+                alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
+                    $('#' + id).submit();
+                }, function() {
 
-        function load_bobot() {
-            $.ajax({
-                url: "{{ route('fungsi.load-bobot') }}",
-                data: {
-                    'jenis_kegiatan': 1,
-                    'penyelenggara': $('#penyelenggara').val(),
-                    'tingkat': $('#tingkat').val(),
-                    'prestasi': $('#prestasi').val()
-                },
-                beforeSend: function() {
-                    $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
-                },
-                success: function(data) {
-                    $('#bobot').text(data);
-                }
-            })
-        }
-
-        function confirmation(id) {
-            alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
-                $('#' + id).submit();
-            }, function() {
-
-            })
-        }
-    </script>
-@endsection
+                })
+            }
+        </script>
+    @endsection
