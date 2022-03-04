@@ -341,6 +341,21 @@ return [
                 ],
             ],
         ],
+        'summernote' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/summernote/summernote.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/summernote/summernote.js',
+                ],
+            ],
+        ],
     ],
 
     /*

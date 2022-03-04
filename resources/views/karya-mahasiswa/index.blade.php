@@ -5,7 +5,8 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Karya Mahasiswa</h1>
+            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Karya Mahasiswa
+            </h1>
         </div>
     </div>
 @stop
@@ -15,14 +16,16 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i> Mendaftar</a>
+                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        Mendaftar</a>
                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i> Daftar Karya Mahasiswa</a>
+                        aria-controls="nav-profile" aria-selected="true"><i class="fa fa-book" aria-hidden="true"></i>
+                        Daftar Karya Mahasiswa</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <form action="{{ route('karya-mahasiswa.store') }}" method="post"
@@ -94,6 +97,123 @@
                             </div>
                             </form>
                         </div>
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-12">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab2" role="tabelist">
+                                    <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab"
+                                        href="#nav-home2" role="tab">HKI</a>
+                                    <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab"
+                                        href="#nav-profile2" role="tab">Publikasi</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home2" role="tabpanel"
+                                    aria-labelledby="nav-home-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form action="#">
+                                                <div class="form-group">
+                                                    <label for="">Nama HKI</label>
+                                                    <input type="date" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Nomor Sertifikat</label>
+                                                    <input type="text" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Tanggal Mulai Berlaku</label>
+                                                    <input type="date" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Tanggal Berakhir</label>
+                                                    <input type="date" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Jenis HKI</label>
+                                                    <select class="form-control" name="" id="">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Jenis Ciptaan</label>
+                                                    <select class="form-control" name="" id="">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Tingkat</label>
+                                                    <select class="form-control" name="" id="">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">File Bukti</label>
+                                                    <input type="file" class="form-control-file" name="" id=""
+                                                        placeholder="" aria-describedby="fileHelpId">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit"
+                                                class="btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 rounded-full text-white btn-sm">Simpan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile2" role="tabpanel"
+                                    aria-labelledby="nav-profile-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form action="#">
+                                                <div class="form-group">
+                                                    <label for="">Nama Publikasi</label>
+                                                    <input type="date" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Tanggal Terbit</label>
+                                                    <input type="date" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Penerbit</label>
+                                                    <input type="text" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Jenis Publikasi</label>
+                                                    <select class="form-control" style="width: 100%" name=""
+                                                        id="jenis-publikasi">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Kategori Capaian</label>
+                                                    <select class="form-control" style="width: 100%" name=""
+                                                        id="kategori-capaian">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Link Publikasi</label>
+                                                    <input type="text" class="form-control" name="" id=""
+                                                        aria-describedby="helpId" placeholder="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">File Bukti</label>
+                                                    <input type="file" class="form-control-file" name="" id=""
+                                                        placeholder="" aria-describedby="fileHelpId">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit"
+                                                class="btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 rounded-full text-white btn-sm">Simpan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -117,11 +237,12 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $loopUtama->judul_hasil_karya }}</td>
-                                                    <td>{{$loopUtama->kategori->nama_kategori}}</td>
-                                                    <td>{{$loopUtama->no_hki}}</td>
+                                                    <td>{{ $loopUtama->kategori->nama_kategori }}</td>
+                                                    <td>{{ $loopUtama->no_hki }}</td>
                                                     <td>
                                                         @if ($loopUtama->status_validasi == '0')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                            <span class="badge badge-warning"><i>Sedang di
+                                                                    Ajukan</i></span>
                                                         @elseif($loopUtama->status_validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
                                                         @elseif($loopUtama->status_validasi == '2')
@@ -130,24 +251,26 @@
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
-                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button"
-                                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i> Proses
+                                                            <button class="btn btn-info btn-sm dropdown-toggle"
+                                                                type="button" id="triggerId" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                                                Proses
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('karya-mahasiswa.show', encrypt($loopUtama->id_karya_mahasiswa)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('karya-mahasiswa.edit',encrypt($loopUtama->id_karya_mahasiswa))}}"><i class="fas fa-edit"
-                                                                        aria-hidden="true"></i> Ubah</a>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('karya-mahasiswa.edit', encrypt($loopUtama->id_karya_mahasiswa)) }}"><i
+                                                                        class="fas fa-edit" aria-hidden="true"></i>
+                                                                    Ubah</a>
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @empty
-
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -158,7 +281,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 @endsection
@@ -216,6 +338,5 @@
 
             })
         }
-
     </script>
 @endsection

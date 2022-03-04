@@ -24,6 +24,7 @@ use App\Http\Controllers\PengabdianMasyarakatController;
 use App\Http\Controllers\PenghargaanKejuaraanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SeminarPelatihanController;
+use App\Http\Controllers\SettingCetakController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidasiRekamKegiatanController;
 use Illuminate\Support\Facades\Auth;
@@ -111,6 +112,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('level-bahasa', MasterLevelBahasaController::class);
     Route::resource('jenis-tes', MasterJenisTesController::class);
 
+    // Setting Cetak
+    Route::resource('pengaturan-cetak', SettingCetakController::class);
     // Cetak
     Route::resource('cetak', CetakController::class);
 

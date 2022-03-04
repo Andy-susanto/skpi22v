@@ -32,5 +32,8 @@
         <a class="dropdown-item" href="{{route('validasi.show',[$row['id'],$row['jenis_kegiatan']])}}">
             <i class="fa fa-info" aria-hidden="true"></i> Detail
         </a>
+        <a class="dropdown-item" href="#">
+            <i class="fa fa-check" aria-hidden="true"></i> Validasi Wadek
+        </a>
     </div>
 </div>
