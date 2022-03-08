@@ -126,11 +126,11 @@
                                                     <td>{{ $loopUtama->kategori->nama_kategori }}</td>
                                                     <td>{{ $loopUtama->cakupan_beasiswa->nama }}</td>
                                                     <td>
-                                                        @if ($loopUtama->status_validasi == '0')
+                                                        @if ($loopUtama->status_validasi == '3')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($loopUtama->kegiatan_mahasiswa_single->validasi == '1')
+                                                        @elseif($loopUtama->_status_validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($loopUtama->kegiatan_mahasiswa_single->validasi == '2')
+                                                        @elseif($loopUtama->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
