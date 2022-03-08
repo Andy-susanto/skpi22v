@@ -137,8 +137,8 @@
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-info btn-sm dropdown-toggle"
-                                                                type="button" id="triggerId" loopUtama-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false">
+                                                                type="button" id="triggerId" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="true">
                                                                 <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                                                                 Proses
                                                             </button>
