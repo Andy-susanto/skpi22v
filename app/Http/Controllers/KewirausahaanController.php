@@ -45,7 +45,6 @@ class KewirausahaanController extends Controller
             'alamat_usaha'    => 'required',
             'no_izin'         => 'required',
             'ref_kategori_id' => 'required',
-            'ref_jenis_id'    => 'required',
             'bukti_kegiatan'  => 'required|mimes:jpg,png,pdf,docx'
         ]);
 
@@ -70,7 +69,6 @@ class KewirausahaanController extends Controller
             'ref_kategori_id'                     => $request->ref_kategori_id,
             'file_kegiatan_id'                    => $files->id_file,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-            'ref_jenis_id'                         => $request->ref_jenis_id,
         ]);
 
         toastr()->success('Berhasil Tambah Data');

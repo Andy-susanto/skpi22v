@@ -56,16 +56,6 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
-                                                <label for="">Jenis Kegiatan </label><span
-                                                    class="text-danger">*</span>
-                                                <select class="form-control select" name="ref_jenis_id"
-                                                    id="bidang">
-                                                    @foreach (Helper::jenis() as $loopJenis)
-                                                        <option value="{{$loopJenis->id_ref_jenis}}">{{$loopJenis->nama}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
@@ -129,7 +119,7 @@
                                                     <td>{{$loopUtama->kategori->nama_kategori}}</td>
                                                     <td>{{$loopUtama->no_izin}}</td>
                                                     <td>
-                                                        @if ($loopUtama->status_validasi == '0')
+                                                        @if ($loopUtama->status_validasi == '3')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
                                                         @elseif($loopUtama->status_validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
