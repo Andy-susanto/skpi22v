@@ -17,6 +17,7 @@ use App\Models\PenghargaanKejuaraan;
 use App\Models\Penyelenggara;
 use App\Models\Peran;
 use App\Models\Prestasi;
+use App\Models\SeminarPelatihan;
 use App\Models\Tingkat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -201,12 +202,16 @@ class Helpers
         return $now;
     }
 
-    public static function hitung_bobot(){
-       $penghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhspt)->where('status_validasi',1)->get();
+    public static function hitung_bobot($jenis){
+        if ($jenis == 'penghargaan') {
+            $getData = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+        }elseif($jenis == 'seminar'){
+            $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+        }
        $data = 0;
-       foreach ($penghargaan as $value) {
+       foreach ($getData as $value) {
            $data += $value->bobot_nilai->bobot;
        }
-       return auth()->user()->siakad_mhspt->id_mhspt;
+       return $data;
     }
 }

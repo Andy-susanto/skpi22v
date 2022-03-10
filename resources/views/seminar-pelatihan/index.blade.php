@@ -15,20 +15,20 @@
                         <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
                             <tr>
                                 <th>Capaian Bobot</th>
-                                <th>Bobot saat ini</th>
+                                <th>Bobot saat ini </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>0</td>
-                                <td>0</td>
+                                <td>500</td>
+                                <td>{{Helper::hitung_bobot('seminar')}}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                            role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                            style="width: 0%">Proses Bobot : 0/0</div>
+                                            role="progressbar" aria-valuenow="{{Helper::hitung_bobot('seminar')}}" aria-valuemin="0" aria-valuemax="100"
+                                            style="width: {{Helper::hitung_bobot('seminar')/500*100}}%">Proses Bobot : {{Helper::hitung_bobot('seminar')}}/500</div>
                                     </div>
                                 </td>
                             </tr>

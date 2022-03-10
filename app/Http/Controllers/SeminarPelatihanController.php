@@ -17,8 +17,7 @@ class SeminarPelatihanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-{
-
+    {
         $seminar = SeminarPelatihan::where('siakad_mhspt_id',Auth::user()->id)->get();
         return view('seminar-pelatihan.index',compact('seminar'));
     }
