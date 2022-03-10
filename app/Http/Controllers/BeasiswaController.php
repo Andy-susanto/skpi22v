@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Beasiswa;
 use App\Models\Files;
+use App\Models\Beasiswa;
+use Illuminate\Http\Request;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BeasiswaController extends Controller
 {
@@ -67,7 +68,7 @@ class BeasiswaController extends Controller
             'nama_promotor'                       => $request->nama_promotor,
             'ref_kategori_id'                     => $request->ref_kategori_id,
             'ref_cakupan_beasiswa_id'             => $request->ref_cakupan_beasiswa_id,
-            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_id'                    => $files->id_files,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
         ]);
 
@@ -123,6 +124,13 @@ class BeasiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Beasiswa::findOrFail(decrypt($id));
+        $file = Files::findOrFail($data->file_kegiatan_id);
+        if (Storage::exists($file->path)) {
+            Storage::delete($file->path);
+        }
+        $data->files()->delete();
+        toastr()->success('Berhasil Hapus Data');
+        return back();
     }
 }

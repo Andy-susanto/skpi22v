@@ -10,6 +10,6 @@ class Files extends Model
     use HasFactory;
     protected $table        = 'file_kegiatan';
     protected $guarded      = [];
-    protected $primaryKey   = 'id_file';
+    protected $primaryKey   = 'id_files';
     public    $incrementing = true;
 }

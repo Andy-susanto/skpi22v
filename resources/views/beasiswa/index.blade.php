@@ -128,7 +128,7 @@
                                                     <td>
                                                         @if ($loopUtama->status_validasi == '3')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($loopUtama->_status_validasi == '1')
+                                                        @elseif($loopUtama->status_validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
                                                         @elseif($loopUtama->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
@@ -147,10 +147,20 @@
                                                                     href="{{ route('beasiswa.show', encrypt($loopUtama->id_beasiswa)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
+                                                                @if (in_array($loopUtama->status_validasi,['3','2']))
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('beasiswa.edit', encrypt($loopUtama->id_beasiswa)) }}"><i
                                                                         class="fas fa-edit" aria-hidden="true"></i>
                                                                     Ubah</a>
+                                                                <a class="dropdown-item"
+                                                                    href="#" onclick="destroy('hapusData{{$loopUtama->id_beasiswa}}')"><i class="fas fa-trash" aria-hidden="true"></i>
+                                                                    Hapus
+                                                                </a>
+                                                                <form method="post" action="{{route('beasiswa.destroy',encrypt($loopUtama->id_beasiswa))}}" id="hapusData{{$loopUtama->id_beasiswa}}">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                </form>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>
@@ -181,6 +191,14 @@
 
         function confirmation(id) {
             alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
+
+        function destroy(id){
+            alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
                 $('#' + id).submit();
             }, function() {
 
