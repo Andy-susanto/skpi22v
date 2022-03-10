@@ -3,40 +3,41 @@
 @section('title', 'Seminar Pelatihan')
 
 @section('content_header')
-<div class="row">
-    <div class="mb-3 col-12">
-        <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Seminar Pelatihan</h1>
-    </div>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
-                        <tr>
-                            <th>Capaian Bobot</th>
-                            <th>Bobot saat ini</th>
-                            <th>Kekurangan Bobot</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">Proses Bobot : 0/0</div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="mb-3 col-12">
+            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Seminar Pelatihan
+            </h1>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
+                            <tr>
+                                <th>Capaian Bobot</th>
+                                <th>Bobot saat ini</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                            role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                            style="width: 0%">Proses Bobot : 0/0</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @stop
 @section('content')
     <div class="row">
@@ -44,9 +45,11 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i> Mendaftar</a>
+                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        Mendaftar</a>
                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i> Daftar Seminar Pelatihan</a>
+                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i>
+                        Daftar Seminar Pelatihan</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -56,7 +59,7 @@
                             <div class="card">
                                 <form action="{{ route('seminar-pelatihan.store') }}" method="post"
                                     enctype="multipart/form-data" id="form-seminar">
-                                        @if ($errors->any())
+                                    @if ($errors->any())
                                         <div class="card-header">
                                             <div class="alert alert-danger">
                                                 <ul>
@@ -66,7 +69,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        @endif
+                                    @endif
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
@@ -120,26 +123,15 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
-                                                <label for="">Tanggal Mulai Kegiatan</label><span
+                                                <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
                                                     class="text-danger">*</span>
-                                                <input type="date"
-                                                    class="form-control @error('tanggal_mulai_kegiatan') is-invalid @enderror"
-                                                    name="tanggal_mulai_kegiatan" id="" aria-describedby="helpId"
-                                                    placeholder="">
-                                                @error('tanggal_mulai_kegiatan')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <label for="">Tanggal Selesai Kegiatan</label><span
-                                                    class="text-danger">*</span>
-                                                <input type="date"
-                                                    class="form-control @error('tanggal_selesai_kegiatan') is-invalid @enderror"
-                                                    name="tanggal_selesai_kegiatan" id="" aria-describedby="helpId"
-                                                    placeholder="">
-                                                @error('tanggal_selesai_kegiatan')
+                                                <input type="text"
+                                                    class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
+                                                    name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
+                                                    placeholder="" value="01/01/2022 - 01/12/2022">
+                                                <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan">
+                                                <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan">
+                                                @error('tanggal_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -175,12 +167,24 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
+                                                <label for="">Bukti Kegiatan (Sertifikat)</label><span class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
                                                     name="bukti_kegiatan" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
-                                                @error('dosen_pembimbing')
+                                                @error('bukti_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Bukti Kegiatan (File SK)</label><span class="text-danger">*</span>
+                                                <input type="file"
+                                                    class="form-control-file @error('file_sk') is-invalid @enderror"
+                                                    name="file_sk" id="" placeholder=""
+                                                    aria-describedby="fileHelpId">
+                                                @error('file_sk')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -200,7 +204,7 @@
                                         </p>
                                     </div>
                                     <div class="text-center mb-2">
-                                        <button type="button" onclick="confirmation('form-penghargaan')"
+                                        <button type="button" onclick="confirmation('form-seminar')"
                                             class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
                                                 class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                                     </div>
@@ -222,6 +226,7 @@
                                                 <th>Tanggal Mulai Kegiatan</th>
                                                 <th>Tanggal Selesai Kegiatan</th>
                                                 <th>Dosen Pembimbing</th>
+                                                <th>Bukti Kegiatan</th>
                                                 <th>Status</th>
                                                 <th>Detail</th>
                                             </tr>
@@ -230,26 +235,32 @@
                                             @forelse ($seminar as $data)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama_kegiatan }}</td>
+                                                    <td>{{ ucwords($data->nama) }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>
                                                         @if ($data->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
+                                                            {{ Helper::nama_gelar($data->kepeg_pegawai) }}
                                                         @else
                                                             -
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_validasi == '0')
-                                                        <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                    @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
-                                                        <span class="badge badge-success"><i>di Validasi</i></span>
-                                                    @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
-                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                    @endif
+                                                        <div class="list-group">
+                                                            <a href="{{asset('storage/'.$data->files->path)}}" class="list-group-item list-group-item-action"><i class="fa fa-archive" aria-hidden="true"></i> File Sertifikat</a>
+                                                            <a href="{{asset('storage/'.$data->file_sk->path)}}" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i> File SK</a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->status_validasi == '3')
+                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                        @elseif($data->status_validasi == '1')
+                                                            <span class="badge badge-success"><i>di Validasi</i></span>
+                                                        @elseif($data->status_validasi == '2')
+                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
@@ -263,14 +274,25 @@
                                                                     href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan_workshop_diklat)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('seminar-pelatihan.edit',encrypt($data->id_seminar_pelatihan_workshop_diklat))}}"><i class="fas fa-edit"
-                                                                        aria-hidden="true"></i> Ubah</a>
+                                                                @if (in_array($data->status_validasi,['3','1']))
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('seminar-pelatihan.edit', encrypt($data->id_seminar_pelatihan_workshop_diklat)) }}"><i
+                                                                        class="fas fa-edit" aria-hidden="true"></i>
+                                                                    Ubah</a>
+                                                                    <a class="dropdown-item"
+                                                                    href="#" onclick="destroy('hapusData{{$data->id_seminar_pelatihan_workshop_diklat}}')"><i class="fas fa-trash" aria-hidden="true"></i>
+                                                                    Hapus
+                                                                </a>
+                                                                <form method="post" action="{{route('seminar-pelatihan.destroy',encrypt($data->id_seminar_pelatihan_workshop_diklat))}}" id="hapusData{{$data->id_seminar_pelatihan_workshop_diklat}}">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                </form>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @empty
-
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -286,9 +308,24 @@
 @endsection
 @include('plugins.select2')
 @section('plugins.Datatables', true)
+@include('plugins.moment')
+@include('plugins.daterangepicker')
 @include('plugins.alertify')
 @section('js')
     <script>
+        $(function() {
+            $('#tanggal_kegiatan').daterangepicker({
+                opens: 'left',
+                startDate: '01 january 2022',
+                endDate: '31 december 2022',
+                locale:{
+                    format: 'DD MMMM YYYY'
+                }
+            }, function(start, end, label) {
+                $('#tanggal_mulai_kegiatan').val(start.format('YYYY-MM-DD'));
+                $('#tanggal_selesai_kegiatan').val(end.format('YYYY-MM-DD'));
+            });
+        });
         $('#table').DataTable();
         $('#penyelenggara,#tingkat,#peran').select2();
         $("#dosen_pembimbing").select2({
@@ -330,8 +367,16 @@
                 }
             })
         }
+
         function confirmation(id) {
             alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
+        function destroy(id){
+            alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
                 $('#' + id).submit();
             }, function() {
 

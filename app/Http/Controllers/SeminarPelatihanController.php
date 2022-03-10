@@ -7,6 +7,7 @@ use App\Models\BobotNilai;
 use Illuminate\Http\Request;
 use App\Models\SeminarPelatihan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SeminarPelatihanController extends Controller
 {
@@ -44,8 +45,7 @@ class SeminarPelatihanController extends Controller
             'nama_kegiatan'            => 'required|string',
             'penyelenggara_kegiatan'   => 'required|integer',
             'tingkat_kegiatan'         => 'required|integer',
-            'tanggal_mulai_kegiatan'   => 'required|date',
-            'tanggal_selesai_kegiatan' => 'required|date',
+            'tanggal_kegiatan'         => 'required',
             'prestasi'                 => 'required|integer',
             'dosen_pembimbing'         => 'nullable|integer',
             'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
@@ -54,10 +54,7 @@ class SeminarPelatihanController extends Controller
             'nama_kegiatan.string'              => 'Nama Kegiatan Harus berbentuk text',
             'tingkat_kegiatan.required'         => 'Tingkat Kegiatan Harus di isi',
             'tingkat_kegiatan.integer'          => 'Tingkat Kegiatan Salah',
-            'tanggal_mulai_kegiatan.required'   => 'Tanggal Mulai Kegiatan Harus di isi',
-            'tanggal_mulai_kegiatan.date'       => 'Format Tanggal Salah',
-            'tanggal_selesai_kegiatan.required' => 'Tanggal Selesai Kegiatan Harus di isi',
-            'tanggal_selesai_kegiatan.date'     => 'Format Tanggal Salah',
+            'tanggal_mulai_kegiatan.required'   => 'Tanggal Kegiatan Harus di isi',
             'peran.required'                    => 'Peran Harus di isi',
             'peran.integer'                     => 'Format Peran Salah',
             'dosen_pembimbing.integer'          => 'Format Data Dosen Salah',
@@ -65,14 +62,23 @@ class SeminarPelatihanController extends Controller
             'bukti_kegiatan.mimes'              => 'Format File tidak mendukung'
         ]);
 
-        if($request->file('bukti_kegiatan')){
+        if($request->file('bukti_kegiatan') && $request->file('file_sk')){
             $filename      = time().'_'.'bukti_kegiatan_seminar_pelatihan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
-            $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $fileSK = time().'_'.'file_sk_seminar_pelatihan'.'_'.Auth::user()->username.'.'.$request->file_sk->getClientOriginalExtension();
+
+            $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $fileSKPath = $request->file('file_sk')->storeAs('uploads',$fileSK,'public');
 
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 2
+            ]);
+
+            $fileSK = Files::create([
+                'nama'                  => $fileSK,
+                'path'                  => $fileSKPath,
                 'siakad_mhspt_id'       => Auth::user()->id,
                 'ref_jenis_kegiatan_id' => 2
             ]);
@@ -101,9 +107,9 @@ class SeminarPelatihanController extends Controller
             'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
             'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
             'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
-            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_id'                    => $files->id_files,
+            'file_sk_id'                             => $fileSK->id_files,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-            'status_validasi' => '0'
         ]);
 
         toastr()->success('Berhasil Tambah Data');
@@ -166,20 +172,38 @@ class SeminarPelatihanController extends Controller
             })
             ->first();
 
-        if ($request->file('bukti_kegiatan')) {
+        if ($request->file('bukti_kegiatan') && $request->file('file_sk')) {
             $extension = ['jpg,pdf,docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
-            if (in_array($file, $extension)) {
+            $file_sk = $request->file_sk->getClientOriginalExtension();
+            if (in_array($file, $extension) && in_array($file_sk, $extension)) {
                 $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-                $original_name = $request->bukti_kegiatan->getClientOriginalName();
-                $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+                $filenameSk = time() . '_' . 'file_sk_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
 
-                $files = Files::where('id_file', $data_utama->files->id_file)->update([
+                $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+                $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
+
+                $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
+                    [
+                        'id_file' => $data_utama->files->id_files
+                    ],
+                    [
                     'nama'                  => $filename,
                     'path'                  => $filePath,
-                ]);
+                    ]
+                 );
 
-                $penghargaan = SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+                 $fileSK = Files::where('id_file', $data_utama->file_sk->id_files)->updateOrCreate(
+                    [
+                        'id_file' => $data_utama->file_sk->id_files
+                    ],
+                    [
+                    'nama'                  => $filename,
+                    'path'                  => $filePath,
+                    ]
+                 );
+
+                SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
                     'nama'                                => $request->nama_kegiatan ?? $data_utama->nama_kegiatan,
                     'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
                     'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
@@ -188,9 +212,9 @@ class SeminarPelatihanController extends Controller
                     'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
                     'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
                     'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
-                    'file_kegiatan_id'                    => $files->id_file,
+                    'file_kegiatan_id'                    => $files->id_files,
+                    'file_sk_id'                          => $fileSK->id_files,
                     'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-                    'status_validasi' => '0'
                 ]);
 
                 toastr()->success('Berhasil Update Data');
@@ -200,7 +224,7 @@ class SeminarPelatihanController extends Controller
                 toastr()->error(' Terjadi Kesalahan :( ');
             }
         } else {
-            $seminarPelatihan = SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+          SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
                 'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
                 'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
                 'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
@@ -209,7 +233,6 @@ class SeminarPelatihanController extends Controller
                 'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
                 'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
                 'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
-                'status_validasi' => '0'
             ]);
 
             toastr()->success('Berhasil Update Data');
@@ -225,6 +248,18 @@ class SeminarPelatihanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = SeminarPelatihan::findOrFail(decrypt($id));
+        $file = Files::findOrFail($data->file_kegiatan_id);
+        $file_sk = Files::findOrFail($data->file_sk_id);
+        if(Storage::exists($file_sk->path)){
+            Storage::delete($file_sk->path);
+        }
+        if (Storage::exists($file->path)) {
+            Storage::delete($file->path);
+        }
+        $data->files()->delete();
+        $data->file_sk()->delete();
+        toastr()->success('Berhasil Hapus Data');
+        return back();
     }
 }

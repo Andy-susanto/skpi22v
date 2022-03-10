@@ -89,8 +89,8 @@ class BeasiswaController extends Controller
      */
     public function show($id)
     {
-        $data = PenghargaanKejuaraan::findOrFail(decrypt($id));
-        return view('penghargaan-kejuaraan.show',compact('data'));
+        $data = Beasiswa::findOrFail(decrypt($id));
+        return view('beasiswa.show',compact('data'));
     }
 
     /**
