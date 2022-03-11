@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Elibyy\TCPDF\Facades\TCPDF;
+use App\Models\SeminarPelatihan;
+use Illuminate\Support\Facades\View;
 
 class CetakController extends Controller
 {
@@ -13,7 +16,8 @@ class CetakController extends Controller
      */
     public function index()
     {
-        return view('cetak.index');
+        $seminar = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+        return view('cetak.index',compact('seminar'));
     }
 
     /**
@@ -23,7 +27,30 @@ class CetakController extends Controller
      */
     public function create()
     {
-        //
+        $view = View::make('cetak.cetak');
+        $html = $view->render();
+        $pdf = new TCPDF;
+        $filename = 'skpi.pdf';
+
+        $pdf::setHeaderCallback(function($pdf) {
+
+            $image_file = public_path('cetak/header1.jpg');
+            $pdf->Image($image_file, 50, 50, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            // Set font
+            $pdf->SetFont('helvetica', 'B', 20);
+            // Title
+            // $pdf->Cell(0, 15, 'Universitas Jambi', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+
+    });
+
+        $pdf::SetTitle('Cetak PDF');
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+
+        $pdf::Output(public_path($filename), 'F');
+
+        return response()->download(public_path($filename));
+        // return view('cetak.cetak');
     }
 
     /**
@@ -34,7 +61,11 @@ class CetakController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->jenis == 'seminar') {
+            SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',$request->id)->update(['nama_eng'=>$request->translate]);
+        }
+
+        return response()->json(['success'=>'Data Berhasil di update']);
     }
 
     /**

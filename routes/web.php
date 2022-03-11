@@ -115,7 +115,7 @@ Route::middleware(['auth'])->group(function () {
     // Setting Cetak
     Route::resource('pengaturan-cetak', SettingCetakController::class);
     // Cetak
-    Route::resource('cetak', CetakController::class);
+    Route::resource('print', CetakController::class);
 
     // Tabbed View
     Route::get('tabbed-menu',function(){
