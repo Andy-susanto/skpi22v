@@ -137,16 +137,17 @@
                                                 <div class="form-group">
                                                     <label for="">Jenis HKI</label>
                                                     <select class="form-control" name="" id="">
+                                                        @foreach (Helper::jenis_hki() as $jenis_hki)
+                                                            <option value="{{$jenis_hki->id_jenis_hki}}">{{$jenis_hki->nama_jenis_hki}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Jenis Ciptaan</label>
                                                     <select class="form-control" name="" id="">
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Tingkat</label>
-                                                    <select class="form-control" name="" id="">
+                                                        @foreach (Helper::jenis_ciptaan() as $jenis_ciptaan)
+                                                         <option value="{{$jenis_ciptaan->id_jenis_ciptaan}}">{{$jenis_ciptaan->jenis_ciptaan}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -186,12 +187,18 @@
                                                     <label for="">Jenis Publikasi</label>
                                                     <select class="form-control" style="width: 100%" name=""
                                                         id="jenis-publikasi">
+                                                        @foreach (Helper::jenis_publikasi() as $jenis_publikasi)
+                                                            <option value="{{$jenis_publikasi->id_jenis}}">{{$jenis_publikasi->nama_jenis}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Kategori Capaian</label>
                                                     <select class="form-control" style="width: 100%" name=""
                                                         id="kategori-capaian">
+                                                        @foreach (Helper::kategori_capaian() as $kategori_capaian)
+                                                        <option value="{{$kategori_capaian->id_kategori_capaian}}">{{$kategori_capaian->nama_kategori_capaian}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -245,7 +252,6 @@
                                                                 <th>Tanggal Berakhir</th>
                                                                 <th>Jenis HKI</th>
                                                                 <th>Jenis Ciptaan</th>
-                                                                <th>Tingkat</th>
                                                                 <th>File Bukti</th>
                                                                 <th>Status</th>
                                                                 <th>Aksi</th>

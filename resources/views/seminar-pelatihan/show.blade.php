@@ -3,7 +3,7 @@
 @section('title', 'Seminar Pelatihan')
 
 @section('content_header')
-    <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm"
+    <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm shadow-sm"
                 href="{{ route('seminar-pelatihan.index') }}" role="button">Kembali</a></span> Seminar Pelatihan Detail</h1>
 @stop
 @section('content')
@@ -41,7 +41,7 @@
                             <tr>
                                 <td>Peran</td>
                                 <td>:</td>
-                                <td>{{ $data->peran->nama }}</td>
+                                <td>{{ $data->peran_prestasi->nama }}</td>
                             </tr>
                             <tr>
                                 <td>Bobot Nilai Kegiatan</td>
@@ -62,8 +62,12 @@
                             <tr>
                                 <td>Bukti Kegiatan</td>
                                 <td>:</td>
-                                <td><a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info">Lihat
-                                        Bukti</a></td>
+                                <td>
+                                    <div class="list-group">
+                                        <a href={{ asset('storage/' . $data->files->path) }} class="list-group-item list-group-item-action"><i class="fa fa-archive" aria-hidden="true"></i> File Sertifikat</a>
+                                        <a href="{{asset('storage/'.$data->file_sk->path)}}" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i> File SK</a>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

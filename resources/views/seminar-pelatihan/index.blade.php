@@ -274,7 +274,7 @@
                                                                     href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan_workshop_diklat)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                @if (in_array($data->status_validasi,['3','1']))
+                                                                @if (in_array($data->status_validasi,['3','2']))
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('seminar-pelatihan.edit', encrypt($data->id_seminar_pelatihan_workshop_diklat)) }}"><i
                                                                         class="fas fa-edit" aria-hidden="true"></i>

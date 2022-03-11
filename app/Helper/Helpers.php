@@ -36,6 +36,26 @@ class Helpers
         }
     }
 
+    public static function jenis_ciptaan(){
+        $data = DB::table('jenis_ciptaan')->get();
+        return $data;
+    }
+
+    public static function jenis_hki(){
+        $data = DB::table('jenis_hki')->get();
+        return $data;
+    }
+
+    public static function jenis_publikasi(){
+        $data = DB::table('jenis_publikasi')->get();
+        return $data;
+    }
+
+    public static function kategori_capaian(){
+        $data = DB::table('kategori_capaian')->get();
+        return $data;
+    }
+
     public static function bidang(){
         return Bidang::oldest()->get();
     }
