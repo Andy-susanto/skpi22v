@@ -15,13 +15,11 @@
                             <tr>
                                 <th>Capaian Bobot</th>
                                 <th>Bobot saat ini</th>
-                                <th>Kekurangan Bobot</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>0</td>
-                                <td>0</td>
+                                <td>500</td>
                                 <td>0</td>
                             </tr>
                             <tr>
