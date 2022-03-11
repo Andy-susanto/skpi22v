@@ -293,13 +293,13 @@ class ValidasiWadekController extends Controller
                         return $row['nama_kegiatan'];
                     })
                     ->addColumn("bukti_kegiatan",function($row){
-                        return view('validasi-rekam-kegiatan.file',compact('row'));
+                        return view('validasi-wadek.file',compact('row'));
                     })
                     ->addColumn("validasi",function($row){
-                        return view('validasi-rekam-kegiatan.status',compact('row'));
+                        return view('validasi-wadek.status',compact('row'));
                     })
                     ->addColumn("action",function($row){
-                        return view('validasi-rekam-kegiatan.aksi',compact('row'));
+                        return view('validasi-wadek.aksi',compact('row'));
                     })
                     ->rawColumns(['action','nama_mahasiswa','nim','program_studi','jenis_kegiatan','nama_kegiatan','bukti_kegiatan'])
                     ->make(true);
@@ -357,9 +357,51 @@ class ValidasiWadekController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$type, $id)
     {
-        //
+        if($type == 'penghargaan'){
+            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'seminar'){
+            SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'hibah'){
+            PenerimaHibah::where('id_penerima_hibah_pendanaan',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'pengabdian'){
+            PengabdianMasyarakat::where('id_pengabdian_masyarakat',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'organisasi'){
+            Organisasi::where('id_organisasi',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'magang'){
+            Magang::where('id_magang',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'beasiswa'){
+            Beasiswa::where('id_beasiswa',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'bahasa'){
+            KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'kewirausahaan'){
+            Kewirausahaan::where('id_kewirausahaan',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }else if($type == 'karya'){
+            KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }
+        toastr()->success('Berhasil menvalidasi data');
+        return back();
     }
 
     /**
@@ -368,8 +410,51 @@ class ValidasiWadekController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($type,$id)
     {
-        //
+        if($type == 'penghargaan'){
+            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'seminar'){
+            SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'hibah'){
+            PenerimaHibah::where('id_penerima_hibah_pendanaan',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'pengabdian'){
+            PengabdianMasyarakat::where('id_pengabdian_masyarakat',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'organisasi'){
+            Organisasi::where('id_organisasi',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'magang'){
+            Magang::where('id_magang',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'beasiswa'){
+            Beasiswa::where('id_beasiswa',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'bahasa'){
+            KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'kewirausahaan'){
+            Kewirausahaan::where('id_kewirausahaan',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }else if($type == 'karya'){
+            KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
+                'status_validasi' => '2'
+            ]);
+        }
+
+        toastr()->success('Berhasil menvalidasi data');
+        return back();
     }
 }

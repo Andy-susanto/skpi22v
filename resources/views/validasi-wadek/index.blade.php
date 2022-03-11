@@ -144,5 +144,15 @@
 
             })
         }
+
+        function tolak(id,text){
+            alertify.prompt('Konfirmasi !!','Alasan Penolakan',text, function(evt, value) {
+                console.log(value);
+                // $('#' + id).submit();
+            },function(){
+
+            });
+
+        }
     </script>
 @endpush

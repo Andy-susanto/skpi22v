@@ -90,6 +90,11 @@ Route::middleware(['auth'])->group(function () {
     ::class);
 
     // Validasi Wadek
+    Route::get('validasi-wadek/{id}/{jenis}', [ValidasiWadekController::class, 'show'])->name('validasi-wadek.show');
+
+    Route::put('validasi-wadek/{type}/{id}/update', [ValidasiWadekController::class, 'update'])->name('validasi-wadek.update');
+
+    Route::delete('validasi-wadek/{type}/{id}/destroy', [ValidasiWadekController::class, 'destroy'])->name('validasi-wadek.destroy');
     Route::resource('validasi-wadek',ValidasiWadekController::class);
     //
 

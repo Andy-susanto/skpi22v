@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $value)
+                        @foreach($data->unique('nim') as $value)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$value['nama_mahasiswa']}}</td>

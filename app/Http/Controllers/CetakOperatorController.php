@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Magang;
 use App\Models\Beasiswa;
 use App\Models\Organisasi;
@@ -26,7 +27,7 @@ class CetakOperatorController extends Controller
         $data = collect();
             $penghargaan = PenghargaanKejuaraan::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $penghargaanMap = $penghargaan->map(function($item){
                 return [
@@ -46,7 +47,7 @@ class CetakOperatorController extends Controller
 
             $seminar = SeminarPelatihan::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $seminarMap = $seminar->map(function($item){
                 return [
@@ -65,7 +66,7 @@ class CetakOperatorController extends Controller
 
             $penerimaHibah = PenerimaHibah::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $penerimaHibahMap = $penerimaHibah->map(function($item){
                 return [
@@ -83,7 +84,7 @@ class CetakOperatorController extends Controller
 
             $pengabdianMasyarakat = PengabdianMasyarakat::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $pengabdianMasyarakatMap = $pengabdianMasyarakat->map(function($item){
                 return [
@@ -102,7 +103,7 @@ class CetakOperatorController extends Controller
 
             $organisasi = Organisasi::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $organisasiMap = $organisasi->map(function($item){
                 return [
@@ -121,7 +122,7 @@ class CetakOperatorController extends Controller
 
             $magang = Magang::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $magangMap = $magang->map(function($item){
                 return [
@@ -140,7 +141,7 @@ class CetakOperatorController extends Controller
 
             $beasiswa = Beasiswa::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $beasiswaMap = $beasiswa->map(function($item){
                 return [
@@ -159,7 +160,7 @@ class CetakOperatorController extends Controller
 
             $bahasa = KemampuanBahasaAsing::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','asc')->get();
+            })->where('status_validasi','asc')->groupBy('siakad_mhspt_id')->get();
 
             $bahasaMap = $bahasa->map(function($item){
                 return [
@@ -177,7 +178,7 @@ class CetakOperatorController extends Controller
             $data = $data->merge($bahasaMap);
             $kewirausahaan = Kewirausahaan::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','asc')->get();
+            })->where('status_validasi','asc')->groupBy('siakad_mhspt_id')->get();
 
             $kewirausahaanMap = $kewirausahaan->map(function($item){
                 return [
@@ -196,7 +197,7 @@ class CetakOperatorController extends Controller
 
             $karyaMahasiswa = KaryaMahasiswa::whereHas('mhspt',function($qp){
                 $qp->FilterUnit();
-            })->where('status_validasi','1')->get();
+            })->where('status_validasi','1')->groupBy('siakad_mhspt_id')->get();
 
             $karyaMahasiswaMap = $karyaMahasiswa->map(function($item){
                 return [
