@@ -15,7 +15,6 @@
                             <tr>
                                 <th>Capaian Bobot</th>
                                 <th>Bobot saat ini</th>
-                                <th>Kekurangan Bobot</th>
                             </tr>
                         </thead>
                         <tbody>

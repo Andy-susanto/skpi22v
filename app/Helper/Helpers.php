@@ -13,6 +13,7 @@ use App\Models\JenisTes;
 use App\Models\Kategori;
 use App\Models\LevelPenguasaan;
 use App\Models\LogAktifitas;
+use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
 use App\Models\Penyelenggara;
 use App\Models\Peran;
@@ -227,7 +228,10 @@ class Helpers
             $getData = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
         }elseif($jenis == 'seminar'){
             $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+        }elseif($jenis == 'pengabdian'){
+            $getData = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
         }
+
        $data = 0;
        foreach ($getData as $value) {
            $data += $value->bobot_nilai->bobot;
