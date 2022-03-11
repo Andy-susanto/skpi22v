@@ -27,6 +27,7 @@ use App\Http\Controllers\SeminarPelatihanController;
 use App\Http\Controllers\SettingCetakController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidasiRekamKegiatanController;
+use App\Http\Controllers\ValidasiWadekController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -86,6 +87,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('validasi-rekam-kegiatan', ValidasiRekamKegiatanController
     ::class);
+
+    // Validasi Wadek
+    Route::resource('validasi-wadek',ValidasiWadekController::class);
+    //
 
     // fungsi
     Route::get('load-bobot', [FungsiAjaxController::class, 'load_bobot'])->name('fungsi.load-bobot');
