@@ -30,9 +30,10 @@
                                 <label for="">Status Kegiatan</label>
                                 <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
                                     <option value="" selected>Semua</option>
-                                    <option value="3">di Ajukan</option>
-                                    <option value="1">di Validasi</option>
-                                    <option value="2">di Tolak</option>
+                                    <option value="3">Menunggu Validasi Operator</option>
+                                    <option value="1">Menunggu Validasi Wakil Dekan</option>
+                                    <option value="4">di Validasi</option>
+                                    <option value="2">Tidak di Terima</option>
                                 </select>
                             </div>
                         </div>
@@ -151,7 +152,7 @@
         function tolak(id,text){
             alertify.prompt('Konfirmasi !!','Alasan Penolakan',text,function(evt, value) {
                 console.log(value);
-                $('#' + id).submit();
+                // $('#' + id).submit();
             },function(){
 
             });
