@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $this->authorize('read-user');
         if ($request->ajax()) {
-            $user = User::join('kepeg.pegawai as a', 'a.nip', '=', 'users.nip')
+            $user = User::join('kepeg.pegawai as a', 'a.nip', '=', 'users.nip')->whereIn('a.status_keaktifan_pegawai_id',[1,2,3,4])
                 ->select('users.*', 'a.nama_pegawai');
             return DataTables::of($user)
                 ->addColumn('action', function ($q) {
