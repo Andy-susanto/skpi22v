@@ -22,6 +22,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\PenerimaHibahController;
 use App\Http\Controllers\PengabdianMasyarakatController;
+use App\Http\Controllers\PengaturanBobotController;
 use App\Http\Controllers\PenghargaanKejuaraanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SeminarPelatihanController;
@@ -125,6 +126,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Setting Cetak
     Route::resource('pengaturan-cetak', SettingCetakController::class);
+    Route::resource('pengaturan-bobot', PengaturanBobotController::class);
     // Cetak
     Route::resource('cetak-skpi',CetakOperatorController::class);
     Route::resource('print', CetakController::class);
