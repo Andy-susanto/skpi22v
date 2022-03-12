@@ -3,7 +3,7 @@
 @section('title', 'Ubah User')
 
 @section('content_header')
-    <h1 class="m-0 font-bold text-dark">Ubah User</h1>
+    <h1 class="m-0 font-bold text-dark">Ubah User <a name="" id="" class="btn bg-gray-400 text-black hover:bg-green-400 btn-md drop-shadow-md" href="{{route('user.index')}}" role="button"><i class="fa fa-reply" aria-hidden="true"></i> Kembali</a></h1>
 @stop
 
 @section('content')
