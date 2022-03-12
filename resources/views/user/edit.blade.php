@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-7">
-                                    <button class="btn btn-sm btn-secondary bg-slate-500" type="submit"><i
+                                    <button class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md" type="submit"><i
                                             class="glyphicon glyphicon-floppy-disk"></i> Simpan Data</button>
                                 </div>
                             </div>
