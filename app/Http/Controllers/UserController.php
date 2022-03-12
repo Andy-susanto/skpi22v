@@ -166,13 +166,18 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->roles()->detach();
+        $user->instansi()->detach();
+        $user->delete();
+        toastr()->success('Berhasil menghapus data');
+        return back();
     }
 
     public function cari_user(Request $request)
     {
         if ($request->ajax()) {
-            $user = DB::table('siakad.users');
+            $user = DB::table('siakad.users')->where('status','1');
             return DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('aksi', function ($row) {
