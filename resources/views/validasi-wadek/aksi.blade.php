@@ -6,7 +6,6 @@
     <div class="dropdown-menu" aria-labelledby="triggerId">
 
         {{-- Validasi Form --}}
-        @if (in_array($row['validasi'], ['2', '3']))
             <a class="dropdown-item text-success"
                 onclick="konfirmasi('update'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#"><i class="fa fa-check" aria-hidden="true"></i> Validasi</a>
@@ -15,9 +14,8 @@
                 @csrf
                 @method('put')
             </form>
-        @endif
+
         {{-- Tolak Form --}}
-        @if (in_array($row['validasi'], ['1', '3']))
             <a class="dropdown-item text-danger"
                 onclick="tolak('hapus'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Bukti kegiatan tidak cocok dengan data yang di masukan');"
                 href="#"><i class="fa fa-times" aria-hidden="true"></i> Tolak</a>
@@ -26,7 +24,6 @@
                 @csrf
                 @method('delete')
             </form>
-        @endif
 
         {{-- Detail Form --}}
         <a class="dropdown-item" href="{{route('validasi.show',[$row['id'],$row['jenis_kegiatan']])}}">

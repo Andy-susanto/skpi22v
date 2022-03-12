@@ -23,17 +23,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Status Kegiatan</label>
-                            <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
-                                <option value="" selected>Semua</option>
-                                <option value="3">di Ajukan</option>
-                                <option value="1">di Validasi</option>
-                                <option value="2">di Tolak</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="card-body table-responsive">
@@ -47,7 +36,6 @@
                             <th>Jenis Kegiatan</th>
                             <th>Nama Kegiatan / Nama Promotor / Nama Beasiswa / Bahasa / Nama Usaha / Judul Hasil Karya</th>
                             <th>Bukti Kegiatan</th>
-                            <th>Status</th>
                             <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                         </tr>
                     </thead>
@@ -82,7 +70,6 @@
                 ajax: {
                     data: {
                         id_jenis_kegiatan: $('#jenis_kegiatan').val(),
-                        status_validasi: $('#status_validasi').val()
                     },
                     url: "{{ route('validasi-wadek.index') }}",
                 },
@@ -114,11 +101,6 @@
                     {
                         data: 'bukti_kegiatan',
                         name: 'bukti_kegiatan'
-                    },
-                    {
-                        data: 'validasi',
-                        name: 'validasi',
-                        orderable:false,searchable:false
                     },
                     {
                         data: 'action',

@@ -29,9 +29,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
                 $penghargaan = PenghargaanKejuaraan::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $penghargaanMap = $penghargaan->map(function($item){
                     return [
@@ -52,9 +50,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 2 || $request->id_jenis_kegiatan == '') {
                 $seminar = SeminarPelatihan::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $seminarMap = $seminar->map(function($item){
                     return [
@@ -75,9 +71,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 3 || $request->id_jenis_kegiatan == '') {
                 $penerimaHibah = PenerimaHibah::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $penerimaHibahMap = $penerimaHibah->map(function($item){
                     return [
@@ -98,9 +92,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 4 || $request->id_jenis_kegiatan == '') {
                 $pengabdianMasyarakat = PengabdianMasyarakat::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $pengabdianMasyarakatMap = $pengabdianMasyarakat->map(function($item){
                     return [
@@ -121,9 +113,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 5 || $request->id_jenis_kegiatan == '') {
                 $organisasi = Organisasi::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $organisasiMap = $organisasi->map(function($item){
                     return [
@@ -143,9 +133,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 6 || $request->id_jenis_kegiatan == '') {
                 $magang = Magang::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $magangMap = $magang->map(function($item){
                     return [
@@ -166,9 +154,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 7 || $request->id_jenis_kegiatan == '') {
                 $beasiswa = Beasiswa::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $beasiswaMap = $beasiswa->map(function($item){
                     return [
@@ -189,9 +175,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 8 || $request->id_jenis_kegiatan == '') {
                 $bahasa = KemampuanBahasaAsing::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $bahasaMap = $bahasa->map(function($item){
                     return [
@@ -212,9 +196,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 9 || $request->id_jenis_kegiatan == '') {
                 $kewirausahaan = Kewirausahaan::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $kewirausahaanMap = $kewirausahaan->map(function($item){
                     return [
@@ -235,9 +217,7 @@ class ValidasiWadekController extends Controller
             if ($request->id_jenis_kegiatan == 10 || $request->id_jenis_kegiatan == '') {
                 $karyaMahasiswa = KaryaMahasiswa::whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->when($request->status_validasi,function($q)use($request){
-                    $q->where('status_validasi',$request->status_validasi);
-                })->orderBy('status_validasi','asc')->get();
+                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
 
                 $karyaMahasiswaMap = $karyaMahasiswa->map(function($item){
                     return [
@@ -294,9 +274,6 @@ class ValidasiWadekController extends Controller
                     })
                     ->addColumn("bukti_kegiatan",function($row){
                         return view('validasi-wadek.file',compact('row'));
-                    })
-                    ->addColumn("validasi",function($row){
-                        return view('validasi-wadek.status',compact('row'));
                     })
                     ->addColumn("action",function($row){
                         return view('validasi-wadek.aksi',compact('row'));
