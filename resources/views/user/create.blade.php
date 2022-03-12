@@ -3,7 +3,7 @@
 @section('title', 'Tambah User')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Tambah User</h1>
+    <h1 class="m-0 font-bold text-dark">Tambah User <a name="" id="" class="btn bg-gray-400 text-black hover:bg-green-400 btn-md drop-shadow-md" href="{{route('user.index')}}" role="button"><i class="fa fa-reply" aria-hidden="true"></i> Kembali</a></h1>
 @stop
 
 @section('content')
@@ -28,9 +28,7 @@
                                 <label for="inputEmail3" class="col-sm-2 control-label">Level Akses</label>
 
                                 <div class="col-sm-7">
-                                    <select class="form-control" name="level_akun" id="level_akun"
-                                        onchange="load_instansi()">
-
+                                    <select class="form-control" name="level_akun" id="level_akun">
                                         <option value="0">Universitas (All)</option>
                                         <option value="1">Per Unit Kerja</option>
                                     </select>
@@ -65,8 +63,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-7">
-                                    <button class="btn btn-sm btn-primary" type="submit"><i
-                                            class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                    <button class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md" type="submit"><i
+                                        class="glyphicon glyphicon-floppy-disk"></i> Simpan Data</button>
                                 </div>
                             </div>
                         </div>
