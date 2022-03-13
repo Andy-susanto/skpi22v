@@ -20,7 +20,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>500</td>
+                                <td>{{Helper::min_bobot()}}</td>
                                 <td>{{Helper::hitung_bobot('seminar')}}</td>
                             </tr>
                             <tr>

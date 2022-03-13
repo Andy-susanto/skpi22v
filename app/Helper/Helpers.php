@@ -238,4 +238,9 @@ class Helpers
        }
        return $data;
     }
+
+    public static function min_bobot(){
+        $data = DB::table('pengaturan_umum')->where('nama','min-bobot')->first();
+        return $data->value;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PengaturanBobotController extends Controller
 {
@@ -13,7 +14,8 @@ class PengaturanBobotController extends Controller
      */
     public function index()
     {
-        return view('pengaturan-umum.pengaturan-bobot');
+        $data = DB::table('pengaturan_umum')->where('nama','min-bobot')->first();
+        return view('pengaturan-umum.pengaturan-bobot',compact('data'));
     }
 
     /**
@@ -34,7 +36,7 @@ class PengaturanBobotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
