@@ -19,7 +19,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>0</td>
+                                <td>{{Helper::min_bobot()}}</td>
                                 <td>0</td>
                             </tr>
                             <tr>
@@ -99,16 +99,19 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
-                                                <label for="">Tanggal Mulai Kegiatan</label><span
+                                                <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
                                                     class="text-danger">*</span>
-                                                <input type="date" class="form-control" name="tanggal_mulai_kegiatan"
-                                                    id="" aria-describedby="helpId" placeholder="">
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <label for="">Tanggal Selesai Kegiatan</label><span
-                                                    class="text-danger">*</span>
-                                                <input type="date" class="form-control" name="tanggal_selesai_kegiatan"
-                                                    id="" aria-describedby="helpId" placeholder="">
+                                                <input type="text"
+                                                    class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
+                                                    name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
+                                                    placeholder="" value="01/01/2022 - 01/12/2022">
+                                                <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan">
+                                                <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan">
+                                                @error('tanggal_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
@@ -130,9 +133,30 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
-                                                <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
-                                                    placeholder="" aria-describedby="fileHelpId">
+                                                <label for="">Bukti Kegiatan (Sertifikat)</label><span class="text-danger">*</span>
+                                                <input type="file"
+                                                    class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
+                                                    name="bukti_kegiatan" id="" placeholder=""
+                                                    aria-describedby="fileHelpId">
+                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
+                                                @error('bukti_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Bukti Kegiatan (File SK)</label><span class="text-danger">*</span>
+                                                <input type="file"
+                                                    class="form-control-file @error('file_sk') is-invalid @enderror"
+                                                    name="file_sk" id="" placeholder=""
+                                                    aria-describedby="fileHelpId">
+                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
+                                                @error('file_sk')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Bobot Nilai Kegiatan :</label>
@@ -235,9 +259,24 @@
 @endsection
 @include('plugins.select2')
 @include('plugins.alertify')
+@include('plugins.moment')
+@include('plugins.daterangepicker')
 @section('plugins.Datatables', true)
 @section('js')
     <script>
+        $(function() {
+            $('#tanggal_kegiatan').daterangepicker({
+                opens: 'left',
+                startDate: '01 january 2022',
+                endDate: '31 december 2022',
+                locale:{
+                    format: 'DD MMMM YYYY'
+                }
+            }, function(start, end, label) {
+                $('#tanggal_mulai_kegiatan').val(start.format('YYYY-MM-DD'));
+                $('#tanggal_selesai_kegiatan').val(end.format('YYYY-MM-DD'));
+            });
+        });
         $('#table').DataTable();
         $('#penyelenggara,#tingkat,#prestasi').select2();
         $("#dosen_pembimbing").select2({
