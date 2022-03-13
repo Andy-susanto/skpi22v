@@ -172,6 +172,7 @@
                                                     class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
                                                     name="bukti_kegiatan" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
+                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('bukti_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -184,6 +185,7 @@
                                                     class="form-control-file @error('file_sk') is-invalid @enderror"
                                                     name="file_sk" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
+                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('file_sk')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
