@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
 use Elibyy\TCPDF\Facades\TCPDF;
@@ -29,54 +30,15 @@ class CetakController extends Controller
      */
     public function create()
     {
+        $data = [
 
-        $domPdfPath = base_path('vendor/dompdf/dompdf');
-        \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
-        \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-        $my_template = new \PhpOffice\PhpWord\TemplateProcessor(public_path('cetak/template.docx'));
+            'title' => 'Welcome to ItSolutionStuff.com',
 
-        // $my_template->setValue('name', $desc1->name);
-        // $my_template->setValue('email', $desc1->email);
-        // $my_template->setValue('phone', $desc1->phone);
-        // $my_template->setValue('address', $desc1->address);
+            'date' => date('m/d/Y')
 
-        try{
-            $my_template->saveAs(storage_path('user_1.docx'));
-            //Load word file
-        $Content = \PhpOffice\PhpWord\IOFactory::load(storage_path('user_1.docx'));
-
-        //Save it into PDF
-        $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content,'PDF');
-        $PDFWriter->save(storage_path('new-result.pdf'));
-        }catch (Exception $e){
-            //handle exception
-        }
-
-        return response()->download(storage_path('new-result.pdf'));
-        // $view = View::make('cetak.cetak');
-        // $html = $view->render();
-        // $pdf = new TCPDF;
-        // $filename = 'skpi.pdf';
-
-        // $pdf::setHeaderCallback(function($pdf) {
-
-        //     $image_file = public_path('cetak/header1.jpg');
-        //     $pdf->Image($image_file, 50, 50, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        //     // Set font
-        //     $pdf->SetFont('helvetica', 'B', 20);
-        //     // Title
-        //     // $pdf->Cell(0, 15, 'Universitas Jambi', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-
-        // });
-
-        // $pdf::SetTitle('Cetak PDF');
-        // $pdf::AddPage();
-        // $pdf::writeHTML($html, true, false, true, false, '');
-
-        // $pdf::Output(public_path($filename), 'F');
-
-        // return response()->download(public_path($filename));
-        // return view('cetak.cetak');
+        ];
+        $pdf = PDF::loadView('cetak.cetak', $data);
+        return $pdf->download('itsolutionstuff.pdf');
     }
 
     /**

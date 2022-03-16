@@ -15,6 +15,8 @@ use App\Models\KemampuanBahasaAsing;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class CetakOperatorController extends Controller
 {
     /**
@@ -245,29 +247,16 @@ class CetakOperatorController extends Controller
      */
     public function show($id)
     {
-        $domPdfPath = base_path('vendor/dompdf/dompdf');
-        \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
-        \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-        $my_template = new \PhpOffice\PhpWord\TemplateProcessor(public_path('cetak/template.docx'));
 
-        // $my_template->setValue('name', $desc1->name);
-        // $my_template->setValue('email', $desc1->email);
-        // $my_template->setValue('phone', $desc1->phone);
-        // $my_template->setValue('address', $desc1->address);
+        $data = [
 
-        try{
-            $my_template->saveAs(storage_path('user_1.docx'));
-            //Load word file
-        $Content = \PhpOffice\PhpWord\IOFactory::load(storage_path('user_1.docx'));
+            'title' => 'Welcome to ItSolutionStuff.com',
+            'logo_path' => asset('cetak/logo.png'),
+            'date' => date('m/d/Y')
 
-        //Save it into PDF
-        $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content,'PDF');
-        $PDFWriter->save(storage_path('new-result.pdf'));
-        }catch (Exception $e){
-            //handle exception
-        }
-
-        return response()->download(storage_path('new-result.pdf'));
+        ];
+        $pdf = PDF::loadView('cetak.cetak',$data);
+        return $pdf->download('cetak.pdf');
 
     }
 
