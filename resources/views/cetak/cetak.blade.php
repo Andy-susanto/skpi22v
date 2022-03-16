@@ -16,7 +16,7 @@
             margin-top: -1 cm;
             margin-left: 0.5 cm;
             margin-right: 0.5 cm;
-            background: url({{ $header_path}});
+            background: url('{{ $header_path }}');
         }
         main{
         	position: relative;

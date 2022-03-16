@@ -40,43 +40,46 @@ class KaryaMahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'judul_hasil_karya' => 'required',
-            'no_hki'            => 'required',
-            'ref_kategori_id'   => 'required',
-            'ref_jenis_id'      => 'required',
-            'bukti_kegiatan'    => 'required|mimes:jpg,png,pdf,docx'
-        ]);
-
-        if ($request->file('bukti_kegiatan')) {
-            $filename      = time() . '_' . 'bukti_karya_mahasiswa' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-            $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
-
-            $files = Files::create([
-                'nama'                  => $filename,
-                'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
-                'ref_jenis_kegiatan_id' => 10
+        if ($request->jenis == 'hki') {
+            $request->validate([
+                'judul_hasil_karya' => 'required',
+                'no_hki'            => 'required',
+                'ref_kategori_id'   => 'required',
+                'ref_jenis_id'      => 'required',
+                'bukti_kegiatan'    => 'required|mimes:jpg,png,pdf,docx'
             ]);
-        }
 
-        $karyaMahasiswa = KaryaMahasiswa::create([
-            'siakad_mhspt_id'                     => Auth::user()->id,
-            'judul_hasil_karya'                   => $request->judul_hasil_karya,
-            'no_hki'                              => $request->no_hki,
-            'ref_kategori_id'                     => $request->ref_kategori_id,
-            'ref_jenis_id'                        => $request->ref_jenis_id,
-            'file_kegiatan_id'                    => $files->id_file,
-            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id
-        ]);
+            if ($request->file('bukti_kegiatan')) {
+                $filename      = time() . '_' . 'bukti_karya_mahasiswa' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+                $original_name = $request->bukti_kegiatan->getClientOriginalName();
+                $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
-        if ($karyaMahasiswa) {
-            toastr()->success('Berhasil Tambah Data');
-        }else{
-            toastr()->error('Terjadi Kesalahan, Silahkan Coba Lagi');
+                $files = Files::create([
+                    'nama'                  => $filename,
+                    'path'                  => $filePath,
+                    'siakad_mhspt_id'       => Auth::user()->id,
+                    'ref_jenis_kegiatan_id' => 10
+                ]);
+            }
+
+            $karyaMahasiswa = KaryaMahasiswa::create([
+                'siakad_mhspt_id'                     => Auth::user()->id,
+                'judul_hasil_karya'                   => $request->judul_hasil_karya,
+                'no_hki'                              => $request->no_hki,
+                'ref_kategori_id'                     => $request->ref_kategori_id,
+                'ref_jenis_id'                        => $request->ref_jenis_id,
+                'file_kegiatan_id'                    => $files->id_file,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id
+            ]);
+
+            if ($karyaMahasiswa) {
+                toastr()->success('Berhasil Tambah Data');
+            } else {
+                toastr()->error('Terjadi Kesalahan, Silahkan Coba Lagi');
+            }
+            return back();
+        } elseif ($request->jenis == 'publikasi') {
         }
-        return back();
     }
 
     /**
@@ -88,7 +91,7 @@ class KaryaMahasiswaController extends Controller
     public function show($id)
     {
         $data = KaryaMahasiswa::findOrFail(decrypt($id));
-        return view('karya-mahasiswa.show',compact('data'));
+        return view('karya-mahasiswa.show', compact('data'));
     }
 
     /**

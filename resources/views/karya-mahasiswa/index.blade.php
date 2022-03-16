@@ -114,6 +114,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <form action="#">
+                                                <input type="hidden" name="jenis" value="hki">
                                                 <div class="form-group">
                                                     <label for="">Nama HKI</label>
                                                     <input type="date" class="form-control" name="" id=""
@@ -168,6 +169,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <form action="#">
+                                                <input type="hidden" name="jenis" value="publikasi">
                                                 <div class="form-group">
                                                     <label for="">Nama Publikasi</label>
                                                     <input type="date" class="form-control" name="" id=""

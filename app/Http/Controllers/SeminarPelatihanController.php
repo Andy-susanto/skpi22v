@@ -63,6 +63,7 @@ class SeminarPelatihanController extends Controller
 
         if($request->file('bukti_kegiatan') && $request->file('file_sk')){
             $filename      = time().'_'.'bukti_kegiatan_seminar_pelatihan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
+
             $fileSK = time().'_'.'file_sk_seminar_pelatihan'.'_'.Auth::user()->username.'.'.$request->file_sk->getClientOriginalExtension();
 
             $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
@@ -96,7 +97,7 @@ class SeminarPelatihanController extends Controller
 
                     ->first();
 
-        $seminar = SeminarPelatihan::create([
+        SeminarPelatihan::create([
             'nama'                                => $request->nama_kegiatan,
             'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
             'ref_tingkat_id'                      => $request->tingkat_kegiatan,
@@ -152,8 +153,7 @@ class SeminarPelatihanController extends Controller
             'nama_kegiatan'    => 'required|string',
             'penyelenggara'    => 'required|integer',
             'tingkat'          => 'required|integer',
-            'tgl_mulai'        => 'required|date',
-            'tgl_selesai'      => 'required|date',
+            'tanggal_kegiatan' => 'required',
             'prestasi'         => 'required|integer',
             'dosen_pembimbing' => 'nullable|integer',
         ]);
@@ -197,8 +197,8 @@ class SeminarPelatihanController extends Controller
                         'id_file' => $data_utama->file_sk->id_files
                     ],
                     [
-                    'nama'                  => $filename,
-                    'path'                  => $filePath,
+                    'nama'                  => $filenameSk,
+                    'path'                  => $fileSKPath,
                     ]
                  );
 
