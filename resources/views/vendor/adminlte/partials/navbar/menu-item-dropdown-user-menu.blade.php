@@ -17,20 +17,20 @@
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if (config('adminlte.usermenu_image'))
-            <img @if ( (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa' ) && isset(Auth::user()->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
+            <img @if ((auth()->user()->SiakadUser->usertype == 'mahasiswa') && isset(Auth::user()->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
             @elseif(Auth::user()->kepeg_pegawai)
                 @if (Auth::user()->kepeg_pegawai->biodata->file_foto)
                 src="https://simpeg.unja.ac.id/foto/{{ Auth::user()->kepeg_pegawai->biodata->file_foto }}" @endif
             @else src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}" @endif
             class="user-image float-left img-circle elevation-2"
             alt="
-            @if (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa')
-                {{ Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
+            @if (auth()->user()->SiakadUser->usertype == 'mahasiswa')
+                    {{ Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
              @else
                 {{ Helper::nama_gelar(Auth::user()->kepeg_pegawai) }} @endif">
 
         @endif
-        @if (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa')
+        @if (auth()->user()->SiakadUser->usertype == 'mahasiswa')
             <span class="font-bold">{{ strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}</span>
         @else
             <span class="font-black">{{ strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai)) }}</span>
@@ -46,7 +46,7 @@
                 class="user-header {{ config('adminlte.usermenu_header_class', 'bg-primary') }}
                 @if (!config('adminlte.usermenu_image')) h-auto @endif">
                 @if (config('adminlte.usermenu_image'))
-                    <img @if ((Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa') && isset(Auth::user()->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
+                    <img @if ((auth()->user()->SiakadUser->usertype == 'mahasiswa') && isset(Auth::user()->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
                     @elseif(Auth::user()->kepeg_pegawai)
                 @if (Auth::user()->kepeg_pegawai->biodata->file_foto)
                 src="https://simpeg.unja.ac.id/foto/{{ Auth::user()->kepeg_pegawai->biodata->file_foto }}" @endif
@@ -54,7 +54,7 @@
                         @endif
                     class="img-circle elevation-2"
                 @endif
-                @if (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa') <span><i class="fa fa-user" aria-hidden="true"></i> {{ strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}</span>
+                @if (auth()->user()->SiakadUser->usertype == 'mahasiswa') <span><i class="fa fa-user" aria-hidden="true"></i> {{ strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}</span>
             @else
             {{ strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai)) }} @endif
                 <p class="@if (!config('adminlte.usermenu_image')) mt-0 @endif">
@@ -82,12 +82,13 @@
         @if (Session::has('kamuflase'))
             <li class="user-footer">
                 <a name="" id="" class="btn btn-default btn-flat btn-block"
-                    href="{{ route('logout-as', encrypt(Auth::user()->id)) }}" role="button"><i class="fa fa-power-off"
-                        aria-hidden="true"></i> Logout As @if (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa')
+                    href="{{ route('logout-as', encrypt(Auth::user()->id)) }}" role="button"><i
+                        class="fa fa-power-off" aria-hidden="true"></i> Logout As @if (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa')
                         {{ strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}
                     @else
                         {{ strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai)) }}
-                    @endif</a>
+                    @endif
+                </a>
             </li>
         @endif
         <li class="user-footer">
