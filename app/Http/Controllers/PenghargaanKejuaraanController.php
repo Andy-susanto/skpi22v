@@ -60,10 +60,10 @@ class PenghargaanKejuaraanController extends Controller
 
             $filename      = time() . '_' . 'bukti_kegiatan_penghargaan_kejuaraan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
 
-            $fileSK = time().'_'.'file_sk_penghargaan_pelatihan'.'_'.Auth::user()->username.'.'.$request->file_sk->getClientOriginalExtension();
+            $fileSK = time() . '_' . 'file_sk_penghargaan_pelatihan' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
 
             $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
-            $fileSkPath    = $request->file('file_sk')->storeAs('uploads',$fileSK,'public');
+            $fileSkPath    = $request->file('file_sk')->storeAs('uploads', $fileSK, 'public');
 
             $files = Files::create([
                 'nama'                  => $filename,
@@ -78,7 +78,6 @@ class PenghargaanKejuaraanController extends Controller
                 'siakad_mhspt_id'       => Auth::user()->id,
                 'ref_jenis_kegiatan_id' => 1
             ]);
-
         }
 
         $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 1)
@@ -194,7 +193,7 @@ class PenghargaanKejuaraanController extends Controller
                     'path'                  => $fileSKPath,
                 ]);
 
-                PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',decrypt($id))->update([
+                PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', decrypt($id))->update([
                     'nama'                                => $request->nama_kegiatan ?? $data_utama->nama_kegiatan,
                     'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
                     'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
@@ -210,12 +209,11 @@ class PenghargaanKejuaraanController extends Controller
 
                 toastr()->success('Berhasil Update Data');
                 return back();
-
             } else {
                 toastr()->error(' Terjadi Kesalahan :( ');
             }
         } else {
-            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',decrypt($id))->update([
+            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', decrypt($id))->update([
                 'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
                 'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
                 'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
@@ -242,18 +240,17 @@ class PenghargaanKejuaraanController extends Controller
         $data = PenghargaanKejuaraan::findOrFail(decrypt($id));
         $file = Files::findOrFail($data->file_kegiatan_id);
         $file_sk = Files::findOrFail($data->file_sk_id);
-        if(Storage::exists('public/'.$file->path)){
-            Storage::delete('public/'.$file->path);
+        if (Storage::exists('public/' . $file->path)) {
+            Storage::delete('public/' . $file->path);
         }
 
-        if(Storage::exists('public/'.$file_sk->path)){
-            Storage::delete('public/'.$file_sk->path);
+        if (Storage::exists('public/' . $file_sk->path)) {
+            Storage::delete('public/' . $file_sk->path);
         }
         $data->file_sk()->delete();
         $data->file->delete();
 
         toastr()->success('Berhasil Hapus Data');
         return back();
-    }
     }
 }

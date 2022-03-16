@@ -223,13 +223,15 @@ class Helpers
         return $now;
     }
 
-    public static function hitung_bobot($jenis){
+    public static function hitung_bobot($jenis=null){
         if ($jenis == 'penghargaan') {
             $getData = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
         }elseif($jenis == 'seminar'){
             $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
         }elseif($jenis == 'pengabdian'){
             $getData = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+        }else{
+            $getData = [];
         }
 
        $data = 0;
