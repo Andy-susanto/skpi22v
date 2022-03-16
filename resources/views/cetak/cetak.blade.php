@@ -16,7 +16,7 @@
             margin-top: -1 cm;
             margin-left: 0.5 cm;
             margin-right: 0.5 cm;
-            /* background: url("{{ $header_path}}"); */
+            background: url("{{ $header_path}}");
         }
         main{
         	position: relative;
@@ -74,21 +74,30 @@
     		<tr>
 
     			<td valign="top" width="2%">1.&nbsp; </td>
-    			<td valign="top"> UU ITE No 11 Tahun 2008 Pasal 5 Ayat 1 <i>"Informasi Elektronik dan/atau Dokumen Elektronik hasil cetaknya merupakan alat bukti yang sah"</i> </td>
+    			<td valign="top"> </td>
 
     		</tr>
     		<tr>
     			<td valign="top"> 2.&nbsp;</td>
     			<td valign="top">
-    				Dokumen ini ditandatangani secara elektronik menggunakan Sertifikat Elektronik yang diterbitkan oleh Balai Sertifikasi Elektronik (BSrE), Badan Siber dan Sandi Negara (BSSN)
+
     			</td>
     		</tr>
     	</table>
     </footer>
     <main>
-        @yield('body')
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>pertama</th>
+                    <th>kedua</th>
+                    <th>ketiga</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
     </main>
-
-
 </body>
 </html>
