@@ -16,7 +16,7 @@
             margin-top: -1 cm;
             margin-left: 0.5 cm;
             margin-right: 0.5 cm;
-            background: url("{{ $header_path}}");
+            /* background: url("{{ $header_path}}"); */
         }
         main{
         	position: relative;
@@ -48,7 +48,7 @@
 
 
     <header>
-        <table width="100%" style="border-bottom:2px solid #0000FF;">
+        <table width="100%" style="border-bottom:2px solid #192213;">
 			<tr>
 				<td  width="10%">
 					<img src="{{ $logo_path }}" style="width: 3cm;height: 3cm;">
