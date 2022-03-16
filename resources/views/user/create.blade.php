@@ -13,7 +13,6 @@
                 <div class="card-body">
                     <form class="form-horizontal" method="post" action="{{ url('user') }}">
                         @csrf
-                        @method('put')
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-2 control-label">Pilih User</label>
