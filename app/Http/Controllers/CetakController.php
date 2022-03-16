@@ -64,7 +64,15 @@ class CetakController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = [
+
+            'title' => 'Welcome to ItSolutionStuff.com',
+            'logo_path' => asset('cetak/logo.png'),
+            'date' => date('m/d/Y')
+
+        ];
+        $pdf = PDF::loadView('cetak.cetak',$data);
+        return $pdf->download('cetak-skpi.pdf');
     }
 
     /**

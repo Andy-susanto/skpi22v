@@ -16,9 +16,7 @@
             margin-top: -1 cm;
             margin-left: 0.5 cm;
             margin-right: 0.5 cm;
-
-
-
+            background-image: url("{{ $header_path}}")
         }
         main{
         	position: relative;
@@ -57,17 +55,9 @@
 				</td>
 				<td align="center">
 						<div>
-							{{-- <font size="{{$ins->pivot->ukuran_font}}pt" style="color:{{$ins->pivot->warna}}">
-								@php
-                                $bold=DB::table('pengaturan_kop_has_level_instansi')->where('pengaturan_kop_id',$ins->pivot->pengaturan_kop_id)->where('level_instansi_id','<',5)->where('dipakai',1)->orderBy("level_instansi_id",'desc')->first();
-                                @endphp
-
-                                @if($bold->level_instansi_id==$ins->id_level_instansi )
-									<b>{{$ins->pivot->nama_instansi}}</b>
-								@else
-									{{$ins->pivot->nama_instansi}}
-								@endif
-							</font> --}}
+							<font size="20pt" style="color:white">
+								<b>UNIVERSITAS JAMBI</b>
+							</font>
 						</div>
 				</td>
 			</tr>

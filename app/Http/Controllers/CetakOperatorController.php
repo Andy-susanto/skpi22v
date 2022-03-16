@@ -252,11 +252,12 @@ class CetakOperatorController extends Controller
 
             'title' => 'Welcome to ItSolutionStuff.com',
             'logo_path' => asset('cetak/logo.png'),
+            'header_path' => asset('cetak/header1.jpg'),
             'date' => date('m/d/Y')
 
         ];
         $pdf = PDF::loadView('cetak.cetak',$data);
-        return $pdf->download('cetak.pdf');
+        return $pdf->download('cetak-skpi.pdf');
 
     }
 
