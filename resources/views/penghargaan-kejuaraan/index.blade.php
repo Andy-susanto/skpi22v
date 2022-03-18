@@ -5,7 +5,8 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Penghargaan Kejuaraan</h1>
+            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Penghargaan
+                Kejuaraan</h1>
         </div>
         <div class="col-12">
             <div class="card">
@@ -19,13 +20,18 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{Helper::min_bobot()}}</td>
-                                <td>{{Helper::hitung_bobot()}}</td>
+                                <td>{{ Helper::min_bobot() }}</td>
+                                <td>{{ Helper::hitung_bobot('penghargaan') }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{Helper::hitung_bobot()}}" aria-valuemin="0" aria-valuemax="100" style="width: {{Helper::hitung_bobot()/Helper::min_bobot()*100}}%">Proses Bobot : {{Helper::hitung_bobot()}}/{{Helper::min_bobot()}}</div>
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                            role="progressbar" aria-valuenow="{{ Helper::hitung_bobot('penghargaan') }}"
+                                            aria-valuemin="0" aria-valuemax="100"
+                                            style="width: {{ (Helper::hitung_bobot('penghargaan') / Helper::min_bobot()) * 100 }}%">
+                                            Proses Bobot :
+                                            {{ Helper::hitung_bobot('penghargaan') }}/{{ Helper::min_bobot() }}</div>
                                     </div>
                                 </td>
                             </tr>
@@ -42,9 +48,11 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i> Mendaftar</a>
+                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        Mendaftar</a>
                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i> Daftar Penghargaan Kejuaraan</a>
+                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i>
+                        Daftar Penghargaan Kejuaraan</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -54,7 +62,7 @@
                             <div class="card">
                                 <form action="{{ route('penghargaan-kejuaraan.store') }}" method="post"
                                     enctype="multipart/form-data" id="form-penghargaan">
-                                        @if ($errors->any())
+                                    @if ($errors->any())
                                         <div class="card-header">
                                             <div class="alert alert-danger">
                                                 <ul>
@@ -64,17 +72,18 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        @endif
+                                    @endif
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
-                                              <label for="">Jenis</label>
-                                              <select class="form-control" name="jenis" id="">
-                                                @foreach (Helper::jenis() as $jenis)
-                                                    <option value="{{$jenis->id_ref_jenis}}">{{$jenis->nama}}</option>
-                                                @endforeach
-                                              </select>
+                                                <label for="">Jenis</label>
+                                                <select class="form-control" name="jenis" id="">
+                                                    @foreach (Helper::jenis() as $jenis)
+                                                        <option value="{{ $jenis->id_ref_jenis }}">{{ $jenis->nama }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -115,8 +124,10 @@
                                                     class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
                                                     name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
                                                     placeholder="" value="01/01/2022 - 01/12/2022">
-                                                <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan">
-                                                <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan">
+                                                <input type="hidden" name="tanggal_mulai_kegiatan"
+                                                    id="tanggal_mulai_kegiatan">
+                                                <input type="hidden" name="tanggal_selesai_kegiatan"
+                                                    id="tanggal_selesai_kegiatan">
                                                 @error('tanggal_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -143,12 +154,13 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Bukti Kegiatan (Sertifikat)</label><span class="text-danger">*</span>
+                                                <label for="">Bukti Kegiatan (Sertifikat)</label><span
+                                                    class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
                                                     name="bukti_kegiatan" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
-                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
+                                                <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('bukti_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -156,12 +168,12 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Bukti Kegiatan (File SK)</label><span class="text-danger">*</span>
+                                                <label for="">Bukti Kegiatan (File SK)</label><span
+                                                    class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('file_sk') is-invalid @enderror"
-                                                    name="file_sk" id="" placeholder=""
-                                                    aria-describedby="fileHelpId">
-                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
+                                                    name="file_sk" id="" placeholder="" aria-describedby="fileHelpId">
+                                                <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('file_sk')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -219,40 +231,58 @@
                                                     </td>
                                                     <td>
                                                         @if ($data->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
+                                                            {{ Helper::nama_gelar($data->kepeg_pegawai) }}
                                                         @else
                                                             -
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($data->status_validasi == '3')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                            <span class="badge badge-warning"><i>Menunggu Verifikasi
+                                                                    Operator</i></span>
                                                         @elseif($data->status_validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
+                                                            <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
+                                                                    Dekan</i></span>
+                                                        @elseif($data->status_validasi == '4')
+                                                            <span class="badge badge-success">diValidasi</span>
                                                         @elseif($data->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
-                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button"
-                                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i> Proses
+                                                            <button class="btn btn-info btn-sm dropdown-toggle"
+                                                                type="button" id="triggerId" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                                                Proses
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
-                                                                sele        class="fa fa-info" aria-hidden="true"></i>
+                                                                        sele class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
-                                                                        aria-hidden="true"></i> Ubah</a>
+                                                                @if (in_array($data->status_validasi, ['3','2']))
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('penghargaan-kejuaraan.edit', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                            class="fas fa-edit" aria-hidden="true"></i>
+                                                                        Ubah</a>
+                                                                    <a class="dropdown-item" href="#"
+                                                                        onclick="destroy('hapusData{{$data->id_penghargaan_kejuaraan_kompetensi }}')"><i
+                                                                            class="fas fa-trash" aria-hidden="true"></i>
+                                                                        Hapus</a>
+                                                                    <form method="post"
+                                                                        action="{{ route('penghargaan-kejuaraan.destroy', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"
+                                                                        id="hapusData{{$data->id_penghargaan_kejuaraan_kompetensi}}">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                    </form>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @empty
-
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -279,7 +309,7 @@
                 opens: 'left',
                 startDate: '01 january 2022',
                 endDate: '31 december 2022',
-                locale:{
+                locale: {
                     format: 'DD MMMM YYYY'
                 }
             }, function(start, end, label) {
@@ -337,5 +367,12 @@
             })
         }
 
+        function destroy(id) {
+            alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
     </script>
 @endsection

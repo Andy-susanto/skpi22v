@@ -34,6 +34,10 @@ class PenghargaanKejuaraan extends Model
         return $this->belongsTo(Files::class,'file_kegiatan_id','id_files');
     }
 
+    public function file_sk(){
+        return $this->belongsTo(Files::class,'file_sk_id','id_files');
+    }
+
     public function bobot_nilai(){
         return $this->belongsTo(BobotNilai::class,'bobot_nilai_id','id_bobot_nilai');
     }

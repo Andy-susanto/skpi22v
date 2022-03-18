@@ -248,16 +248,25 @@ class SeminarPelatihanController extends Controller
     public function destroy($id)
     {
         $data = SeminarPelatihan::findOrFail(decrypt($id));
-        $file = Files::findOrFail($data->file_kegiatan_id);
-        $file_sk = Files::findOrFail($data->file_sk_id);
-        if(Storage::exists($file_sk->path)){
-            Storage::delete($file_sk->path);
+        $file = Files::find($data->file_kegiatan_id);
+        $file_sk = Files::find($data->file_sk_id);
+
+        if(!empty($file)){
+
+            if(Storage::exists($file_sk->path)){
+                Storage::delete($file_sk->path);
+                $data->files()->delete();
+            }
         }
-        if (Storage::exists($file->path)) {
-            Storage::delete($file->path);
+
+        if(!empty($file_sk)){
+
+            if(Storage::exists($file_sk->path)){
+                Storage::delete($file_sk->path);
+                $data->file_sk()->delete();
+            }
         }
-        $data->files()->delete();
-        $data->file_sk()->delete();
+        $data->delete();
         toastr()->success('Berhasil Hapus Data');
         return back();
     }

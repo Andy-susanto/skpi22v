@@ -238,19 +238,24 @@ class PenghargaanKejuaraanController extends Controller
     public function destroy($id)
     {
         $data = PenghargaanKejuaraan::findOrFail(decrypt($id));
-        $file = Files::findOrFail($data->file_kegiatan_id);
-        $file_sk = Files::findOrFail($data->file_sk_id);
-        if (Storage::exists('public/' . $file->path)) {
-            Storage::delete('public/' . $file->path);
+        $file = Files::find($data->file_kegiatan_id);
+        $file_sk = Files::find($data->file_sk_id);
+
+        if(!empty($file)){
+            if (Storage::exists('public/' . $file->path)) {
+                Storage::delete('public/' . $file->path);
+                $data->files()->delete();
+            }
         }
 
-        if (Storage::exists('public/' . $file_sk->path)) {
-            Storage::delete('public/' . $file_sk->path);
+        if(!empty($file_sk)){
+            if (Storage::exists('public/' . $file_sk->path)) {
+                Storage::delete('public/' . $file_sk->path);
+                $data->file_sk()->delete();
+            }
         }
-        $data->file_sk()->delete();
-        $data->file->delete();
-
+        $data->delete();
         toastr()->success('Berhasil Hapus Data');
-        return back();
+        return redirect(route('penghargaan-kejuaraan.index'));
     }
 }

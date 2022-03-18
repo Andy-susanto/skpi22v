@@ -257,9 +257,11 @@
                                                     </td>
                                                     <td>
                                                         @if ($data->status_validasi == '3')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                            <span class="badge badge-warning"><i>Menunggu Verifikasi Operator</i></span>
                                                         @elseif($data->status_validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
+                                                            <span class="badge badge-info"><i>Menunggu Verifikasi Wakil Dekan</i></span>
+                                                        @elseif($data->status_validasi == '4')
+                                                            <span class="badge badge-success">diValidasi</span>
                                                         @elseif($data->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
@@ -281,7 +283,7 @@
                                                                     href="{{ route('seminar-pelatihan.edit', encrypt($data->id_seminar_pelatihan_workshop_diklat)) }}"><i
                                                                         class="fas fa-edit" aria-hidden="true"></i>
                                                                     Ubah</a>
-                                                                    <a class="dropdown-item"
+                                                                <a class="dropdown-item"
                                                                     href="#" onclick="destroy('hapusData{{$data->id_seminar_pelatihan_workshop_diklat}}')"><i class="fas fa-trash" aria-hidden="true"></i>
                                                                     Hapus
                                                                 </a>
