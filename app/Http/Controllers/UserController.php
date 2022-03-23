@@ -71,6 +71,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create-user');
         $roles = Role::all();
         $unitKerja = UnitKerja::with('ref_unit', 'parent_unit', 'parent_unit_utama')->get();
         return view('user.create', compact('roles', 'unitKerja'));
@@ -84,6 +85,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-user');
         $peg = DB::table('kepeg.pegawai as a')
             ->join('kepeg.dosen as b', 'a.id_pegawai', '=', 'b.pegawai_id')
             ->join('kepeg.users as c', 'c.id', '=', 'a.user_id')
@@ -124,6 +126,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update-user');
         $user = User::findOrFail($id);
         $user_roles = [];
         $roles = Role::all();
@@ -148,6 +151,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update-user');
         $user = User::where('id', $id);
         User::where('id',$id)->update([
             'level_akun' => $request->level_akun
@@ -166,6 +170,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete-user');
         $user = User::findOrFail($id);
         $user->roles()->detach();
         $user->instansi()->detach();
@@ -176,6 +181,7 @@ class UserController extends Controller
 
     public function cari_user(Request $request)
     {
+        $this->authorize('read-user');
         if ($request->ajax()) {
             $user = DB::table('siakad.users')->where('status','1');
             return DataTables::of($user)
@@ -190,6 +196,7 @@ class UserController extends Controller
 
     public function login_as($id)
     {
+        $this->authorize('read-user');
         $cek = DB::table('siakad.users')->where('id',decrypt($id))->first();
         if ($cek) {
             session(['kamuflase' => $cek->username]);

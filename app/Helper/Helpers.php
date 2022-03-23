@@ -137,6 +137,12 @@ class Helpers
     {
         return "(" . $u->parent_unit_utama->ref_unit->singkatan_unit . ") " . $u->ref_unit->nama_ref_unit_kerja_lengkap;
     }
+
+    public static function unit_kerja($id_unit_kerja_siakad){
+        $unit_kerja = DB::table('kepeg.unit_kerja as a')->join('kepeg.referensi_unit_kerja as b','a.referensi_unit_kerja_id','b.id_ref_unit_kerja')->where('a.id_unit_kerja_siakad',$id_unit_kerja_siakad)->first();
+        return $unit_kerja->nama_ref_unit_kerja_lengkap;
+    }
+
     public static function alert($type = null, $message = null)
     {
         $alert = ['type' => $type, 'message' => $message];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PengaturanUmum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,7 +37,15 @@ class PengaturanBobotController extends Controller
      */
     public function store(Request $request)
     {
+        PengaturanUmum::updateOrCreate([
+            'id' => $request->id,
+            'nama' => 'min-bobot'
+        ],[
+            'value' => $request->min_bobot
+        ]);
 
+        toastr()->success('Berhasil mengubah data');
+        return back();
     }
 
     /**
@@ -70,7 +79,7 @@ class PengaturanBobotController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

@@ -46,7 +46,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                 </div>
-                <div class="modal-body table-respponsive">
+                <div class="modal-body table-responsive">
                     <table class="table table-hover table-stripped" id="tabel-login-as">
                         <thead class="thead-dark">
                             <tr>

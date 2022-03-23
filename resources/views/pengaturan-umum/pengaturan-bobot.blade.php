@@ -10,10 +10,10 @@
             <div class="card-body">
                 <form action="{{route('pengaturan-bobot.store')}}" method="post">
                     @csrf
-                    @method('PUT')
+                    <input type="hidden" name="id" value="{{$data->id ?? ''}}">
                     <div class="form-group">
                       <label for="">Minimum Bobot</label>
-                      <input type="nunmber" class="form-control" name="min_bobot" id="" aria-describedby="helpId" placeholder="" value="{{$data->value}}">
+                      <input type="nunmber" class="form-control" name="min_bobot" id="" aria-describedby="helpId" placeholder="" value="{{$data->value ?? ''}}">
                     </div>
                     <button type="submit" class="btn bg-blue-400 text-white shadow-sm hover:bg-green-400">Simpan Data</button>
                 </form>

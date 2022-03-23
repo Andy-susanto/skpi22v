@@ -20,6 +20,21 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                              <label for="">Program Studi</label>
+                              <select class="form-control" name="prodi" id="prodi">
+                                  @foreach(\App\Models\UnitKerja::with('parent_unit','parent_unit_utama','ref_unit')->FilterUnit()->get() as $unit)
+                                    <option value="{{ $unit->id_unit_kerja }}">
+                                        {{ ' (' . $unit->parent_unit_utama->ref_unit->singkatan_unit . ') ' . $unit->ref_unit->nama_ref_unit_kerja_lengkap }}
+                                    </option>
+                                  </option>
+                                  @endforeach
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Sikap dan Tata Nilai</label>

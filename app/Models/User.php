@@ -63,10 +63,8 @@ class User extends Authenticatable
 
     public function unit_kerja(){
         $unit = [];
-        if($this->level_akun == 1){
-            foreach ($this->instansi as $v) {
-                $unit[] = (int) $v->id_unit_kerja_siakad;
-            }
+        foreach ($this->instansi as $v) {
+            $unit[] = (int) $v->id_unit_kerja_siakad;
         }
         return $unit;
     }
