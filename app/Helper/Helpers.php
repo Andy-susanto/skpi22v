@@ -2,25 +2,25 @@
 
 namespace App\Helper;
 
+use App\Models\Jenis;
+use App\Models\Peran;
 use App\Models\Bahasa;
 use App\Models\Bidang;
-use App\Models\BobotNilai;
-use App\Models\CakupanBeasiswa;
 use App\Models\Divisi;
-use App\Models\Jenis;
-use App\Models\JenisKegiatan;
+use App\Models\Tingkat;
 use App\Models\JenisTes;
 use App\Models\Kategori;
-use App\Models\LevelPenguasaan;
+use App\Models\Prestasi;
+use App\Models\Organisasi;
 use App\Models\LogAktifitas;
+use App\Models\JenisKegiatan;
+use App\Models\Penyelenggara;
+use App\Models\CakupanBeasiswa;
+use App\Models\LevelPenguasaan;
+use App\Models\SeminarPelatihan;
+use Illuminate\Support\Facades\DB;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
-use App\Models\Penyelenggara;
-use App\Models\Peran;
-use App\Models\Prestasi;
-use App\Models\SeminarPelatihan;
-use App\Models\Tingkat;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -237,8 +237,7 @@ class Helpers
             $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
         }elseif($jenis == 'pengabdian'){
             $getData = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
-
-        }elseif($jenis == 'organisasi'){
+        }elseif($jenis =='organisasi'){
             $getData = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
         }
         else{

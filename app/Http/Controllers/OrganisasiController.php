@@ -40,21 +40,22 @@ class OrganisasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kegiatan'            => 'required|string',
-            'penyelenggara_kegiatan'   => 'required|integer',
-            'tingkat_kegiatan'         => 'required|integer',
-            'tanggal_mulai_kegiatan'   => 'required|date',
-            'tanggal_selesai_kegiatan' => 'required|date',
-            'prestasi'                 => 'required|integer',
-            'dosen_pembimbing'         => 'nullable|integer',
+            'nama_kegiatan'          => 'required|string',
+            'penyelenggara_kegiatan' => 'required|integer',
+            'tingkat_kegiatan'       => 'required|integer',
+            'tanggal_kegiatan'       => 'required',
+            'prestasi'               => 'required|integer',
+            'dosen_pembimbing'       => 'nullable|integer',
             // 'kategori_organisasi'      => 'required',
             'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
         ]);
 
-        if ($request->file('bukti_kegiatan')) {
-            $filename      = time() . '_' . 'bukti_organisasi' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-            $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+        if ($request->file('bukti_kegiatan') && $request->file('file_sk')) {
+            $filename = time() . '_' . 'bukti_organisasi' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+            $fileSK   = time() . '_' . 'file_sk' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
+
+            $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+            $fileSKPath = $request->file('file_sk')->storeAs('uploads', $fileSK, 'public');
 
             $files = Files::create([
                 'nama'                  => $filename,
@@ -62,6 +63,13 @@ class OrganisasiController extends Controller
                 'siakad_mhspt_id'       => Auth::user()->id,
                 'ref_jenis_kegiatan_id' => 5
             ]);
+            $fileSK = Files::create([
+                'nama'                  => $fileSK,
+                'path'                  => $fileSKPath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 5
+            ]);
+
         }
         $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 5)
         ->when($request->penyelenggara_kegiatan, function ($q) use ($request) {
@@ -76,20 +84,20 @@ class OrganisasiController extends Controller
         ->first();
 
 
-        $organisasi = Organisasi::create([
+        Organisasi::create([
             'nama'                                => $request->nama_kegiatan,
             'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
             'ref_tingkat_id'                      => $request->tingkat_kegiatan,
             'ref_peran_prestasi_id'               => $request->prestasi,
-            'ref_kategori_id'                     => $request->kategori_organisasi ?? 1, //kategori
+            'ref_kategori_id'                     => $request->kategori_organisasi ?? 1,   //kategori
             'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
             'siakad_mhspt_id'                     => Auth::user()->id,
             'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
             'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
             'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
-            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_id'                    => $files->id_files,
+            'file_sk_id'                          => $fileSK->id_files,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-            'status_validasi'                     => '0'
         ]);
 
         toastr()->success('Berhasil Tambah Data');
@@ -153,20 +161,38 @@ class OrganisasiController extends Controller
             })
             ->first();
 
-        if ($request->file('bukti_kegiatan')) {
+        if ($request->file('bukti_kegiatan') && $request->file('file_sk')) {
             $extension = ['jpg,pdf,docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
-            if (in_array($file, $extension)) {
+            $fileSK = $request->file_sk->getClientOriginalExtension();
+            if (in_array($file, $extension) && in_array($fileSK, $extension)) {
                 $filename      = time() . '_' . 'bukti_organisasi' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-                $original_name = $request->bukti_kegiatan->getClientOriginalName();
-                $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+                $filenameSk = time() . '_' . 'sk_organisasi' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
 
-                $files = Files::where('id_file', $data_utama->files->id_file)->update([
+                $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+                $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
+
+                $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
+                    [
+                        'id_file' => $data_utama->files->id_files
+                    ],
+                    [
                     'nama'                  => $filename,
                     'path'                  => $filePath,
-                ]);
+                    ]
+                 );
 
-                $organisasi = Organisasi::where('id_organisasi',decrypt($id))->update([
+                 $fileSK = Files::where('id_file', $data_utama->file_sk->id_files)->updateOrCreate(
+                    [
+                        'id_file' => $data_utama->file_sk->id_files
+                    ],
+                    [
+                    'nama'                  => $filenameSk,
+                    'path'                  => $fileSKPath,
+                    ]
+                 );
+
+                Organisasi::where('id_organisasi',decrypt($id))->update([
                     'nama'                                => $request->nama_kegiatan ?? $data_utama->nama_kegiatan,
                     'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
                     'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
@@ -176,9 +202,9 @@ class OrganisasiController extends Controller
                     'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
                     'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
                     'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
-                    'file_kegiatan_id'                    => $files->id_file,
+                    'file_kegiatan_id'                    => $files->id_files,
+                    'file_sk_id'                          => $fileSK->id_files,
                     'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-                    'status_validasi'                     => '0'
                 ]);
 
                 toastr()->success('Berhasil Update Data');

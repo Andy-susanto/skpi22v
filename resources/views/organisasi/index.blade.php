@@ -108,6 +108,17 @@
                                                     @endforelse
                                                 </select>
                                             </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Peran</label><span class="text-danger">*</span>
+                                                <select class="form-control" name="prestasi" id="prestasi"
+                                                    onchange="load_bobot();">
+                                                    @forelse(Helper::prestasi(5) as $prestasi)
+                                                        <option value="{{ $prestasi->id_ref_peran_prestasi }}">
+                                                            {{ $prestasi->nama }}</option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
@@ -124,17 +135,6 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <label for="">Peran</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="prestasi" id="prestasi"
-                                                    onchange="load_bobot();">
-                                                    @forelse(Helper::prestasi(5) as $prestasi)
-                                                        <option value="{{ $prestasi->id_ref_peran_prestasi }}">
-                                                            {{ $prestasi->nama }}</option>
-                                                    @empty
-                                                    @endforelse
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -270,6 +270,8 @@
 
 @endsection
 @include('plugins.select2')
+@include('plugins.moment')
+@include('plugins.daterangepicker')
 @include('plugins.alertify')
 @section('plugins.Datatables', true)
 @section('js')
