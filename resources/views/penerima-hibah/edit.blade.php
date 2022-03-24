@@ -17,6 +17,7 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
+
                             <label for="">Nama Kegiatan</label>
                             <input type="text" class="form-control" name="nama_kegiatan" id="" aria-describedby="helpId"
                                 placeholder="" value="{{ $data['utama']->nama }}">
@@ -58,19 +59,29 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Tanggal Mulai</label>
-                            <input type="date" class="form-control" name="tgl_mulai" id="" aria-describedby="helpId"
-                                placeholder="" value="{{ $data['utama']->tgl_mulai }}">
+                            <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
+                                class="text-danger">*</span>
+                            <input type="text"
+                                class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
+                                name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
+                                placeholder="" value="01/01/2022 - 01/12/2022">
+                            <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan"  value="{{$data['utama']->tgl_mulai}}">
+                            <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan" value="{{$data['utama']->tgl_selesai}}">
+                            @error('tanggal_kegiatan')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label for="">Tanggal Selesai</label>
-                            <input type="date" class="form-control" name="tgl_selesai" id="" aria-describedby="helpId"
-                                placeholder="" value="{{ $data['utama']->tgl_selesai }}">
-                        </div>
-                        <div class="form-group">
-                          <label for="">Bukti Kegiatan</label>
+                          <label for="">Bukti Kegiatan ( File Sertifikat )</label>
                           <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
-                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> Bukti Kegiatan</a></small>
+                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a></small>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Bukti Kegiatan ( File Sk ) </label>
+                          <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
+                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->file_sk->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File SK</a></small>
                         </div>
                         <div class="form-group">
                             <label for="">Dosen Pembimbing</label>
@@ -97,9 +108,24 @@
     </div>
 @endsection
 @include('plugins.select2')
+@include('plugins.moment')
+@include('plugins.daterangepicker')
 @include('plugins.alertify')
 @section('js')
     <script>
+        $(function() {
+            $('#tanggal_kegiatan').daterangepicker({
+                opens: 'left',
+                startDate: "{{\Carbon\Carbon::parse($data['utama']->tgl_mulai)->format('d M Y')}}",
+                endDate: "{{\Carbon\Carbon::parse($data['utama']->tgl_selesai)->format('d M Y')}}",
+                locale:{
+                    format: 'DD MMMM YYYY'
+                }
+            }, function(start, end, label) {
+                $('#tanggal_mulai_kegiatan').val(start.format('YYYY-MM-DD'));
+                $('#tanggal_selesai_kegiatan').val(end.format('YYYY-MM-DD'));
+            });
+        });
         $('#penyelenggara,#tingkat,#prestasi').select2();
         $("#dosen_pembimbing").select2({
             placeholder: "Cari Dosen Pembimbing..",
