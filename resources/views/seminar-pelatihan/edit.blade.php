@@ -73,9 +73,14 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                          <label for="">Bukti Kegiatan</label>
+                          <label for="">Bukti Kegiatan ( File Sertifikat ) </label>
                           <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
-                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> Bukti Kegiatan</a></small>
+                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a></small>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Bukti Kegiatan ( File SK ) </label>
+                          <input type="file" class="form-control-file" name="file_sk" id="" placeholder="" aria-describedby="fileHelpId">
+                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->file_sk->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File SK</a></small>
                         </div>
                         <div class="form-group">
                             <label for="">Dosen Pembimbing</label>

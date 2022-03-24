@@ -14,37 +14,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Capaian Bobot</th>
-                                <th>Bobot saat ini</th>
-                                <th>Kekurangan Bobot</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>100</td>
-                                <td>100</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated"
-                                            role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                                            style="width: 100%">Proses Bobot : 75/100</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
                     <table class="table table-hover">
                         <tbody>
                             <tr>
@@ -97,8 +66,12 @@
                                 <td class="text-bold">Bukti Kegiatan
                                 </td>
                                 <td>:</td>
-                                <td><a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info"><i
-                                            class="fa fa-paperclip" aria-hidden="true"></i> Lihat Bukti</a></td>
+                                <td>
+                                    <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
+                                            class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
+                                    <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
+                                            class="fa fa-paperclip" aria-hidden="true"></i> File SK</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

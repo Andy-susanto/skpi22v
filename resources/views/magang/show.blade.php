@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Penghargaan Kejuaraan')
+@section('title', 'Magang')
 
 @section('content_header')
     <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm"
-                href="{{ route('penghargaan-kejuaraan.index') }}" role="button">Kembali</a></span> Penghargaan Kejuaraan
+                href="{{ route('magang.index') }}" role="button">Kembali</a></span> Magang
         Detail</h1>
 @stop
 @section('content')
