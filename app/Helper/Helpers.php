@@ -150,12 +150,13 @@ class Helpers
     }
     public static function nama_gelar($data)
     {
+        if(!empty($data)){
+            if (!empty($data->gelar_belakang)) $koma = ',';
+            else $koma = '';
+            $nama_gelar = $data->gelar_depan . ' ' . $data->nama_pegawai . $koma . ' ' . $data->gelar_belakang;
 
-        if (!empty($data->gelar_belakang)) $koma = ',';
-        else $koma = '';
-        $nama_gelar = $data->gelar_depan . ' ' . $data->nama_pegawai . $koma . ' ' . $data->gelar_belakang;
-
-        return $nama_gelar;
+            return $nama_gelar;
+        }
     }
     public static function set_active($uri, $output = 'active')
     {

@@ -1,8 +1,8 @@
 @extends('adminlte::page')
-@section('title', 'Ubah Seminar Pelatihan')
+@section('title', 'Ubah Program Magang')
 @section('content_header')
     <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm"
-                href="{{ route('seminar-pelatihan.index') }}" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a></span> Ubah Seminar Pelatihan <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
+                href="{{ route('magang.index') }}" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a></span> Ubah Magang <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
 @endsection
 
 @section('content')
@@ -11,51 +11,50 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="font-bold card-title">Ubah Data</h4>
+                    {{-- Error validate --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="card-body">
-                    <form action="{{route('seminar-pelatihan.update',encrypt($data['utama']->id_seminar_pelatihan_workshop_diklat))}}" method="post" enctype="multipart/form-data" id="form-seminar">
+                    <form action="{{route('magang.update',encrypt($data['utama']->id_magang))}}" method="post" enctype="multipart/form-data" id="form-seminar">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="">Nama Kegiatan</label>
-                            <input type="text" class="form-control" name="nama_kegiatan" id="" aria-describedby="helpId"
+                            <label for="">Nama Perusahaan / Industri / Instansi</label>
+                            <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
                                 placeholder="" value="{{ $data['utama']->nama }}">
                         </div>
                         <div class="form-group">
-                            <label for="">Penyelenggara Kegiatan</label>
-                            <select class="form-control" name="penyelenggara" id="penyelenggara" onchange="load_bobot()">
-                                @forelse (Helper::penyelenggara(2) as $penyelenggara)
-                                    <option value="{{ $penyelenggara->id_ref_penyelenggara }}"
-                                        {{ $data['utama']->penyelenggara->id_ref_penyelenggara == $penyelenggara->id_ref_penyelenggara ? 'selected' : '' }}>
-                                        {{ $penyelenggara->nama }}</option>
-                                @empty
-                                    <option>Data Tidak ada</option>
-                                @endforelse
+                            <label for="">Bergerak di bidang </label><span
+                                class="text-danger">*</span>
+                            <select class="form-control select" name="ref_bidang_id" id="bidang">
+                                @foreach (Helper::bidang() as $loopBidang)
+                                    <option value="{{ $loopBidang->id_ref_bidang }}" {{$data['utama']->ref_bidang_id == $loopBidang->id_ref_bidang ? 'selected' : ''}}>
+                                        {{ $loopBidang->nama }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Tingkat Kegiatan</label>
-                            <select class="form-control" name="tingkat" id="tingkat" onchange="load_bobot()">
-                                @forelse (Helper::tingkat(2) as $tingkat)
-                                    <option value="{{ $tingkat->id_ref_tingkat }}"
-                                        {{ $data['utama']->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
-                                        {{ $tingkat->nama }}</option>
-                                @empty
-                                    <option>Data Tidak ada</option>
-                                @endforelse
+                            <label for="">Divisi</label><span class="text-danger">*</span>
+                            <select class="form-control select2" name="ref_divisi_id" id="tingkat">
+                                @foreach (Helper::divisi() as $loopDivisi)
+                                    <option value="{{ $loopDivisi->id_ref_divisi }}" {{$data['utama']->ref_divisi_id == $loopDivisi->id_ref_divisi ? 'selected' : ''}}>
+                                        {{ $loopDivisi->nama }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Peran</label>
-                            <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot()">
-                                @forelse (Helper::prestasi(2) as $prestasi)
-                                    <option value="{{ $prestasi->id_ref_peran_prestasi }}"
-                                        {{ $data['utama']->peran_prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
-                                        {{ $prestasi->nama }}</option>
-                                @empty
-                                    <option>Data Tidak ada</option>
-                                @endforelse
-                            </select>
+                            <div class="form-group">
+                                <label for="">Alamat Perusahaan</label>
+                                <textarea class="form-control" name="alamat" id="" rows="1" placeholder="Jalan xxxx">{{$data['utama']->alamat}}</textarea>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
@@ -73,6 +72,19 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <div class="form-group">
+                                <label for="">Tugas Utama Magang</label>
+                                <textarea class="form-control" name="tugas_utama_magang" id="" rows="1"
+                                    placeholder="Tugas Saya sebagai ....">{{$data['utama']->tugas_utama_magang}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tema / Judul Laporan Akhir Magang</label><span
+                                class="text-danger">*</span>
+                            <input type="text" class="form-control" name="judul_laporan_akhir"
+                                id="" aria-describedby="helpId" placeholder="ex: Pengembangan xxxx" value="{{$data['utama']->judul_laporan_akhir}}">
+                        </div>
+                        <div class="form-group">
                           <label for="">Bukti Kegiatan</label>
                           <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
                           <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> Bukti Kegiatan</a></small>
@@ -85,10 +97,6 @@
                                 <option value="{{$data['utama']->kepeg_pegawai->id_pegawai}}">{{$data['utama']->kepeg_pegawai->nip}} - {{Helper::nama_gelar($data['utama']->kepeg_pegawai)}}</option>
                                 @endif
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Bobot Nilai Kegiatan</label>
-                            <div id="bobot"></div>
                         </div>
                         <div class="row">
                             <div class="col-12 offset-5">

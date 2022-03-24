@@ -224,13 +224,15 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_validasi == '0')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
-                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                        @endif
+                                                        @if ($data->status_validasi == '3')
+                                                        <span class="badge badge-warning"><i>Menunggu Verifikasi Operator</i></span>
+                                                    @elseif($data->status_validasi == '1')
+                                                        <span class="badge badge-info"><i>Menunggu Verifikasi Wakil Dekan</i></span>
+                                                    @elseif($data->status_validasi == '4')
+                                                        <span class="badge badge-success">diValidasi</span>
+                                                    @elseif($data->status_validasi == '2')
+                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                    @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
@@ -282,6 +284,8 @@
 
 @endsection
 @include('plugins.select2')
+@include('plugins.moment')
+@include('plugins.daterangepicker')
 @include('plugins.alertify')
 @section('plugins.Datatables', true)
 @section('js')

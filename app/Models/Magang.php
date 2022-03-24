@@ -23,4 +23,12 @@ class Magang extends Model
     public function files(){
         return $this->belongsTo(Files::class,'file_kegiatan_id','id_files');
     }
+
+    public function bidang(){
+        return $this->belongsTo(Bidang::class,'ref_bidang_id');
+    }
+
+    public function divisi(){
+        return $this->belongsTo(Divisi::class,'ref_divisi_id');
+    }
 }

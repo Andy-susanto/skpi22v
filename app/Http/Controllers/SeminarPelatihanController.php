@@ -253,8 +253,8 @@ class SeminarPelatihanController extends Controller
 
         if(!empty($file)){
 
-            if(Storage::exists($file_sk->path)){
-                Storage::delete($file_sk->path);
+            if(Storage::exists($file->path)){
+                Storage::delete($file->path);
                 $data->files()->delete();
             }
         }
