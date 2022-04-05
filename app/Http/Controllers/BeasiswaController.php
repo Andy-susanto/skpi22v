@@ -20,7 +20,7 @@ class BeasiswaController extends Controller
     public function index()
     {
         $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->id)->get();
-        return view('beasiswa.index',compact('data'));
+        return view('beasiswa.index', compact('data'));
     }
 
     /**
@@ -74,7 +74,7 @@ class BeasiswaController extends Controller
 
         if ($beasiswa) {
             toastr()->success('Berhasil Tambah Data');
-        }else{
+        } else {
             toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
         }
 
@@ -90,7 +90,7 @@ class BeasiswaController extends Controller
     public function show($id)
     {
         $data = Beasiswa::findOrFail(decrypt($id));
-        return view('beasiswa.show',compact('data'));
+        return view('beasiswa.show', compact('data'));
     }
 
     /**
@@ -101,7 +101,8 @@ class BeasiswaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['utama'] = Beasiswa::findOrFail(decrypt($id));
+        return view('beasiswa.edit', compact('data'));
     }
 
     /**
@@ -113,7 +114,60 @@ class BeasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama'                    => 'required|string',
+            'nama_promotor'           => 'required',
+            'ref_kategori_id'         => 'required',
+            'ref_cakupan_beasiswa_id' => 'required',
+            'bukti_kegiatan'          => 'mimes:jpg,png,pdf,docx'
+        ]);
+
+        $data_utama = Beasiswa::findOrFail(decrypt($id));
+
+        if ($request->file('bukti_kegiatan')) {
+            $extension = ['jpg,pdf,docx'];
+            $file = $request->bukti_kegiatan->getClientOriginalExtension();
+            if (in_array($file, $extension)) {
+                $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+
+
+                $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+
+                $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
+                    [
+                        'id_file' => $data_utama->files->id_files
+                    ],
+                    [
+                        'nama'                  => $filename,
+                        'path'                  => $filePath,
+                    ]
+                );
+
+                Beasiswa::where('id_beasiswa', decrypt($id))->update([
+                    'nama'                                => $request->nama ?? $data_utama->nama_kegiatan,
+                    'nama_promotor'                       => $request->nama_promotor ?? $data_utama->nama_promotor,
+                    'ref_kategori_id'                      => $request->ref_kategori_id ?? $data_utama->ref_kategori_id,
+                    'ref_cakupan_beasiswa_id'               => $request->ref_cakupan_beasiswa_id ?? $data_utama->ref_cakupan_beasiswa_id,
+                    'file_kegiatan_id'                    => $files->id_files,
+                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                ]);
+
+                toastr()->success('Berhasil Update Data');
+                return back();
+            } else {
+                toastr()->error(' Terjadi Kesalahan :( ');
+            }
+        } else {
+            Beasiswa::where('id_beasiswa', decrypt($id))->update([
+                'nama'                                => $request->nama ?? $data_utama->nama_kegiatan,
+                'nama_promotor'                       => $request->nama_promotor ?? $data_utama->nama_promotor,
+                'ref_kategori_id'                      => $request->ref_kategori_id ?? $data_utama->ref_kategori_id,
+                'ref_cakupan_beasiswa_id'               => $request->ref_cakupan_beasiswa_id ?? $data_utama->ref_cakupan_beasiswa_id,
+            ]);
+
+            toastr()->success('Berhasil Update Data');
+            return back();
+        }
     }
 
     /**

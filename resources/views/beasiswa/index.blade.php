@@ -127,9 +127,11 @@
                                                     <td>{{ $loopUtama->cakupan_beasiswa->nama }}</td>
                                                     <td>
                                                         @if ($loopUtama->status_validasi == '3')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                            <span class="badge badge-warning"><i>Menunggu Verifikasi Operator</i></span>
                                                         @elseif($loopUtama->status_validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
+                                                            <span class="badge badge-info"><i>Menunggu Verifikasi Wakil Dekan</i></span>
+                                                        @elseif($loopUtama->status_validasi == '4')
+                                                            <span class="badge badge-success">diValidasi</span>
                                                         @elseif($loopUtama->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
@@ -147,7 +149,7 @@
                                                                     href="{{ route('beasiswa.show', encrypt($loopUtama->id_beasiswa)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                @if (in_array($loopUtama->status_validasi,['3','2']))
+                                                                    @if (in_array($loopUtama->status_validasi,['3','2']))
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('beasiswa.edit', encrypt($loopUtama->id_beasiswa)) }}"><i
                                                                         class="fas fa-edit" aria-hidden="true"></i>
