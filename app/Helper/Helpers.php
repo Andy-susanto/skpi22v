@@ -232,13 +232,13 @@ class Helpers
 
     public static function hitung_bobot($jenis=null){
         if ($jenis == 'penghargaan') {
-            $getData = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+            $getData = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
         }elseif($jenis == 'seminar'){
-            $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+            $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
         }elseif($jenis == 'pengabdian'){
-            $getData = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+            $getData = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
         }elseif($jenis =='organisasi'){
-            $getData = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+            $getData = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
         }
         else{
             $getData = [];
