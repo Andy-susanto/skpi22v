@@ -67,7 +67,7 @@ class KewirausahaanController extends Controller
             'alamat_usaha'                        => $request->alamat_usaha,
             'no_izin'                             => $request->no_izin,
             'ref_kategori_id'                     => $request->ref_kategori_id,
-            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_id'                    => $files->id_files,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
         ]);
 
