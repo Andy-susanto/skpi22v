@@ -50,7 +50,6 @@ class KemampuanBahasaAsingController extends Controller
 
         if ($request->file('bukti_kegiatan')) {
             $filename      = time() . '_' . 'bukti_kemampuan_bahasa_asing' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-            $original_name = $request->bukti_kegiatan->getClientOriginalName();
             $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
             $files = Files::create([
@@ -61,12 +60,15 @@ class KemampuanBahasaAsingController extends Controller
             ]);
         }
 
-        $magang = KemampuanBahasaAsing::create([
+
+        dd($files);
+
+        KemampuanBahasaAsing::create([
             'nilai_tes'                           => $request->nilai_tes,
             'ref_bahasa_id'                       => $request->ref_bahasa_id,
             'ref_level_bahasa_id'                 => $request->ref_level_bahasa_id,
             'ref_jenis_tes_id'                    => $request->ref_jenis_tes_id,
-            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_id'                    => $files->id_files,
             'siakad_mhspt_id'                     => Auth::user()->id,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
         ]);
