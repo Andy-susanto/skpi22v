@@ -40,9 +40,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer">
-                <a name="" id="" class="btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 rounded-full text-white btn-sm" href="{{route('print.create')}}" role="button">Cek Preview Cetak</a>
-            </div>
         </div>
     </div>
 </div>
