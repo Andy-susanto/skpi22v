@@ -44,6 +44,7 @@
     </div>
 </div>
 @stop
+@include('plugins.alertify')
 @section('js')
 <script>
     $(document).ready(function(){
@@ -67,6 +68,7 @@
             success: function(data){
                 btn.html('Data Berhasil di Simpan <i class="fa fa-check" aria-hidden="true"></i>');
                 btn.html('Simpan');
+                alert('Data Berhasil di Simpan');
             }
         });
         })
