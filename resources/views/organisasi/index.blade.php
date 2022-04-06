@@ -227,28 +227,42 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_validasi == '0')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
-                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                        @endif
+                                                        @if ($data->status_validasi == '3')
+                                                        <span class="badge badge-warning"><i>Menunggu Verifikasi Operator</i></span>
+                                                    @elseif($data->status_validasi == '1')
+                                                        <span class="badge badge-info"><i>Menunggu Verifikasi Wakil Dekan</i></span>
+                                                    @elseif($data->status_validasi == '4')
+                                                        <span class="badge badge-success">diValidasi</span>
+                                                    @elseif($data->status_validasi == '2')
+                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                    @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
-                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button"
-                                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i> Proses
+                                                            <button class="btn btn-info btn-sm dropdown-toggle"
+                                                                type="button" id="triggerId" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                Proses
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('seminar-pelatihan.show', encrypt($data->id_organisasi)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
-                                                                        aria-hidden="true"></i> Ubah</a>
+                                                                @if (in_array($data->status_validasi,['3','2']))
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('seminar-pelatihan.edit', encrypt($data->id_organisasi)) }}"><i
+                                                                        class="fas fa-edit" aria-hidden="true"></i>
+                                                                    Ubah</a>
+                                                                <a class="dropdown-item"
+                                                                    href="#" onclick="destroy('hapusData{{$data->id_organisasi}}')"><i class="fas fa-trash" aria-hidden="true"></i>
+                                                                    Hapus
+                                                                </a>
+                                                                <form method="post" action="{{route('seminar-pelatihan.destroy',encrypt($data->id_organisasi))}}" id="hapusData{{$data->id_organisasi}}">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                </form>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>
