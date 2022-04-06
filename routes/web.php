@@ -96,7 +96,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('validasi-wadek/{type}/{id}/update', [ValidasiWadekController::class, 'update'])->name('validasi-wadek.update');
 
     Route::delete('validasi-wadek/{type}/{id}/destroy', [ValidasiWadekController::class, 'destroy'])->name('validasi-wadek.destroy');
-    Route::resource('validasi-wadek',ValidasiWadekController::class);
+
+    Route::resource('validasi-wadek',ValidasiWadekController::class)->except(['update']);
     //
 
     // fungsi
@@ -129,7 +130,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pengaturan-bobot', PengaturanBobotController::class);
     // Cetak
     Route::resource('cetak-skpi',CetakOperatorController::class);
-    Route::resource('print', CetakController::class);
+    Route::resource('print', CetakController::class)->except([
+        'update'
+    ]);
 
     // Tabbed View
     Route::get('tabbed-menu',function(){

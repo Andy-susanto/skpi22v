@@ -19,7 +19,7 @@ class CetakController extends Controller
      */
     public function index()
     {
-        $seminar = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',1)->get();
+        $seminar = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
         return view('cetak.index',compact('seminar'));
     }
 
