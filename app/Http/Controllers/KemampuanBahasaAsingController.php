@@ -60,9 +60,6 @@ class KemampuanBahasaAsingController extends Controller
             ]);
         }
 
-
-        dd($files);
-
         KemampuanBahasaAsing::create([
             'nilai_tes'                           => $request->nilai_tes,
             'ref_bahasa_id'                       => $request->ref_bahasa_id,

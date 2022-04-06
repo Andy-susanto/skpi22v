@@ -128,30 +128,41 @@
                                                     <td>{{$loopUtama->nilai_tes}}</td>
                                                     <td>
                                                         @if ($loopUtama->status_validasi == '3')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($loopUtama->status_validasi == '1')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($loopUtama->status_validasi == '2')
-                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                        @endif
+                                                        <span class="badge badge-warning"><i>Menunggu Verifikasi Operator</i></span>
+                                                    @elseif($loopUtama->status_validasi == '1')
+                                                        <span class="badge badge-info"><i>Menunggu Verifikasi Wakil Dekan</i></span>
+                                                    @elseif($loopUtama->status_validasi == '4')
+                                                        <span class="badge badge-success">diValidasi</span>
+                                                    @elseif($loopUtama->status_validasi == '2')
+                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                    @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-info btn-sm dropdown-toggle"
                                                                 type="button" id="triggerId" data-toggle="dropdown"
                                                                 aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                                                                 Proses
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($loopUtama->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('kemampuan-bahasa-asing.show', encrypt($loopUtama->id_kemampuan_bahasa_asing)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
+                                                                @if (in_array($loopUtama->status_validasi,['3','2']))
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.edit', encrypt($loopUtama->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('kemampuan-bahasa-asing.edit', encrypt($loopUtama->id_kemampuan_bahasa_asing)) }}"><i
                                                                         class="fas fa-edit" aria-hidden="true"></i>
                                                                     Ubah</a>
+                                                                <a class="dropdown-item"
+                                                                    href="#" onclick="destroy('hapusData{{$loopUtama->id_kemampuan_bahasa_asing}}')"><i class="fas fa-trash" aria-hidden="true"></i>
+                                                                    Hapus
+                                                                </a>
+                                                                <form method="post" action="{{route('kemampuan-bahasa-asing.destroy',encrypt($loopUtama->id_kemampuan_bahasa_asing))}}" id="hapusData{{$loopUtama->id_kemampuan_bahasa_asing}}">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                </form>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </td>
