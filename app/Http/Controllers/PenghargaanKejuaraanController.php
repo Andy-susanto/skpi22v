@@ -155,7 +155,7 @@ class PenghargaanKejuaraanController extends Controller
             'dosen_pembimbing' => 'nullable|integer',
         ]);
 
-        $data_utama = PenghargaanKejuaraan::findOrFail(decrypt($id));
+        $data_utama = PenghargaanKejuaraan::find(decrypt($id));
         $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 1)
             ->when($request->penyelenggara_kegiatan, function ($q) use ($request) {
                 $q->where('ref_penyelenggara_id', $request->penyelenggara_kegiatan);
