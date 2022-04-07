@@ -176,7 +176,7 @@ class SeminarPelatihanController extends Controller
             ->first();
 
         if ($request->file('bukti_kegiatan')) {
-            $extension = ['jpg,pdf,docx'];
+            $extension = ['jpg','pdf','docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
             if (in_array($file, $extension)) {
                 $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
@@ -204,7 +204,7 @@ class SeminarPelatihanController extends Controller
 
 
         if ($request->file('file_sk')) {
-            $extension = ['jpg,pdf,docx'];
+            $extension = ['jpg','pdf','docx'];
             $file_sk = $request->file_sk->getClientOriginalExtension();
             if (in_array($file_sk, $extension)) {
                 $filenameSk = time() . '_' . 'file_sk_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
