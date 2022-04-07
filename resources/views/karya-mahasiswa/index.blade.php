@@ -128,27 +128,27 @@
                                             <div class="card-body">
                                                 <input type="hidden" name="jenis" value="hki">
                                                 <div class="form-group">
-                                                    <label for="">Nama HKI</label>
+                                                    <label for="">Nama HKI <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="nama_hki" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Nomor Sertifikat</label>
+                                                    <label for="">Nomor Sertifikat <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="nomor_sertifikat" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Tanggal Mulai Berlaku</label>
+                                                    <label for="">Tanggal Mulai Berlaku <span class="text-danger">*</span></label>
                                                     <input type="date" class="form-control" name="tgl_mulai_berlaku" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Tanggal Berakhir</label>
+                                                    <label for="">Tanggal Berakhir <span class="text-danger">*</span></label>
                                                     <input type="date" class="form-control" name="tgl_berakhir" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Jenis HKI</label>
+                                                    <label for="">Jenis HKI <span class="text-danger">*</span></label>
                                                     <select class="form-control" name="jenis_hki_id" id="">
                                                         @foreach (Helper::jenis_hki() as $jenis_hki)
                                                             <option value="{{ $jenis_hki->id_jenis_hki }}">
@@ -157,7 +157,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Jenis Ciptaan</label>
+                                                    <label for="">Jenis Ciptaan <span class="text-danger">*</span></label>
                                                     <select class="form-control" name="jenis_ciptaan_id" id="">
                                                         @foreach (Helper::jenis_ciptaan() as $jenis_ciptaan)
                                                             <option value="{{ $jenis_ciptaan->id_jenis_ciptaan }}">
@@ -166,9 +166,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">File Bukti</label>
+                                                    <label for="">File Bukti <span class="text-danger">*</span></label>
                                                     <input type="file" class="form-control-file" name="file_bukti"
                                                         placeholder="" aria-describedby="fileHelpId">
+                                                        <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
@@ -186,22 +187,22 @@
                                             <div class="card-body">
                                                 <input type="hidden" name="jenis" value="publikasi">
                                                 <div class="form-group">
-                                                    <label for="">Judul Publikasi</label>
+                                                    <label for="">Judul Publikasi <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="judul" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Tanggal Terbit</label>
+                                                    <label for="">Tanggal Terbit <span class="text-danger">*</span></label>
                                                     <input type="date" class="form-control" name="tgl_terbit" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Penerbit</label>
+                                                    <label for="">Penerbit <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="penerbit" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Jenis Publikasi</label>
+                                                    <label for="">Jenis Publikasi <span class="text-danger">*</span></label>
                                                     <select class="form-control" style="width: 100%" name="jenis_id"
                                                         id="jenis-publikasi">
                                                         @foreach (Helper::jenis_publikasi() as $jenis_publikasi)
@@ -211,7 +212,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Kategori Capaian</label>
+                                                    <label for="">Kategori Capaian <span class="text-danger">*</span></label>
                                                     <select class="form-control" style="width: 100%"
                                                         name="kategori_capaian_id" id="kategori-capaian">
                                                         @foreach (Helper::kategori_capaian() as $kategori_capaian)
@@ -221,14 +222,15 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Link Publikasi</label>
+                                                    <label for="">Link Publikasi <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="tautan_eksternal" id=""
                                                         aria-describedby="helpId" placeholder="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">File Bukti</label>
+                                                    <label for="">File Bukti <span class="text-danger">*</span></label>
                                                     <input type="file" class="form-control-file" name="bukti" id=""
                                                         placeholder="" aria-describedby="fileHelpId">
+                                                        <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
