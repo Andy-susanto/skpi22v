@@ -330,7 +330,9 @@
                 $('#tanggal_selesai_kegiatan').val(end.format('YYYY-MM-DD'));
             });
         });
-        $('#table').DataTable();
+        $('#table').DataTable({
+            responsive: true
+        });
         $('#penyelenggara,#tingkat,#peran').select2();
         $("#dosen_pembimbing").select2({
             placeholder: "Cari Dosen Pembimbing..",
