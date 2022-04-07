@@ -129,8 +129,8 @@
                                                     class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
                                                     name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
                                                     placeholder="" value="01/01/2022 - 01/12/2022">
-                                                <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan">
-                                                <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan">
+                                                <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan" value="2022-01-01">
+                                                <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan" value="2022-12-01">
                                                 @error('tanggal_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>

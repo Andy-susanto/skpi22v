@@ -41,24 +41,27 @@ class SeminarPelatihanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kegiatan'            => 'required|string',
-            'penyelenggara_kegiatan'   => 'required|integer',
-            'tingkat_kegiatan'         => 'required|integer',
-            'tanggal_kegiatan'         => 'required',
-            'prestasi'                 => 'required|integer',
-            'dosen_pembimbing'         => 'nullable|integer',
-            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
+            'nama_kegiatan'          => 'required|string',
+            'penyelenggara_kegiatan' => 'required|integer',
+            'tingkat_kegiatan'       => 'required|integer',
+            'tanggal_kegiatan'       => 'required',
+            'prestasi'               => 'required|integer',
+            'dosen_pembimbing'       => 'nullable|integer',
+            'bukti_kegiatan'         => 'required|mimes:jpg,png,pdf,docx|file|size:5000',
+            'file_sk'                => 'required|mimes:jpg,png,pdf,docx|file|size:5000'
         ],[
-            'nama_kegiatan.required'            => 'Nama Kegiatan Harus di isi',
-            'nama_kegiatan.string'              => 'Nama Kegiatan Harus berbentuk text',
-            'tingkat_kegiatan.required'         => 'Tingkat Kegiatan Harus di isi',
-            'tingkat_kegiatan.integer'          => 'Tingkat Kegiatan Salah',
-            'tanggal_mulai_kegiatan.required'   => 'Tanggal Kegiatan Harus di isi',
-            'peran.required'                    => 'Peran Harus di isi',
-            'peran.integer'                     => 'Format Peran Salah',
-            'dosen_pembimbing.integer'          => 'Format Data Dosen Salah',
-            'bukti_kegiatan.required'           => 'Bukti Kegiatan Harus di isi',
-            'bukti_kegiatan.mimes'              => 'Format File tidak mendukung'
+            'nama_kegiatan.required'          => 'Nama Kegiatan Harus di isi',
+            'nama_kegiatan.string'            => 'Nama Kegiatan Harus berbentuk text',
+            'tingkat_kegiatan.required'       => 'Tingkat Kegiatan Harus di isi',
+            'tingkat_kegiatan.integer'        => 'Tingkat Kegiatan Salah',
+            'tanggal_mulai_kegiatan.required' => 'Tanggal Kegiatan Harus di isi',
+            'peran.required'                  => 'Peran Harus di isi',
+            'peran.integer'                   => 'Format Peran Salah',
+            'dosen_pembimbing.integer'        => 'Format Data Dosen Salah',
+            'bukti_kegiatan.required'         => 'Bukti Kegiatan Harus di isi',
+            'bukti_kegiatan.mimes'            => 'Format File tidak mendukung',
+            'file_sk.required'                => 'Bukti Kegiatan Harus di isi',
+            'file_sk.mimes'                   => 'Format File tidak mendukung'
         ]);
 
         if($request->file('bukti_kegiatan') && $request->file('file_sk')){
