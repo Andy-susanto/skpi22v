@@ -175,7 +175,7 @@ class SeminarPelatihanController extends Controller
             })
             ->first();
 
-        if ($request->file('bukti_kegiatan')) {
+        if ($request->hasFile('bukti_kegiatan')) {
             $extension = ['jpg','pdf','docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
             if (in_array($file, $extension)) {
@@ -203,7 +203,7 @@ class SeminarPelatihanController extends Controller
         }
 
 
-        if ($request->file('file_sk')) {
+        if ($request->hasFile('file_sk')) {
             $extension = ['jpg','pdf','docx'];
             $file_sk = $request->file_sk->getClientOriginalExtension();
             if (in_array($file_sk, $extension)) {
