@@ -183,7 +183,7 @@ class SeminarPelatihanController extends Controller
 
                 $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
-                $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
+                $files = Files::where('id_files', $data_utama->files->id_files)->updateOrCreate(
                     [
                         'id_files' => $data_utama->files->id_files
                     ],
@@ -211,7 +211,7 @@ class SeminarPelatihanController extends Controller
 
                 $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
 
-                 $fileSK = Files::where('id_file', $data_utama->file_sk->id_files)->updateOrCreate(
+                 $fileSK = Files::where('id_files', $data_utama->file_sk->id_files)->updateOrCreate(
                     [
                         'id_files' => $data_utama->file_sk->id_files
                     ],
