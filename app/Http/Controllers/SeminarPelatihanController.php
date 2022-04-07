@@ -48,8 +48,8 @@ class SeminarPelatihanController extends Controller
             'tanggal_selesai_kegiatan' => 'required|date',
             'prestasi'                 => 'required|integer',
             'dosen_pembimbing'         => 'nullable|integer',
-            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx',
-            'file_sk'                  => 'required|mimes:jpg,png,pdf,docx'
+            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx|file|max:5000',
+            'file_sk'                  => 'required|mimes:jpg,png,pdf,docx|file|max:5000'
         ],[
             'nama_kegiatan.required'          => 'Nama Kegiatan Harus di isi',
             'nama_kegiatan.string'            => 'Nama Kegiatan Harus berbentuk text',
