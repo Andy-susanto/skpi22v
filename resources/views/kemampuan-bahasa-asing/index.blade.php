@@ -43,7 +43,7 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bahasa yang di kuasai </label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control select" name="ref_bahasa_id" id="bidang">
@@ -52,7 +52,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Level Penguasaan Bahasa</label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control select" name="ref_level_bahasa_id" id="tingkat">
@@ -61,7 +61,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Jenis Tes</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="ref_jenis_tes_id" id="tingkat">
                                                     @foreach (Helper::jenis_tes() as $loopJenisTes)
@@ -72,12 +72,12 @@
                                         </div>
                                         <div class="form-row">
 
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Nilai Tes</label><span class="text-danger">*</span>
                                                 <input type="number" class="form-control" name="nilai_tes" id=""
                                                     aria-describedby="helpId" placeholder="Nilai Tes">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
                                                     placeholder="" aria-describedby="fileHelpId">

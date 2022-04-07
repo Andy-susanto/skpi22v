@@ -43,14 +43,14 @@
                                         <div class="card-body">
                                             @csrf
                                             <div class="form-row">
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Nama Perusahaan / Industri / Instansi</label><span
                                                         class="text-danger">*</span>
                                                     <input type="text" class="form-control" name="nama" id=""
                                                         aria-describedby="helpId" placeholder="ex : Telkom Indonesia"
                                                         autofocus>
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Bergerak di bidang </label><span
                                                         class="text-danger">*</span>
                                                     <select class="form-control select" name="ref_bidang_id" id="bidang">
@@ -60,7 +60,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Divisi</label><span class="text-danger">*</span>
                                                     <select class="form-control select2" name="ref_divisi_id" id="tingkat">
                                                         @foreach (Helper::divisi() as $loopDivisi)
@@ -71,13 +71,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-row">
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Alamat Perusahaan</label>
                                                         <textarea class="form-control" name="alamat" id="" rows="1" placeholder="Jalan xxxx"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
                                                         class="text-danger">*</span>
                                                     <input type="text"
@@ -97,20 +97,20 @@
                                                 </div>
                                             </div>
                                             <div class="form-row">
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Tugas Utama Magang</label>
                                                         <textarea class="form-control" name="tugas_utama_magang" id="" rows="1"
                                                             placeholder="Tugas Saya sebagai ...."></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Dosen Pembimbing</label>
                                                     <select class="form-control" name="kepeg_pegawai_id"
                                                         id="dosen_pembimbing">
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Bukti Kegiatan</label><span
                                                         class="text-danger">*</span>
                                                     <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
@@ -118,7 +118,7 @@
                                                     <span class="text-muted italic">File docx,pdf,jpg,png ( Maks.
                                                         5MB)</span>
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-lg-4">
                                                     <label for="">Tema / Judul Laporan Akhir Magang</label><span
                                                         class="text-danger">*</span>
                                                     <input type="text" class="form-control" name="judul_laporan_akhir"

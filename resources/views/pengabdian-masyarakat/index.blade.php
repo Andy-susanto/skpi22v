@@ -77,12 +77,12 @@
                                      <div class="card-body">
                                          @csrf
                                          <div class="form-row">
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
                                                  <input type="text" class="form-control" name="nama_kegiatan" id=""
                                                      aria-describedby="helpId" placeholder="Nama Kegiatan">
                                              </div>
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Penyelenggara Kegiatan</label><span
                                                      class="text-danger">*</span>
                                                  <select class="form-control" name="penyelenggara_kegiatan"
@@ -94,7 +94,7 @@
                                                      @endforelse
                                                  </select>
                                              </div>
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                  <select class="form-control" name="tingkat_kegiatan" id="tingkat"
                                                      onchange="load_bobot();">
@@ -107,7 +107,7 @@
                                              </div>
                                          </div>
                                          <div class="form-row">
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
                                                      class="text-danger">*</span>
                                                  <input type="text"
@@ -124,7 +124,7 @@
                                                      </span>
                                                  @enderror
                                              </div>
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Prestasi</label><span class="text-danger">*</span>
                                                  <select class="form-control" name="prestasi" id="prestasi"
                                                      onchange="load_bobot();">
@@ -137,13 +137,13 @@
                                              </div>
                                          </div>
                                          <div class="form-row">
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Dosen Pembimbing</label>
                                                  <select class="form-control" name="dosen_pembimbing"
                                                      id="dosen_pembimbing">
                                                  </select>
                                              </div>
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Bukti Kegiatan (Sertifikat)</label><span
                                                      class="text-danger">*</span>
                                                  <input type="file"
@@ -157,7 +157,7 @@
                                                      </span>
                                                  @enderror
                                              </div>
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Bukti Kegiatan (File SK)</label><span
                                                      class="text-danger">*</span>
                                                  <input type="file"
@@ -170,7 +170,7 @@
                                                      </span>
                                                  @enderror
                                              </div>
-                                             <div class="form-group col-4">
+                                             <div class="form-group col-lg-4">
                                                  <label for="">Bobot Nilai Kegiatan :</label>
                                                  <div id="bobot"></div>
                                              </div>

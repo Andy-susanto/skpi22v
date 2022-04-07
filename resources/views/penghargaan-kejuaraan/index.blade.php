@@ -117,7 +117,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <input type="text"
@@ -153,7 +153,7 @@
                                                     id="dosen_pembimbing">
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan (Sertifikat)</label><span
                                                     class="text-danger">*</span>
                                                 <input type="file"
@@ -167,7 +167,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan (File SK)</label><span
                                                     class="text-danger">*</span>
                                                 <input type="file"

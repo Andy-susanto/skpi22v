@@ -43,12 +43,12 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Nama Beasiswa</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama" id=""
                                                     aria-describedby="helpId" placeholder="Nama Beasiswa">
                                             </div>
-                                            <div class="form-group col-8">
+                                            <div class="form-group col-lg-8">
                                                 <label for="">Nama Perusahaan / Industri / Instansi / Yayasan Pemberi
                                                     Beasiswa ( Promotor ) </label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama_promotor" id=""
@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Kategori Beasiswa </label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control select" name="ref_kategori_id" id="beasiswa">
@@ -66,7 +66,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Cakupan Beasiswa </label><span class="text-danger">*</span>
                                                 <select class="form-control select" name="ref_cakupan_beasiswa_id"
                                                     id="cakupan_beasiswa">
@@ -76,7 +76,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
                                                     placeholder="" aria-describedby="fileHelpId">

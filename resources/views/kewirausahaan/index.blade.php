@@ -41,12 +41,12 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Nama Usaha Mandiri</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama_usaha" id=""
                                                     aria-describedby="helpId" placeholder="Nama Usaha Mandiri">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Kategori Usaha Mandiri </label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control select" name="ref_kategori_id"
@@ -58,18 +58,18 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <div class="form-group">
                                                   <label for="">Alamat Usaha Mandiri</label>
                                                   <textarea class="form-control" name="alamat_usaha" placeholder="ex: Jalan gajahmada ..." id="" rows="1"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">No Izin Usaha Mandiri</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="no_izin" id=""
                                                     aria-describedby="helpId" placeholder="ex : 10/ad/xxx">
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
                                                     placeholder="" aria-describedby="fileHelpId">

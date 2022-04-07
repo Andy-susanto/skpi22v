@@ -73,7 +73,7 @@
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="text"
                                                     class="form-control @error('nama_kegiatan') is-invalid @enderror"
@@ -85,7 +85,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Penyelenggara Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <select
@@ -104,7 +104,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
                                                     name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
@@ -122,7 +122,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <input type="text"
@@ -137,7 +137,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('peran') is-invalid @enderror"
                                                     name="prestasi" id="peran" onchange="load_bobot();">
@@ -155,7 +155,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Dosen Pembimbing</label>
                                                 <select class="form-control @error('dosen_pembimbing') is-invalid @enderror"
                                                     name="dosen_pembimbing" id="dosen_pembimbing">
@@ -166,7 +166,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan (Sertifikat)</label><span class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
@@ -179,7 +179,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan (File SK)</label><span class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('file_sk') is-invalid @enderror"
@@ -192,7 +192,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-lg-4">
                                                 <label for="">Bobot Nilai Kegiatan</label>
                                                 <div id="bobot">0</div>
                                             </div>
