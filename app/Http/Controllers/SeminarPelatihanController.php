@@ -185,7 +185,7 @@ class SeminarPelatihanController extends Controller
 
                 $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
                     [
-                        'id_file' => $data_utama->files->id_files
+                        'id_files' => $data_utama->files->id_files
                     ],
                     [
                     'nama'                  => $filename,
@@ -213,7 +213,7 @@ class SeminarPelatihanController extends Controller
 
                  $fileSK = Files::where('id_file', $data_utama->file_sk->id_files)->updateOrCreate(
                     [
-                        'id_file' => $data_utama->file_sk->id_files
+                        'id_files' => $data_utama->file_sk->id_files
                     ],
                     [
                     'nama'                  => $filenameSk,
