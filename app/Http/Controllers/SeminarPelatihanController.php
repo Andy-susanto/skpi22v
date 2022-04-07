@@ -239,7 +239,7 @@ class SeminarPelatihanController extends Controller
             ]);
 
             toastr()->success('Berhasil Update Data');
-            return back();
+            return redirect()->route('seminar_pelatihan.index');
         }
     }
 

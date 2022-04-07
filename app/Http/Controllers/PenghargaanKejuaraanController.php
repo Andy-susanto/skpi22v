@@ -225,7 +225,7 @@ class PenghargaanKejuaraanController extends Controller
             ]);
 
             toastr()->success('Berhasil Update Data');
-            return back();
+            return redirect()->route('penghargaan_kejuaraan.index');
         }
     }
 

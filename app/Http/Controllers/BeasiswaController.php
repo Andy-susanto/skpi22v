@@ -166,7 +166,7 @@ class BeasiswaController extends Controller
             ]);
 
             toastr()->success('Berhasil Update Data');
-            return back();
+            return redirect()->route('beasiswa.index');
         }
     }
 

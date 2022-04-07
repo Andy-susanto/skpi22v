@@ -223,7 +223,7 @@ class PengabdianMasyarakatController extends Controller
             ]);
 
             toastr()->success('Berhasil Update Data');
-            return back();
+            return redirect()->route('pengabdian_masyarakat.index');
         }
     }
 

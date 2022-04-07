@@ -228,7 +228,7 @@ class OrganisasiController extends Controller
             ]);
 
             toastr()->success('Berhasil Update Data');
-            return back();
+            return redirect()->route('organisasi.index');
         }
     }
 

@@ -227,7 +227,7 @@ class PenerimaHibahController extends Controller
             ]);
 
             toastr()->success('Berhasil Update Data');
-            return back();
+            return redirect()->route('penerima_hibah.index');
         }
     }
 
