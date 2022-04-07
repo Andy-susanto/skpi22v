@@ -169,7 +169,7 @@ class PenghargaanKejuaraanController extends Controller
             ->first();
 
         if ($request->file('bukti_kegiatan') ) {
-            $extension = ['jpg,pdf,docx'];
+            $extension = ['jpg','pdf','docx'];
 
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
 
@@ -180,7 +180,7 @@ class PenghargaanKejuaraanController extends Controller
                 $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
 
-                $files = Files::where('id_file', $data_utama->files->id_file)->update([
+                $files = Files::where('id_files', $data_utama->files->id_file)->update([
                     'nama'                  => $filename,
                     'path'                  => $filePath,
                 ]);
@@ -195,7 +195,7 @@ class PenghargaanKejuaraanController extends Controller
 
 
         if ($request->file('file_sk')) {
-            $extension = ['jpg,pdf,docx'];
+            $extension = ['jpg','pdf','docx'];
 
             $file_sk = $request->file_sk->getClientOriginalExtension();
 
@@ -205,7 +205,7 @@ class PenghargaanKejuaraanController extends Controller
 
                 $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
 
-                $fileSK = Files::where('id_file', $data_utama->file_sk->id_file)->update([
+                $fileSK = Files::where('id_files', $data_utama->file_sk->id_file)->update([
                     'nama'                  => $filenameSk,
                     'path'                  => $fileSKPath,
                 ]);
