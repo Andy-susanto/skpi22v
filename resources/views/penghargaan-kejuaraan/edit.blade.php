@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tingkat Kegiatan</label>
-                            <select class="form-control" name="tingkat" id="tingkat" onchange="load_bobot()">
+                            <select class="form-control" name="tingkat_kegiatan" id="tingkat" onchange="load_bobot()">
                                 @forelse (Helper::tingkat(1) as $tingkat)
                                     <option value="{{ $tingkat->id_ref_tingkat }}"
                                         {{ $data['utama']->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
