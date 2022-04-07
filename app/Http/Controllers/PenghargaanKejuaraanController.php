@@ -149,7 +149,7 @@ class PenghargaanKejuaraanController extends Controller
         $request->validate([
             'nama_kegiatan'    => 'required|string',
             'penyelenggara'    => 'required|integer',
-            'tingkat'          => 'required|integer',
+            'tingkat_kegiatan' => 'required|integer',
             'tanggal_kegiatan' => 'required',
             'prestasi'         => 'required|integer',
             'dosen_pembimbing' => 'nullable|integer',
