@@ -261,7 +261,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body table-responsive">
                                                 <table class="table table-bordered table-stripped" id="table">
                                                     <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                                                         <tr>
@@ -343,7 +343,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body table-responsive">
                                                 <table class="table table-bordered table-stripped" id="tabelPublikasi">
                                                     <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                                                         <tr>
@@ -434,7 +434,9 @@
 @section('plugins.Datatables', true)
 @section('js')
     <script>
-        $('#table,#tabelPublikasi').DataTable();
+        $('#table,#tabelPublikasi').DataTable({
+            responsive: true
+        });
         $('#penyelenggara,#tingkat,#prestasi').select2();
         $("#dosen_pembimbing").select2({
             placeholder: "Cari Dosen Pembimbing..",

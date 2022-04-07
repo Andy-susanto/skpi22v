@@ -188,7 +188,9 @@
 @section('plugins.Select2', true)
 @section('js')
     <script>
-        $('#table').DataTable();
+        $('#table').DataTable({
+            responsive: true
+        });
         $('#penyelenggara,#tingkat,#prestasi').select2();
 
         function confirmation(id) {
