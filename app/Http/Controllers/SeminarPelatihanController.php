@@ -198,9 +198,6 @@ class SeminarPelatihanController extends Controller
                     'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
                 ]);
 
-                toastr()->success('Berhasil Update Data');
-                return back();
-
             } else {
                 toastr()->error(' Terjadi Kesalahan :( ');
             }
@@ -229,9 +226,6 @@ class SeminarPelatihanController extends Controller
                     'file_sk_id'                          => $fileSK->id_files,
                 ]);
 
-                toastr()->success('Berhasil Update Data');
-                return back();
-
             } else {
                 toastr()->error(' Terjadi Kesalahan :( ');
             }
@@ -247,6 +241,10 @@ class SeminarPelatihanController extends Controller
             'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
             'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
         ]);
+
+        toastr()->success('Berhasil Update Data');
+        return redirect()->route('seminar-pelatihan.index');
+
     }
 
     /**

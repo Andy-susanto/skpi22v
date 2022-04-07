@@ -129,6 +129,7 @@ class MagangController extends Controller
 
 
         $data_utama = Magang::findOrFail(decrypt($id));
+
         if ($request->file('bukti_kegiatan')) {
             $extension = ['jpg', 'png', 'pdf', 'docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
