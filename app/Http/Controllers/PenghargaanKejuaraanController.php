@@ -187,7 +187,6 @@ class PenghargaanKejuaraanController extends Controller
 
                 PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', decrypt($id))->update([
                     'file_kegiatan_id'                    => $files->id_files,
-                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
                 ]);
             } else {
                 toastr()->error(' Terjadi Kesalahan :( ');

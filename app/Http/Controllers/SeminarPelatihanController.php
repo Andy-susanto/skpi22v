@@ -195,7 +195,6 @@ class SeminarPelatihanController extends Controller
 
                 SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
                     'file_kegiatan_id'                    => $files->id_files,
-                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
                 ]);
 
             } else {
