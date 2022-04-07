@@ -27,7 +27,7 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="">Nama Perusahaan / Industri / Instansi</label>
+                            <label for="">Nama Perusahaan / Industri / Instansi <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
                                 placeholder="" value="{{ $data['utama']->nama }}">
                         </div>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="">Alamat Perusahaan</label>
+                                <label for="">Alamat Perusahaan <span class="text-danger">*</span></label>
                                 <textarea class="form-control" name="alamat" id="" rows="1" placeholder="Jalan xxxx">{{$data['utama']->alamat}}</textarea>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="">Tugas Utama Magang</label>
+                                <label for="">Tugas Utama Magang <span class="text-danger">*</span></label>
                                 <textarea class="form-control" name="tugas_utama_magang" id="" rows="1"
                                     placeholder="Tugas Saya sebagai ....">{{$data['utama']->tugas_utama_magang}}</textarea>
                             </div>
@@ -85,7 +85,7 @@
                                 id="" aria-describedby="helpId" placeholder="ex: Pengembangan xxxx" value="{{$data['utama']->judul_laporan_akhir}}">
                         </div>
                         <div class="form-group">
-                          <label for="">Bukti Kegiatan</label>
+                          <label for="">Bukti Kegiatan <span class="text-danger">*</span></label>
                           <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
                           <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> Bukti Kegiatan</a></small>
                         </div>

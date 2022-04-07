@@ -17,12 +17,12 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="">Nama Kegiatan</label>
+                            <label for="">Nama Kegiatan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="nama_kegiatan" id="" aria-describedby="helpId"
                                 placeholder="" value="{{ $data['utama']->nama }}">
                         </div>
                         <div class="form-group">
-                            <label for="">Penyelenggara Kegiatan</label>
+                            <label for="">Penyelenggara Kegiatan <span class="text-danger">*</span></label>
                             <select class="form-control" name="penyelenggara" id="penyelenggara" onchange="load_bobot()">
                                 @forelse (Helper::penyelenggara(2) as $penyelenggara)
                                     <option value="{{ $penyelenggara->id_ref_penyelenggara }}"
@@ -34,7 +34,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Tingkat Kegiatan</label>
+                            <label for="">Tingkat Kegiatan <span class="text-danger">*</span></label>
                             <select class="form-control" name="tingkat" id="tingkat" onchange="load_bobot()">
                                 @forelse (Helper::tingkat(2) as $tingkat)
                                     <option value="{{ $tingkat->id_ref_tingkat }}"
@@ -46,7 +46,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Peran</label>
+                            <label for="">Peran <span class="text-danger">*</span></label>
                             <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot()">
                                 @forelse (Helper::prestasi(2) as $prestasi)
                                     <option value="{{ $prestasi->id_ref_peran_prestasi }}"
@@ -73,12 +73,12 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                          <label for="">Bukti Kegiatan ( File Sertifikat ) </label>
+                          <label for="">Bukti Kegiatan ( File Sertifikat ) <span class="text-danger">*</span></label>
                           <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
                           <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a></small>
                         </div>
                         <div class="form-group">
-                          <label for="">Bukti Kegiatan ( File SK ) </label>
+                          <label for="">Bukti Kegiatan ( File SK ) <span class="text-danger">*</span></label>
                           <input type="file" class="form-control-file" name="file_sk" id="" placeholder="" aria-describedby="fileHelpId">
                           <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->file_sk->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File SK</a></small>
                         </div>

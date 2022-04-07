@@ -1,5 +1,5 @@
 @if ($row['validasi'] == '3')
-    <span class="text-white badge badge-warning"><i>Menunggu Validasi Operator</i></span>
+    <span class="text-black badge badge-warning"><i>Menunggu Validasi Operator</i></span>
 @elseif ($row['validasi'] == '1')
     <span class="text-white badge badge-info"><i>Menunggu Validasi Wakil Dekan</i></span>
 @elseif ($row['validasi'] == '4')
