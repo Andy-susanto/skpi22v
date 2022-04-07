@@ -41,14 +41,15 @@ class SeminarPelatihanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kegiatan'          => 'required|string',
-            'penyelenggara_kegiatan' => 'required|integer',
-            'tingkat_kegiatan'       => 'required|integer',
-            'tanggal_kegiatan'       => 'required',
-            'prestasi'               => 'required|integer',
-            'dosen_pembimbing'       => 'nullable|integer',
-            'bukti_kegiatan'         => 'required|mimes:jpg,png,pdf,docx|file|size:5000',
-            'file_sk'                => 'required|mimes:jpg,png,pdf,docx|file|size:5000'
+            'nama_kegiatan'            => 'required|string',
+            'penyelenggara_kegiatan'   => 'required|integer',
+            'tingkat_kegiatan'         => 'required|integer',
+            'tanggal_mulai_kegiatan'   => 'required|date',
+            'tanggal_selesai_kegiatan' => 'required|date',
+            'prestasi'                 => 'required|integer',
+            'dosen_pembimbing'         => 'nullable|integer',
+            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx|size:5000',
+            'file_sk'                  => 'required|mimes:jpg,png,pdf,docx|size:5000'
         ],[
             'nama_kegiatan.required'          => 'Nama Kegiatan Harus di isi',
             'nama_kegiatan.string'            => 'Nama Kegiatan Harus berbentuk text',
