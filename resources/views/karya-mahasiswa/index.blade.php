@@ -485,5 +485,13 @@
 
             })
         }
+
+        function destroy(id){
+            alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
     </script>
 @endsection

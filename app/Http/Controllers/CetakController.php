@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
 use Elibyy\TCPDF\Facades\TCPDF;
 use App\Models\SeminarPelatihan;
+use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\View;
 
 class CetakController extends Controller
@@ -19,8 +20,11 @@ class CetakController extends Controller
      */
     public function index()
     {
-        $seminar = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-        return view('cetak.index',compact('seminar'));
+        $data['seminar'] = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['penghargaan'] = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        return view('cetak.index',compact('data'));
     }
 
     /**

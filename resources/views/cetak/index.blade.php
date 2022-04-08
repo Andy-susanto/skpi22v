@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($seminar as $data_seminar)
+                        @foreach ($data['seminar'] as $data_seminar)
                             <tr>
                                 <td><input type="hidden" name="jenis" value="seminar" class="jenis">Seminar</td>
                                 <td><input type="hidden" name="id" class="id" value="{{$data_seminar->id_seminar_pelatihan_workshop_diklat}}">{{$data_seminar->nama}}</td>
