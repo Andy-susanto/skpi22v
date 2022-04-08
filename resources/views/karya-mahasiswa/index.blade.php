@@ -323,6 +323,7 @@
                                                                             <form method="post" action="{{route('karya-mahasiswa.edit',encrypt($hki->id_hki_mahasiswa))}}" id="hapusData{{$hki->id_hki_mahasiswa}}">
                                                                                 @csrf
                                                                                 @method('delete')
+                                                                                <input type="hidden" name="jenis" value="hki">
                                                                             </form>
                                                                             @endif
                                                                         </div>
@@ -405,6 +406,7 @@
                                                                             <form method="post" action="{{route('karya-mahasiswa.edit',encrypt($publikasi->id_publikasi))}}" id="hapusData{{$publikasi->id_publikasi}}">
                                                                                 @csrf
                                                                                 @method('delete')
+                                                                                <input type="hidden" name="jenis" value="publikasi">
                                                                             </form>
                                                                             @endif
                                                                         </div>
