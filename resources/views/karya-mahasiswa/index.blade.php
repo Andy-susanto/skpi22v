@@ -403,7 +403,7 @@
                                                                                 href="#" onclick="destroy('hapusData{{$publikasi->id_publikasi}}')"><i class="fas fa-trash" aria-hidden="true"></i>
                                                                                 Hapus
                                                                             </a>
-                                                                            <form method="post" action="{{route('karya-mahasiswa.edit',encrypt($publikasi->id_publikasi))}}" id="hapusData{{$publikasi->id_publikasi}}">
+                                                                            <form method="post" action="{{route('karya-mahasiswa.destroy',encrypt($publikasi->id_publikasi))}}" id="hapusData{{$publikasi->id_publikasi}}">
                                                                                 @csrf
                                                                                 @method('delete')
                                                                                 <input type="hidden" name="jenis" value="publikasi">
