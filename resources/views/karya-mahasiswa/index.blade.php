@@ -320,7 +320,7 @@
                                                                                 href="#" onclick="destroy('hapusData{{$hki->id_hki_mahasiswa}}')"><i class="fas fa-trash" aria-hidden="true"></i>
                                                                                 Hapus
                                                                             </a>
-                                                                            <form method="post" action="{{route('karya-mahasiswa.edit',encrypt($hki->id_hki_mahasiswa))}}" id="hapusData{{$hki->id_hki_mahasiswa}}">
+                                                                            <form method="post" action="{{route('karya-mahasiswa.destroy',encrypt($hki->id_hki_mahasiswa))}}" id="hapusData{{$hki->id_hki_mahasiswa}}">
                                                                                 @csrf
                                                                                 @method('delete')
                                                                                 <input type="hidden" name="jenis" value="hki">
