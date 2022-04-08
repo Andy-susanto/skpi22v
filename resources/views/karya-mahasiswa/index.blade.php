@@ -297,6 +297,7 @@
                                                                         <span class="badge badge-success">diValidasi</span>
                                                                     @elseif($hki->status_validasi == '2')
                                                                         <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                                        <p class="italic"> Pesan : {{$hki->pesan}}</p>
                                                                     @endif
                                                                 </td>
                                                                 <td>
@@ -380,6 +381,7 @@
                                                                         <span class="badge badge-success">diValidasi</span>
                                                                     @elseif($publikasi->status_validasi == '2')
                                                                         <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                                        <p class="italic"> Pesan : {{$publikasi->pesan}}</p>
                                                                     @endif
                                                                 </td>
                                                                 <td>

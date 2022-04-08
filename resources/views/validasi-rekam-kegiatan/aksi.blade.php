@@ -1,4 +1,4 @@
-<div class="dropdown">
+<div class="dropdown z-50">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         Proses
@@ -18,14 +18,7 @@
         @endif
         {{-- Tolak Form --}}
         @if (in_array($row['validasi'], ['1', '3']))
-            <a class="dropdown-item text-danger"
-                onclick="tolak('hapus'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Bukti kegiatan tidak cocok dengan data yang di masukan');"
-                href="#"><i class="fa fa-times" aria-hidden="true"></i> Tolak</a>
-            <form action="{{ route('validasi.destroy', [$row['jenis_kegiatan'], $row['id']]) }}"
-                id="hapus{{ $row['id'] . $row['jenis_kegiatan'] }}" method="post">
-                @csrf
-                @method('delete')
-            </form>
+            <a class="dropdown-item tolak text-danger" onclick="tolakModal(this);" data-url="{{ route('validasi.destroy', [$row['jenis_kegiatan'], $row['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i> Tolak</a>
         @endif
 
         {{-- Detail Form --}}

@@ -135,6 +135,7 @@
                                                         <span class="badge badge-success">diValidasi</span>
                                                     @elseif($loopUtama->status_validasi == '2')
                                                         <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                        <p class="italic"> Pesan : {{$loopUtama->pesan}}</p>
                                                     @endif
                                                     </td>
                                                     <td>

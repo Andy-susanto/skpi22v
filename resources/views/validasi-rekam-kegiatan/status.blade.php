@@ -6,4 +6,5 @@
     <span class="text-white badge badge-success"><i>di Validasi</i></span>
 @elseif ($row['validasi'] == '2')
     <span class="text-white badge badge-danger"><i>Tidak di Terima</i></span>
+    <p class="italic">Pesan : {{$row['pesan']}}</p>
 @endif

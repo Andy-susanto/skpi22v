@@ -235,6 +235,7 @@
                                                         <span class="badge badge-success">diValidasi</span>
                                                     @elseif($data->status_validasi == '2')
                                                         <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                        <p class="italic"> Pesan : {{$data->pesan}}</p>
                                                     @endif
                                                     </td>
                                                     <td>

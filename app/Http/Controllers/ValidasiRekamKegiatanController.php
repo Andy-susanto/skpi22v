@@ -47,6 +47,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -70,6 +71,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -93,6 +95,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
                 $data = $data->merge($penerimaHibahMap);
@@ -116,6 +119,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -139,6 +143,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -161,6 +166,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -184,6 +190,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -207,6 +214,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->bahasa->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -230,6 +238,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->nama_usaha,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -253,6 +262,7 @@ class ValidasiRekamKegiatanController extends Controller
                         'nama_kegiatan'  => $item->judul_hasil_karya,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
@@ -438,47 +448,57 @@ class ValidasiRekamKegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($type,$id)
+    public function destroy(Request $request,$type,$id)
     {
         if($type == 'penghargaan'){
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'seminar'){
             SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'hibah'){
             PenerimaHibah::where('id_penerima_hibah_pendanaan',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'pengabdian'){
             PengabdianMasyarakat::where('id_pengabdian_masyarakat',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'organisasi'){
             Organisasi::where('id_organisasi',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'magang'){
             Magang::where('id_magang',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'beasiswa'){
             Beasiswa::where('id_beasiswa',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'bahasa'){
             KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'kewirausahaan'){
             Kewirausahaan::where('id_kewirausahaan',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }else if($type == 'karya'){
             KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
-                'status_validasi' => '2'
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
             ]);
         }
 
