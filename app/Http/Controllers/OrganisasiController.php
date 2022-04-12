@@ -161,16 +161,13 @@ class OrganisasiController extends Controller
             })
             ->first();
 
-        if ($request->file('bukti_kegiatan') && $request->file('file_sk')) {
-            $extension = ['jpg,pdf,docx'];
+        if ($request->file('bukti_kegiatan')) {
+            $extension = ['jpg','pdf','docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
-            $fileSK = $request->file_sk->getClientOriginalExtension();
-            if (in_array($file, $extension) && in_array($fileSK, $extension)) {
+            if (in_array($file, $extension)) {
                 $filename      = time() . '_' . 'bukti_organisasi' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-                $filenameSk = time() . '_' . 'sk_organisasi' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
 
                 $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
-                $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
 
                 $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
                     [
@@ -181,6 +178,29 @@ class OrganisasiController extends Controller
                     'path'                  => $filePath,
                     ]
                  );
+
+                Organisasi::where('id_organisasi',decrypt($id))->update([
+                    'file_kegiatan_id'                    => $files->id_files,
+                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                ]);
+
+                toastr()->success('Berhasil Update Data');
+                return back();
+
+            } else {
+                toastr()->error(' Terjadi Kesalahan :( ');
+            }
+        }
+
+        if ($$request->file('file_sk')) {
+            $extension = ['jpg','pdf','docx'];
+            $fileSK = $request->file_sk->getClientOriginalExtension();
+            if (in_array($fileSK, $extension)) {
+
+                $filenameSk = time() . '_' . 'sk_organisasi' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
+
+
+                $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
 
                  $fileSK = Files::where('id_file', $data_utama->file_sk->id_files)->updateOrCreate(
                     [
@@ -193,18 +213,7 @@ class OrganisasiController extends Controller
                  );
 
                 Organisasi::where('id_organisasi',decrypt($id))->update([
-                    'nama'                                => $request->nama_kegiatan ?? $data_utama->nama_kegiatan,
-                    'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
-                    'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
-                    'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
-                    'ref_kategori_id'                     => $request->kategori_organisasi ?? $data_utama->ref_kategori_id,
-                    'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
-                    'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
-                    'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
-                    'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
-                    'file_kegiatan_id'                    => $files->id_files,
-                    'file_sk_id'                          => $fileSK->id_files,
-                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                    'file_sk_id'            => $fileSK->id_files,
                 ]);
 
                 toastr()->success('Berhasil Update Data');
@@ -213,23 +222,22 @@ class OrganisasiController extends Controller
             } else {
                 toastr()->error(' Terjadi Kesalahan :( ');
             }
-        } else {
-            $organisasi = Organisasi::where('id_organisasi',decrypt($id))->update([
-                'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
-                'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
-                'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
-                'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
-                'ref_kategori_id'                     => $request->kategori_organisasi ?? $data_utama->ref_kategori_id,
-                'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
-                'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
-                'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
-                'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
-                'status_validasi' => '0'
-            ]);
-
-            toastr()->success('Berhasil Update Data');
-            return redirect()->route('organisasi.index');
         }
+
+        Organisasi::where('id_organisasi',decrypt($id))->update([
+            'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
+            'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
+            'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
+            'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
+            'ref_kategori_id'                     => $request->kategori_organisasi ?? $data_utama->ref_kategori_id,
+            'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
+            'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
+            'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
+            'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
+        ]);
+
+        toastr()->success('Berhasil Update Data');
+        return redirect()->route('organisasi.index');
     }
 
     /**

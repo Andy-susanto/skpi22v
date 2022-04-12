@@ -95,7 +95,8 @@ class KewirausahaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['utama'] = Kewirausahaan::findOrFail(decrypt($id));
+        return view('kewirausahaan.edit', compact('data'));
     }
 
     /**
@@ -107,7 +108,53 @@ class KewirausahaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_usaha'              => 'required|string',
+            'alamat_usaha'            => 'required',
+            'no_izin'                 => 'required',
+            'bukti_kegiatan'          => 'mimes:jpg,png,pdf,docx'
+        ]);
+
+        $data_utama = Kewirausahaan::findOrFail(decrypt($id));
+
+        if ($request->file('bukti_kegiatan')) {
+            $extension = ['jpg','pdf','docx'];
+            $file = $request->bukti_kegiatan->getClientOriginalExtension();
+            if (in_array($file, $extension)) {
+                $filename      = time() . '_' . 'bukti_kewirausahaan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+
+                $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+
+                $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
+                    [
+                        'id_file' => $data_utama->files->id_files
+                    ],
+                    [
+                        'nama'                  => $filename,
+                        'path'                  => $filePath,
+                    ]
+                );
+
+                Kewirausahaan::where('id_beasiswa', decrypt($id))->update([
+                    'file_kegiatan_id'                    => $files->id_files,
+                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                ]);
+
+                toastr()->success('Berhasil Update Data');
+                return back();
+            } else {
+                toastr()->error(' Terjadi Kesalahan :( ');
+            }
+        }
+
+        Kewirausahaan::where('id_beasiswa', decrypt($id))->update([
+            'nama_usaha'                          => $request->nama_usaha ?? $data_utama->nama_usaha,
+                'alamat_usaha'                        => $request->alamat_usaha ?? $data_utama->alamat_usaha,
+                'no_izin'                             => $request->no_izin ?? $data_utama->no_izin,
+        ]);
+
+        toastr()->success('Berhasil Update Data');
+        return redirect()->route('beasiswa.index');
     }
 
     /**
