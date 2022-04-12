@@ -68,7 +68,7 @@
 
             <ul class="main-menu ">
                 <li class="active "><a href="https://skpi.unja.ac.id">HOME</a></li>
-                <li><a href="{{asset('panduan/panduan-skpi-2022.pdf')}}" target="_blank" rel="noopener noreferrer"></a>Panduan SKPI</li>
+                <li class="active"><a href="{{asset('panduan/panduan-skpi-2022.pdf')}}" target="_blank" rel="noopener noreferrer"></a>Panduan SKPI</li>
             </ul>
         </div>
     </nav>
