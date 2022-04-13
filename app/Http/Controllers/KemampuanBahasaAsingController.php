@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
-use App\Models\KemampuanBahasaAsing;
 use Illuminate\Http\Request;
+use App\Models\KemampuanBahasaAsing;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class KemampuanBahasaAsingController extends Controller
 {
@@ -160,6 +161,17 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = KemampuanBahasaAsing::findOrFail(decrypt($id));
+        $file = Files::findOrFail($data->file_kegiatan_id);
+        if(!empty($file)){
+            if(Storage::exists($file->path)){
+                Storage::delete($file->path);
+                $data->files->delete();
+            }
+        }
+
+        $data->delete();
+        toastr()->success('Berhasil Hapus Data');
+        return back();
     }
 }

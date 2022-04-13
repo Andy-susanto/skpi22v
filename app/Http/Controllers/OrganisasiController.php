@@ -7,6 +7,7 @@ use App\Models\BobotNilai;
 use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class OrganisasiController extends Controller
 {
@@ -248,6 +249,17 @@ class OrganisasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Organisasi::findOrFail(decrypt($id));
+        $file = Files::findOrFail($data->file_kegiatan_id);
+        if(!empty($file)){
+            if(Storage::exists($file->path)){
+                Storage::delete($file->path);
+                $data->files->delete();
+            }
+        }
+
+        $data->delete();
+        toastr()->success('Berhasil Hapus Data');
+        return back();
     }
 }

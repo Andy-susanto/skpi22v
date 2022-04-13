@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
-use App\Models\KegiatanMahasiswa;
-use App\Models\Kewirausahaan;
-use App\Models\PenghargaanKejuaraan;
 use Illuminate\Http\Request;
+use App\Models\Kewirausahaan;
+use App\Models\KegiatanMahasiswa;
+use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class KewirausahaanController extends Controller
 {
@@ -165,6 +166,17 @@ class KewirausahaanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Kewirausahaan::findOrFail(decrypt($id));
+        $file = Files::findOrFail($data->file_kegiatan_id);
+        if(!empty($file)){
+            if(Storage::exits($file->path)){
+                Storage::delete($file->path);
+                $data->files->delete();
+            }
+        }
+
+        $data->delete();
+        toastr()->success('Berhasil Hapus Data');
+        return back();
     }
 }

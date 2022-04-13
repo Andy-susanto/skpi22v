@@ -256,12 +256,12 @@ class PenerimaHibahController extends Controller
         $file_sk = Files::where('id_files', $data->file_sk_id)->first();
 
         if($file) {
-            Storage::delete('public/'.$file->path);
+            Storage::delete($file->path);
             $data->files()->delete();
         }
 
         if($file_sk) {
-            Storage::delete('public/'.$file_sk->path);
+            Storage::delete($file_sk->path);
             $data->file_sk()->delete();
         }
 

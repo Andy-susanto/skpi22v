@@ -245,15 +245,15 @@ class PengabdianMasyarakatController extends Controller
         $file    = Files::find($data->file_kegiatan_id);
         $file_sk = Files::find($data->file_sk_id);
         if(!empty($file)){
-            if(Storage::exists('public/'.$file->path)){
-                Storage::delete('public/'.$file->path);
+            if(Storage::exists($file->path)){
+                Storage::delete($file->path);
                 $data->files()->delete();
             }
         }
 
         if(!empty($file_sk)){
-            if(Storage::exists('public/'.$file_sk->path)){
-                Storage::delete('public/'.$file_sk->path);
+            if(Storage::exists($file_sk->path)){
+                Storage::delete($file_sk->path);
                 $data->file_sk()->delete();
             }
         }

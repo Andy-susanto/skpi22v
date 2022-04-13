@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Files;
 use App\Models\Hki;
+use App\Models\Files;
+use App\Models\Publikasi;
+use Illuminate\Http\Request;
 use App\Models\KaryaMahasiswa;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
-use App\Models\Publikasi;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class KaryaMahasiswaController extends Controller
 {
@@ -26,7 +27,7 @@ class KaryaMahasiswaController extends Controller
     }
 
     /**
- * Show the form for creating a new resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -103,7 +104,6 @@ class KaryaMahasiswaController extends Controller
                     'siakad_mhspt_id'       => Auth::user()->id,
                     'ref_jenis_kegiatan_id' => 10
                 ]);
-
             }
 
             $karyaMahasiswa = Publikasi::create([
@@ -131,12 +131,12 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($jenis,$id)
+    public function show($jenis, $id)
     {
         if ($jenis == 'hki') {
             $data['utama']['hki'] = Hki::find($id);
             return view('karya-mahasiswa.edit', compact('data'));
-        }else if($jenis == 'publikasi'){
+        } else if ($jenis == 'publikasi') {
             $data['utama']['publikasi'] = Publikasi::find($id);
             return view('karya-mahasiswa.edit', compact('data'));
         }
@@ -148,12 +148,12 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($jenis,$id)
+    public function edit($jenis, $id)
     {
         if ($jenis == 'hki') {
             $data['utama']['hki'] = Hki::find($id);
             return view('karya-mahasiswa.edit', compact('data'));
-        }else if($jenis == 'publikasi'){
+        } else if ($jenis == 'publikasi') {
             $data['utama']['publikasi'] = Publikasi::find($id);
             return view('karya-mahasiswa.edit', compact('data'));
         }
@@ -177,14 +177,30 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
-        if($request->jenis == 'hki'){
+        if ($request->jenis == 'hki') {
             $data = Hki::findOrFail(decrypt($id));
+            $file = Files::findOrFail($data->file_kegiatan_id);
+            if (!empty($file)) {
+                if (Storage::exists($file->path)) {
+                    Storage::delete($file->path);
+                    $data->files->delete();
+                }
+            }
+
             $data->delete();
             toastr()->success('Berhasil Hapus Data');
-        }elseif($request->jenis == 'publikasi'){
+        } elseif ($request->jenis == 'publikasi') {
             $data = Publikasi::findOrFail(decrypt($id));
+            $file = Files::findOrFail($data->file_kegiatan_id);
+            if (!empty($file)) {
+                if (Storage::exists($file->path)) {
+                    Storage::delete($file->path);
+                    $data->files->delete();
+                }
+            }
+
             $data->delete();
             toastr()->success('Berhasil Hapus Data');
         }
