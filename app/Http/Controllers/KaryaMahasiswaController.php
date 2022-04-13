@@ -131,10 +131,15 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($jenis,$id)
     {
-        $data = KaryaMahasiswa::findOrFail(decrypt($id));
-        return view('karya-mahasiswa.show', compact('data'));
+        if ($jenis == 'hki') {
+            $data['utama']['hki'] = Hki::find($id);
+            return view('karya-mahasiswa.edit', compact('data'));
+        }else if($jenis == 'publikasi'){
+            $data['utama']['publikasi'] = Publikasi::find($id);
+            return view('karya-mahasiswa.edit', compact('data'));
+        }
     }
 
     /**
@@ -143,9 +148,15 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($jenis,$id)
     {
-        //
+        if ($jenis == 'hki') {
+            $data['utama']['hki'] = Hki::find($id);
+            return view('karya-mahasiswa.edit', compact('data'));
+        }else if($jenis == 'publikasi'){
+            $data['utama']['publikasi'] = Publikasi::find($id);
+            return view('karya-mahasiswa.edit', compact('data'));
+        }
     }
 
     /**
