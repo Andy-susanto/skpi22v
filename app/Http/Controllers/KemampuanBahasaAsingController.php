@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
-use App\Models\KegiatanMahasiswa;
 use App\Models\KemampuanBahasaAsing;
-use App\Models\PenghargaanKejuaraan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,8 +80,8 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function show($id)
     {
-        $data = PenghargaanKejuaraan::findOrFail(decrypt($id));
-        return view('penghargaan-kejuaraan.show',compact('data'));
+        $data = KemampuanBahasaAsing::findOrFail(decrypt($id));
+        return view('kemampuan-bahasa-asing.show',compact('data'));
     }
 
     /**
@@ -94,7 +92,8 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['utama'] = KemampuanBahasaAsing::findOrFail(decrypt($id));
+        return view('kemampuan-bahasa-asing.edit', compact('data'));
     }
 
     /**
@@ -106,7 +105,51 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'ref_bahasa_id'       => 'required|integer',
+            'ref_level_bahasa_id' => 'required|integer',
+            'ref_jenis_tes_id'    => 'required|integer',
+            'nilai_tes'           => 'required|integer',
+            'file_kegiatan_id'    => 'mime:jpg,png,pdf,docx',
+        ]);
+
+        $data_utama = KemampuanBahasaAsing::findOrFail(decrypt($id));
+        if ($request->hasFile('file_kegiatan_id')) {
+            $extension = ['jpg','pdf','docx'];
+            $file = $request->file_kegiatan_id->getClientOriginalExtension();
+            if (in_array($file, $extension)) {
+                $filename      = time() . '_' . 'bukti_kemampuan_bahasa_asing' . '_' . Auth::user()->username . '.' . $request->file_kegiatan_id->getClientOriginalExtension();
+
+                $filePath   = $request->file('file_kegiatan_id')->storeAs('uploads', $filename, 'public');
+
+                $files = Files::where('id_files', $data_utama->files->id_files)->updateOrCreate(
+                    [
+                        'id_files' => $data_utama->files->id_files
+                    ],
+                    [
+                    'nama'                  => $filename,
+                    'path'                  => $filePath,
+                    ]
+                 );
+
+                KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',decrypt($id))->update([
+                    'file_kegiatan_id'                    => $files->id_files,
+                ]);
+
+            } else {
+                toastr()->error(' Terjadi Kesalahan :( ');
+            }
+        }
+
+        KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',decrypt($id))->update([
+            'nilai_tes'           => $request->nilai_tes ?? $data_utama->nilai_tes,
+            'ref_bahasa_id'       => $request->ref_bahasa_id ?? $data_utama->ref_bahasa_id,
+            'ref_level_bahasa_id' => $request->ref_level_bahasa_id ?? $data_utama->ref_level_bahasa_id,
+            'ref_jenis_tes_id'    => $request->ref_jenis_tes_id ?? $data_utama->ref_jenis_tes_id,
+        ]);
+
+        toastr()->success('Berhasil Update Data');
+        return redirect()->route('kemampuan-bahasa-asing.index');
     }
 
     /**

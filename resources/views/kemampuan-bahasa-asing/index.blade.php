@@ -81,6 +81,7 @@
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
                                                     placeholder="" aria-describedby="fileHelpId">
+                                                    <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -192,49 +193,17 @@
         $('#table').DataTable({
             responsive: true
         });
-        $('#penyelenggara,#tingkat,#prestasi').select2();
-        $("#dosen_pembimbing").select2({
-            placeholder: "Cari Dosen Pembimbing..",
-            ajax: {
-                url: "{{ route('load.dosen') }}",
-                dataTyper: "json",
-                data: function(param) {
-                    var value = {
-                        search: param.term,
-                    }
-                    return value;
-                },
-                processResults: function(hasil) {
-
-                    return {
-                        results: hasil,
-                    }
-                }
-            }
-        });
-
-        load_bobot()
-
-        function load_bobot() {
-            $.ajax({
-                url: "{{ route('fungsi.load-bobot') }}",
-                data: {
-                    'jenis_kegiatan': 1,
-                    'penyelenggara': $('#penyelenggara').val(),
-                    'tingkat': $('#tingkat').val(),
-                    'prestasi': $('#prestasi').val()
-                },
-                beforeSend: function() {
-                    $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
-                },
-                success: function(data) {
-                    $('#bobot').text(data);
-                }
-            })
-        }
 
         function confirmation(id) {
             alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
+
+        function destroy(id){
+            alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
                 $('#' + id).submit();
             }, function() {
 
