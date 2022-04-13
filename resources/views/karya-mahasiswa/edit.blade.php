@@ -13,7 +13,7 @@
                     <h4 class="font-bold card-title">Ubah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('seminar-pelatihan.update',encrypt($data['utama']->id_seminar_pelatihan_workshop_diklat))}}" method="post" enctype="multipart/form-data" id="form-seminar">
+                    <form action="{{route('karya-mahasiswa.update',encrypt($data['utama']->id_seminar_pelatihan_workshop_diklat))}}" method="post" enctype="multipart/form-data" id="form-seminar">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
