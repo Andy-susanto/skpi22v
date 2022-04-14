@@ -29,6 +29,27 @@
             background-image: :none !important;
         }
 
+        div.scroll{
+            margin:4px, 4px;
+            padding:4px;
+            width: 560px;
+            height: 315px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align:justify;
+        }
+
+         /* Hide scrollbar for Chrome, Safari and Opera */
+        div.scroll::-webkit-scrollbar {
+        display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        div.scroll{
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        }
+
     </style>
 
 </head>
@@ -103,10 +124,10 @@
 
 
 
-    <section class="enroll-section spad     set-bg" data-setbg="img/enroll-bg.jpg">
+    <section class="enroll-section spad set-bg" data-setbg="img/enroll-bg.jpg">
         <div class="container">
             <div class="row">
-                <div class="p-4 col-lg-7 p-lg-0 overflow-auto" style="height:500px">
+                <div class="p-4 col-lg-7 p-lg-0 scroll" style="margin-right:50px">
                     <div class="text-white section-title">
                         <h4>Tentang SKPI UNJA</h4>
                     </div>
@@ -171,12 +192,9 @@
 
                     </div>
                 </div>
-                <div class="p-4 col-lg-1 col p-lg-0">
-
+                <div class="p-4 col-lg-1 col p-lg-0" style="margin-left:50spx">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/iKVc8szbT1A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="p-4 col-lg-4 col p-lg-0">
-                </div>
-
             </div>
         </div>
     </section>
