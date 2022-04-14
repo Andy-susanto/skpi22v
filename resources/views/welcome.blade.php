@@ -222,9 +222,6 @@
                             <li><a href="https://www.siakad.unja.ac.id">Sistem Akademik</a></li>
                             <li><a href="https://simawa.unja.ac.id/">Sistem Informasi Mahasiswa</a></li>
                             <li><a href="https://www.elista.unja.ac.id">Tugas Akhir</a></li>
-                            <li><a href="https://www.edimas.unja.ac.id">EDIMAS</a></li>
-                            <li><a href="https://www.karir.unja.ac.id">KARIR ALUMNI</a></li>
-                            <li><a href="https://jejakalumni.unja.ac.id/">TRACER STUDY</a></li>
                         </ul>
 
                     </div>
