@@ -175,7 +175,7 @@
 
                 </div>
                 <div class="p-4 col-lg-4 col p-lg-0">
-                    <img src="https://simpeg.unja.ac.id/img/visimisi.jpeg" width="100%" height="70%">
+                    
                 </div>
 
             </div>
