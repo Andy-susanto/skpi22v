@@ -106,7 +106,7 @@
     <section class="enroll-section spad     set-bg" data-setbg="img/enroll-bg.jpg">
         <div class="container">
             <div class="row">
-                <div class="p-4 col-lg-7 p-lg-0">
+                <div class="p-4 col-lg-7 p-lg-0 overflow-auto" style="height:500px">
                     <div class="text-white section-title">
                         <h4>Tentang SKPI UNJA</h4>
                     </div>
@@ -175,7 +175,6 @@
 
                 </div>
                 <div class="p-4 col-lg-4 col p-lg-0">
-                    
                 </div>
 
             </div>
