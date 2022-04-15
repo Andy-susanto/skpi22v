@@ -33,7 +33,7 @@
             margin:4px, 4px;
             padding:4px;
             width: 560px;
-            height: 315px;
+            height: 650px;
             overflow-x: hidden;
             overflow-y: auto;
             text-align:justify;
@@ -192,8 +192,12 @@
 
                     </div>
                 </div>
-                <div class="p-4 col-lg-1 col p-lg-0" style="margin-left:50spx">
+                <div class="p-4 col-lg-4 col p-lg-0" style="margin-left:50spx">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/iKVc8szbT1A?autoplay=1&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <br><br>
+                    <h2 class="text-white mt-10">TUTORIAL SKPI</h2>
+                    <br>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/K-_BnvyG32E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
