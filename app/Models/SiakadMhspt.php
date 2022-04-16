@@ -23,21 +23,23 @@ class SiakadMhspt extends Model
     public function scopeFilterUnit($query)
     {
         $unit = [];
-        $unit_child = [];
         if (auth()->user()->level_akun == 1){
             $unit[] = auth()->user()->kepeg_pegawai->unit_kerja->id_unit_kerja_siakad;
             foreach (auth()->user()->instansi as $v) {
                 $unit[] = (int) $v->id_unit_kerja_siakad;
-                $cekParent = UnitKerja::where('id_unit_kerja',$v->id_unit_kerja_siakad)->first();
-                if($cekParent->parent_unit_id === 0){
-                    $child = UnitKerja::where('parent_unit_id',$v->id_unit_kerja_siakad)->get();
+                $cekParent = UnitKerja::where('id_unit_kerja_siakad',$v->id_unit_kerja_siakad)->first();
+                if($cekParent->parent_unit_id == 0){
+                    $child = UnitKerja::where('parent_unit_id',$v->id_unit_kerja)->get();
                     foreach($child as $v2){
-                        $unit_child[] = (int) $v2->id_unit_kerja_siakad;
+                        $unit[] = (int) $v->id_unit_kerja_siakad;
+                        $subChild = UnitKerja::where('parent_unit_id',$v2->id_unit_kerja)->get();
+                        foreach($subChild as $v3){
+                            $unit[] = (int) $v3->id_unit_kerja_siakad;
+                        }
                     }
                 }
             }
-            $merge = array_merge($unit,$unit_child);
-            return $query->whereIn('id_prodi',$merge);
+            return $query->whereIn('id_prodi',$unit);
         }
     }
 
