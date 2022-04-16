@@ -247,19 +247,19 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('seminar-pelatihan.show', encrypt($data->id_organisasi)) }}"><i
+                                                                    href="{{ route('organisasi.show', encrypt($data->id_organisasi)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
                                                                 @if (in_array($data->status_validasi,['3','2']))
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('seminar-pelatihan.edit', encrypt($data->id_organisasi)) }}"><i
+                                                                    href="{{ route('organisasi.edit', encrypt($data->id_organisasi)) }}"><i
                                                                         class="fas fa-edit" aria-hidden="true"></i>
                                                                     Ubah</a>
                                                                 <a class="dropdown-item"
                                                                     href="#" onclick="destroy('hapusData{{$data->id_organisasi}}')"><i class="fas fa-trash" aria-hidden="true"></i>
                                                                     Hapus
                                                                 </a>
-                                                                <form method="post" action="{{route('seminar-pelatihan.destroy',encrypt($data->id_organisasi))}}" id="hapusData{{$data->id_organisasi}}">
+                                                                <form method="post" action="{{route('organisasi.destroy',encrypt($data->id_organisasi))}}" id="hapusData{{$data->id_organisasi}}">
                                                                     @csrf
                                                                     @method('delete')
                                                                 </form>
