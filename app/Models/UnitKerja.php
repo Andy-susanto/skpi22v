@@ -25,14 +25,24 @@ class UnitKerja extends Model
         return $this->belongsTo(UnitKerja::class, 'parent_unit_utama_id', 'id_unit_kerja');
     }
 
-    public function scopeFilterUnit()
+    public function scopeFilterUnit($query)
     {
-        if (auth()->user()->level_akun == 1) {
-            $unit = [];
+        $unit = [];
+        $unit_child = [];
+        if (auth()->user()->level_akun == 1){
+            $unit[] = auth()->user()->kepeg_pegawai->unit_kerja->id_unit_kerja_siakad;
             foreach (auth()->user()->instansi as $v) {
-                $unit[] = $v->id_unit_kerja;
+                $unit[] = (int) $v->id_unit_kerja_siakad;
+                $cekParent = UnitKerja::where('id_unit_kerja',$v->id_unit_kerja_siakad)->first();
+                if($cekParent->parent_unit_id === 0){
+                    $child = UnitKerja::where('parent_unit_id',$v->id_unit_kerja_siakad)->get();
+                    foreach($child as $v2){
+                        $unit_child[] = (int) $v2->id_unit_kerja_siakad;
+                    }
+                }
             }
-            return $this->whereIn('id_unit_kerja', $unit);
+            $merge = array_merge($unit,$unit_child);
+            return $query->whereIn('id_prodi',$merge);
         }
     }
 }
