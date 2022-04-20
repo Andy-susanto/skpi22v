@@ -323,7 +323,7 @@
                                                                             </a>
                                                                             <form method="post" action="{{route('karya-mahasiswa.destroy',encrypt($hki->id_hki_mahasiswa))}}" id="hapusData{{$hki->id_hki_mahasiswa}}">
                                                                                 @csrf
-                                                                                @method('delete')
+                                                                                @method('DELETE')
                                                                                 <input type="hidden" name="jenis" value="hki">
                                                                             </form>
                                                                             @endif
@@ -402,10 +402,10 @@
                                                                                     class="fas fa-edit" aria-hidden="true"></i>
                                                                                 Ubah</a>
                                                                             <a class="dropdown-item"
-                                                                                href="#" onclick="destroy('hapusData{{$publikasi->id_publikasi}}')"><i class="fas fa-trash" aria-hidden="true"></i>
+                                                                                href="#" onclick="destroy('hapusDataPublikasi{{$publikasi->id_publikasi}}')"><i class="fas fa-trash" aria-hidden="true"></i>
                                                                                 Hapus
                                                                             </a>
-                                                                            <form method="post" action="{{route('karya-mahasiswa.destroy',encrypt($publikasi->id_publikasi))}}" id="hapusData{{$publikasi->id_publikasi}}">
+                                                                            <form method="post" action="{{route('karya-mahasiswa.destroy',encrypt($publikasi->id_publikasi))}}" id="hapusDataPublikasi{{$publikasi->id_publikasi}}">
                                                                                 @csrf
                                                                                 @method('delete')
                                                                                 <input type="hidden" name="jenis" value="publikasi">

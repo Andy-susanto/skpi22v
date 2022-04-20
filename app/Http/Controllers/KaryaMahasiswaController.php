@@ -180,20 +180,19 @@ class KaryaMahasiswaController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->jenis == 'hki') {
-            $data = Hki::findOrFail(decrypt($id));
-            $file = Files::findOrFail($data->file_kegiatan_id);
+            $data = Hki::find(decrypt($id));
+            $file = Files::find($data->file_kegiatan_id);
             if (!empty($file)) {
                 if (Storage::exists($file->path)) {
                     Storage::delete($file->path);
                     $data->files->delete();
                 }
             }
-
             $data->delete();
             toastr()->success('Berhasil Hapus Data');
         } elseif ($request->jenis == 'publikasi') {
-            $data = Publikasi::findOrFail(decrypt($id));
-            $file = Files::findOrFail($data->file_kegiatan_id);
+            $data = Publikasi::find(decrypt($id));
+            $file = Files::find($data->file_kegiatan_id);
             if (!empty($file)) {
                 if (Storage::exists($file->path)) {
                     Storage::delete($file->path);

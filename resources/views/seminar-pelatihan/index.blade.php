@@ -180,7 +180,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group col-lg-4">
-                                                <label for="">Bukti Kegiatan (File SK)</label><span class="text-danger">*</span>
+                                                <label for="">Bukti Kegiatan (SK/Surat Tugas/Undangan/Flyer)</label><span class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('file_sk') is-invalid @enderror"
                                                     name="file_sk" id="" placeholder=""
