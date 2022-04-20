@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 @endif
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <button type="button" data-toggle="modal" data-target="#modalTambah"
                         class="mb-2 btn btn-outline-primary btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Tambah Data</button>
