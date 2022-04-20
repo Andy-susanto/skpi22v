@@ -84,6 +84,7 @@ class PengabdianMasyarakatController extends Controller
             })
             ->first();
 
+        if($bobot_nilai){
             PengabdianMasyarakat::create([
                 'nama'                                => $request->nama_kegiatan,
                 'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
@@ -101,6 +102,10 @@ class PengabdianMasyarakatController extends Controller
 
         toastr()->success('Berhasil Tambah Data');
         return back();
+        }else{
+            toastr()->warning('Gagal menyimpan data. Bobot Nilai tidak ditemukan. Silahkan input data bobot dengan benar. bobot yang benar tidak menghasilkan angka 0');
+            return back();
+        }
     }
 
     /**
@@ -158,6 +163,7 @@ class PengabdianMasyarakatController extends Controller
             })
             ->first();
 
+       if($bobot_nilai){
         if ($request->file('bukti_kegiatan')) {
             $extension = ['jpg','pdf','docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
@@ -231,6 +237,10 @@ class PengabdianMasyarakatController extends Controller
 
         toastr()->success('Berhasil Update Data');
         return redirect()->route('pengabdian_masyarakat.index');
+       }else{
+        toastr()->warning('Gagal menyimpan data. Bobot Nilai tidak ditemukan. Silahkan input data bobot dengan benar. bobot yang benar tidak menghasilkan angka 0');
+        return redirect()->route('pengabdian_masyarakat.index');
+       }
     }
 
     /**

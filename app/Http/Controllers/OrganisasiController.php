@@ -85,6 +85,7 @@ class OrganisasiController extends Controller
         ->first();
 
 
+       if($bobot_nilai){
         Organisasi::create([
             'nama'                                => $request->nama_kegiatan,
             'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
@@ -103,6 +104,10 @@ class OrganisasiController extends Controller
 
         toastr()->success('Berhasil Tambah Data');
         return back();
+       }else{
+        toastr()->warning('Gagal menyimpan data. Bobot Nilai tidak ditemukan. Silahkan input data bobot dengan benar. bobot yang benar tidak menghasilkan angka 0');
+        return back();
+       }
     }
 
     /**
@@ -162,6 +167,7 @@ class OrganisasiController extends Controller
             })
             ->first();
 
+       if($bobot_nilai){
         if ($request->file('bukti_kegiatan')) {
             $extension = ['jpg','pdf','docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
@@ -193,7 +199,7 @@ class OrganisasiController extends Controller
             }
         }
 
-        if ($$request->file('file_sk')) {
+        if ($request->file('file_sk')) {
             $extension = ['jpg','pdf','docx'];
             $fileSK = $request->file_sk->getClientOriginalExtension();
             if (in_array($fileSK, $extension)) {
@@ -239,6 +245,10 @@ class OrganisasiController extends Controller
 
         toastr()->success('Berhasil Update Data');
         return redirect()->route('organisasi.index');
+       }else{
+        toastr()->warning('Gagal menyimpan data. Bobot Nilai tidak ditemukan. Silahkan input data bobot dengan benar. bobot yang benar tidak menghasilkan angka 0');
+        return redirect()->route('organisasi.index');
+       }
     }
 
     /**
