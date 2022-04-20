@@ -101,23 +101,28 @@ class SeminarPelatihanController extends Controller
 
                     ->first();
 
-        SeminarPelatihan::create([
-            'nama'                                => $request->nama_kegiatan,
-            'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
-            'ref_tingkat_id'                      => $request->tingkat_kegiatan,
-            'ref_peran_prestasi_id'               => $request->prestasi,
-            'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
-            'siakad_mhspt_id'                     => Auth::user()->id,
-            'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
-            'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
-            'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
-            'file_kegiatan_id'                    => $files->id_files,
-            'file_sk_id'                             => $fileSK->id_files,
-            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-        ]);
+        if($bobot_nilai){
+            SeminarPelatihan::create([
+                'nama'                                => $request->nama_kegiatan,
+                'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
+                'ref_tingkat_id'                      => $request->tingkat_kegiatan,
+                'ref_peran_prestasi_id'               => $request->prestasi,
+                'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
+                'siakad_mhspt_id'                     => Auth::user()->id,
+                'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
+                'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
+                'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
+                'file_kegiatan_id'                    => $files->id_files,
+                'file_sk_id'                             => $fileSK->id_files,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+            ]);
 
-        toastr()->success('Berhasil Tambah Data');
-        return back();
+            toastr()->success('Berhasil Tambah Data');
+            return back();
+        }else{
+            toastr()->warning('Gagal menyimpan data. Bobot Nilai tidak ditemukan. Silahkan input data bobot dengan benar. bobot yang benar tidak menghasilkan angka 0');
+            return back();
+        }
     }
 
     /**
@@ -175,74 +180,79 @@ class SeminarPelatihanController extends Controller
             })
             ->first();
 
-        if ($request->hasFile('bukti_kegiatan')) {
-            $extension = ['jpg','pdf','docx'];
-            $file = $request->bukti_kegiatan->getClientOriginalExtension();
-            if (in_array($file, $extension)) {
-                $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+        if($bobot_nilai){
+            if ($request->hasFile('bukti_kegiatan')) {
+                $extension = ['jpg','pdf','docx'];
+                $file = $request->bukti_kegiatan->getClientOriginalExtension();
+                if (in_array($file, $extension)) {
+                    $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
 
-                $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+                    $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
-                $files = Files::where('id_files', $data_utama->files->id_files)->updateOrCreate(
-                    [
-                        'id_files' => $data_utama->files->id_files
-                    ],
-                    [
-                    'nama'                  => $filename,
-                    'path'                  => $filePath,
-                    ]
-                 );
+                    $files = Files::where('id_files', $data_utama->files->id_files)->updateOrCreate(
+                        [
+                            'id_files' => $data_utama->files->id_files
+                        ],
+                        [
+                        'nama'                  => $filename,
+                        'path'                  => $filePath,
+                        ]
+                     );
 
-                SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
-                    'file_kegiatan_id'                    => $files->id_files,
-                ]);
+                    SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+                        'file_kegiatan_id'                    => $files->id_files,
+                    ]);
 
-            } else {
-                toastr()->error(' Terjadi Kesalahan :( ');
+                } else {
+                    toastr()->error(' Terjadi Kesalahan :( ');
+                }
             }
-        }
 
 
-        if ($request->hasFile('file_sk')) {
-            $extension = ['jpg','pdf','docx'];
-            $file_sk = $request->file_sk->getClientOriginalExtension();
-            if (in_array($file_sk, $extension)) {
-                $filenameSk = time() . '_' . 'file_sk_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
+            if ($request->hasFile('file_sk')) {
+                $extension = ['jpg','pdf','docx'];
+                $file_sk = $request->file_sk->getClientOriginalExtension();
+                if (in_array($file_sk, $extension)) {
+                    $filenameSk = time() . '_' . 'file_sk_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->file_sk->getClientOriginalExtension();
 
-                $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
+                    $fileSKPath = $request->file('file_sk')->storeAs('uploads', $filenameSk, 'public');
 
-                 $fileSK = Files::where('id_files', $data_utama->file_sk->id_files)->updateOrCreate(
-                    [
-                        'id_files' => $data_utama->file_sk->id_files
-                    ],
-                    [
-                    'nama'                  => $filenameSk,
-                    'path'                  => $fileSKPath,
-                    ]
-                 );
+                     $fileSK = Files::where('id_files', $data_utama->file_sk->id_files)->updateOrCreate(
+                        [
+                            'id_files' => $data_utama->file_sk->id_files
+                        ],
+                        [
+                        'nama'                  => $filenameSk,
+                        'path'                  => $fileSKPath,
+                        ]
+                     );
 
-                SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
-                    'file_sk_id'                          => $fileSK->id_files,
-                ]);
+                    SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+                        'file_sk_id'                          => $fileSK->id_files,
+                    ]);
 
-            } else {
-                toastr()->error(' Terjadi Kesalahan :( ');
+                } else {
+                    toastr()->error(' Terjadi Kesalahan :( ');
+                }
             }
+
+            SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+                'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
+                'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
+                'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
+                'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
+                'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
+                'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
+                'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
+                'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
+            ]);
+
+            toastr()->success('Berhasil Update Data');
+            return redirect()->route('seminar-pelatihan.index');
+        }else{
+            toastr()->warning('Gagal menyimpan data. Bobot Nilai tidak ditemukan. Silahkan input data bobot dengan benar. bobot yang benar tidak menghasilkan angka 0');
+            return redirect()->route('seminar-pelatihan.index');
         }
-
-        SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
-            'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
-            'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
-            'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
-            'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
-            'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
-            'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
-            'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
-            'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
-        ]);
-
-        toastr()->success('Berhasil Update Data');
-        return redirect()->route('seminar-pelatihan.index');
 
     }
 
