@@ -2,18 +2,18 @@
 
 namespace Vizir\KeycloakWebGuard\Auth\Guard;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Guard;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Vizir\KeycloakWebGuard\Facades\KeycloakWeb;
+use Vizir\KeycloakWebGuard\Models\KeycloakUser;
 use Vizir\KeycloakWebGuard\Auth\KeycloakAccessToken;
 use Vizir\KeycloakWebGuard\Exceptions\KeycloakCallbackException;
-use Vizir\KeycloakWebGuard\Models\KeycloakUser;
-use Vizir\KeycloakWebGuard\Facades\KeycloakWeb;
-use Illuminate\Contracts\Auth\UserProvider;
-use App\Models\User;
-use DB;
-use Session;
 
 class KeycloakWebGuard implements Guard
 {
@@ -158,12 +158,13 @@ class KeycloakWebGuard implements Guard
         if (!$getuser) {
             $cekUserSimpeg = DB::table('kepeg.users as a')->where('a.username', $username)
                 ->join('kepeg.pegawai as b', 'a.id', '=', 'b.user_id')->first();
+
             $cekUserSiakad = DB::table('siakad.users as a')->where('a.username', $username)
                 ->join('siakad.mhs_pt as b', 'b.no_mhs', '=', 'a.username')->first();
 
             if ($cekUserSimpeg || $cekUserSiakad) {
                 User::create([
-                    'id'          => $cekUserSimpeg->id_pegawai ?? $cekUserSiakad->id_mhs_pt,
+                    'id_user'     => $cekUserSimpeg->id_pegawai ?? $cekUserSiakad->id_mhs_pt,
                     'username'    => $username,
                     'nip'         => $cekUserSimpeg->nip ?? $cekUserSiakad->no_mhs,
                     'usertype'    => (isset($cekUserSiakad->id_mhs_pt)) ? 1 : 2
