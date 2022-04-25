@@ -17,15 +17,16 @@
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if (config('adminlte.usermenu_image'))
-            <img @if ((auth()->user()->SiakadUser->usertype == 'mahasiswa') && isset(Auth::user()->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
+            <img
+            @if (auth()->user()->SiakadUser->usertype == 'mahasiswa' && isset(Auth::user()->SiakadUser->siakad_file->path))
+            src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
             @elseif(Auth::user()->kepeg_pegawai)
                 @if (Auth::user()->kepeg_pegawai->biodata->file_foto)
                 src="https://simpeg.unja.ac.id/foto/{{ Auth::user()->kepeg_pegawai->biodata->file_foto }}" @endif
-            @else src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}" @endif
+            @endif
             class="user-image float-left img-circle elevation-2"
             alt="
-            @if (auth()->user()->SiakadUser->usertype == 'mahasiswa')
-                    {{ Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
+            @if (auth()->user()->SiakadUser->usertype == 'mahasiswa') {{ Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
              @else
                 {{ Helper::nama_gelar(Auth::user()->kepeg_pegawai) }} @endif">
 
@@ -46,11 +47,10 @@
                 class="user-header {{ config('adminlte.usermenu_header_class', 'bg-primary') }}
                 @if (!config('adminlte.usermenu_image')) h-auto @endif">
                 @if (config('adminlte.usermenu_image'))
-                    <img @if ((auth()->user()->SiakadUser->usertype == 'mahasiswa') && isset(Auth::user()->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
+                    <img @if (auth()->user()->SiakadUser->usertype == 'mahasiswa' && isset(Auth::user()->SiakadUser->siakad_file->path)) src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
                     @elseif(Auth::user()->kepeg_pegawai)
                 @if (Auth::user()->kepeg_pegawai->biodata->file_foto)
                 src="https://simpeg.unja.ac.id/foto/{{ Auth::user()->kepeg_pegawai->biodata->file_foto }}" @endif
-                    @else src="https://siakad.unja.ac.id/{{ Auth::user()->SiakadUser->siakad_file->path }}"
                         @endif
                     class="img-circle elevation-2"
                 @endif

@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function siakad_mhspt(){
-    return $this->belongsTo(SiakadMhspt::class,'id','id_mhs_pt');
+    return $this->belongsTo(SiakadMhspt::class,'username','no_mhs');
     }
 
     public function hasPermission($key){

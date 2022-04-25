@@ -163,17 +163,19 @@ class KeycloakWebGuard implements Guard
                 ->join('siakad.mhs_pt as b', 'b.no_mhs', '=', 'a.username')->first();
 
             if ($cekUserSimpeg || $cekUserSiakad) {
-                User::create([
+                $create = User::create([
                     'id_user'     => $cekUserSimpeg->id_pegawai ?? $cekUserSiakad->id_mhs_pt,
                     'username'    => $username,
                     'nip'         => $cekUserSimpeg->nip ?? $cekUserSiakad->no_mhs,
                     'usertype'    => (isset($cekUserSiakad->id_mhs_pt)) ? 1 : 2
                 ]);
 
+                $user = User::where('username', $username)->first();
+
                 if (!empty($cekUserSiakad->id_mhs_pt)) {
                     DB::table('users_has_roles')->insert([
                         'role_id' => 3,
-                        'user_id' => $cekUserSiakad->id_mhs_pt,
+                        'user_id' => $user->id,
                     ]);
                 }
 

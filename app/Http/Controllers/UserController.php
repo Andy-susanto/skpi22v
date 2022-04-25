@@ -183,7 +183,7 @@ class UserController extends Controller
     {
         $this->authorize('read-user');
         if ($request->ajax()) {
-            $user = DB::table('siakad.users')->where('status','1');
+            $user = DB::table('siakad.users')->where('status','1')->where('usertype','!=','alumni');
             return DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('aksi', function ($row) {
