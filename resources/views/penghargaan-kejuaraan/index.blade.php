@@ -21,17 +21,17 @@
                         <tbody>
                             <tr>
                                 <td>{{ Helper::min_bobot() }}</td>
-                                <td>{{ Helper::hitung_bobot('penghargaan') }}</td>
+                                <td>{{ Helper::hitung_bobot() }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                            role="progressbar" aria-valuenow="{{ Helper::hitung_bobot('penghargaan') }}"
+                                            role="progressbar" aria-valuenow="{{ Helper::hitung_bobot() }}"
                                             aria-valuemin="0" aria-valuemax="100"
-                                            style="width: {{ (Helper::hitung_bobot('penghargaan') / Helper::min_bobot()) * 100 }}%">
+                                            style="width: {{ (Helper::hitung_bobot() / Helper::min_bobot()) * 100 }}%">
                                             Proses Bobot :
-                                            {{ Helper::hitung_bobot('penghargaan') }}/{{ Helper::min_bobot() }}</div>
+                                            {{ Helper::hitung_bobot() }}/{{ Helper::min_bobot() }}</div>
                                     </div>
                                 </td>
                             </tr>

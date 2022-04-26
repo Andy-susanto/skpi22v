@@ -230,25 +230,30 @@ class Helpers
         return $now;
     }
 
-    public static function hitung_bobot($jenis=null){
-        if ($jenis == 'penghargaan') {
-            $getData = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-        }elseif($jenis == 'seminar'){
-            $getData = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-        }elseif($jenis == 'pengabdian'){
-            $getData = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-        }elseif($jenis =='organisasi'){
-            $getData = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-        }
-        else{
-            $getData = [];
-        }
+    public static function hitung_bobot(){
 
-       $data = 0;
-       foreach ($getData as $value) {
-           $data += $value->bobot_nilai->bobot;
-       }
-       return $data;
+            $data = 0;
+            $getDataPenghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+            $getDataSeminar = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+            $getDataPengabdian = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+            $getDataOrganisasi = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+            foreach ($getDataPenghargaan as $value) {
+                $data += $value->bobot_nilai->bobot;
+            }
+
+            foreach ($getDataSeminar as $value) {
+                $data += $value->bobot_nilai->bobot;
+            }
+
+            foreach ($getDataPengabdian as $value) {
+                $data += $value->bobot_nilai->bobot;
+            }
+            foreach ($getDataOrganisasi as $value) {
+                $data += $value->bobot_nilai->bobot;
+            }
+
+         return $data;
     }
 
     public static function min_bobot(){
