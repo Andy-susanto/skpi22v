@@ -19,7 +19,7 @@ class BeasiswaController extends Controller
      */
     public function index()
     {
-        $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('beasiswa.index', compact('data'));
     }
 
@@ -57,14 +57,14 @@ class BeasiswaController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 1
             ]);
         }
 
         $beasiswa = Beasiswa::create([
             'nama'                                => $request->nama,
-            'siakad_mhspt_id'                     => Auth::user()->id,
+            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
             'nama_promotor'                       => $request->nama_promotor,
             'ref_kategori_id'                     => $request->ref_kategori_id,
             'ref_cakupan_beasiswa_id'             => $request->ref_cakupan_beasiswa_id,

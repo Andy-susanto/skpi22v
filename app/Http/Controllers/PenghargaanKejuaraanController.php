@@ -23,7 +23,7 @@ class PenghargaanKejuaraanController extends Controller
      */
     public function index()
     {
-        $data['utama'] = PenghargaanKejuaraan::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = PenghargaanKejuaraan::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('penghargaan-kejuaraan.index', compact('data'));
     }
 
@@ -68,14 +68,14 @@ class PenghargaanKejuaraanController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 1
             ]);
 
             $filesSk = Files::create([
                 'nama'                  => $fileSK,
                 'path'                  => $fileSkPath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 1
             ]);
         }
@@ -100,7 +100,7 @@ class PenghargaanKejuaraanController extends Controller
             'ref_tingkat_id'                      => $request->tingkat_kegiatan,
             'ref_peran_prestasi_id'               => $request->prestasi,
             'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
-            'siakad_mhspt_id'                     => Auth::user()->id,
+            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
             'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
             'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
             'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,

@@ -19,7 +19,7 @@ class MagangController extends Controller
      */
     public function index()
     {
-        $data['utama'] = Magang::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = Magang::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('magang.index', compact('data'));
     }
 
@@ -60,7 +60,7 @@ class MagangController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 6
             ]);
         }
@@ -72,7 +72,7 @@ class MagangController extends Controller
             'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
             'judul_laporan_akhir'                 => $request->judul_laporan_akhir,
             'tugas_utama_magang'                  => $request->tugas_utama_magang,
-            'siakad_mhspt_id'                     => Auth::user()->id,
+            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
             'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
             'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
             'alamat'                              => $request->alamat,
@@ -153,7 +153,7 @@ class MagangController extends Controller
                     'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
                     'judul_laporan_akhir'                 => $request->judul_laporan_akhir ?? $data_utama->judul_laporan_akhir,
                     'tugas_utama_magang'                  => $request->tugas_utama_magang ?? $data_utama->tugas_utama_magang,
-                    'siakad_mhspt_id'                     => Auth::user()->id,
+                    'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
                     'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
                     'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
                     'alamat'                              => $request->alamat ?? $data_utama->alamat,
@@ -169,7 +169,7 @@ class MagangController extends Controller
                 'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
                 'judul_laporan_akhir'                 => $request->judul_laporan_akhir ?? $data_utama->judul_laporan_akhir,
                 'tugas_utama_magang'                  => $request->tugas_utama_magang ?? $data_utama->tugas_utama_magang,
-                'siakad_mhspt_id'                     => Auth::user()->id,
+                'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
                 'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
                 'alamat'                              => $request->alamat ?? $data_utama->alamat,

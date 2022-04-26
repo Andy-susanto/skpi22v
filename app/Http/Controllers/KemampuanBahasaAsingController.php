@@ -17,7 +17,7 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function index()
     {
-        $data['utama'] = KemampuanBahasaAsing::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = KemampuanBahasaAsing::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('kemampuan-bahasa-asing.index', compact('data'));
     }
 
@@ -54,7 +54,7 @@ class KemampuanBahasaAsingController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 8
             ]);
         }
@@ -65,7 +65,7 @@ class KemampuanBahasaAsingController extends Controller
             'ref_level_bahasa_id'                 => $request->ref_level_bahasa_id,
             'ref_jenis_tes_id'                    => $request->ref_jenis_tes_id,
             'file_kegiatan_id'                    => $files->id_files,
-            'siakad_mhspt_id'                     => Auth::user()->id,
+            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
             'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
         ]);
 

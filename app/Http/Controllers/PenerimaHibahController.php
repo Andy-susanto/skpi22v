@@ -23,7 +23,7 @@ class PenerimaHibahController extends Controller
      */
     public function index()
     {
-        $data['utama'] = PenerimaHibah::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = PenerimaHibah::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('penerima-hibah.index',compact('data'));
     }
 
@@ -65,14 +65,14 @@ class PenerimaHibahController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 3
             ]);
 
             $fileSK = Files::create([
                 'nama'                  => $fileSK,
                 'path'                  => $fileSKPath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 3
             ]);
         }
@@ -96,7 +96,7 @@ class PenerimaHibahController extends Controller
                 'ref_tingkat_id'                      => $request->tingkat_kegiatan,
                 'ref_peran_prestasi_id'               => $request->prestasi,
                 'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
-                'siakad_mhspt_id'                     => Auth::user()->id,
+                'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
                 'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
                 'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,

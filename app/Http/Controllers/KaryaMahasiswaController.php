@@ -21,8 +21,8 @@ class KaryaMahasiswaController extends Controller
      */
     public function index()
     {
-        $data['utama']['hki']       = Hki::where('siakad_mhspt_id', Auth::user()->id)->get();
-        $data['utama']['publikasi'] = Publikasi::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama']['hki']       = Hki::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        $data['utama']['publikasi'] = Publikasi::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('karya-mahasiswa.index', compact('data'));
     }
 
@@ -61,13 +61,13 @@ class KaryaMahasiswaController extends Controller
                 $files = Files::create([
                     'nama'                  => $filename,
                     'path'                  => $filePath,
-                    'siakad_mhspt_id'       => Auth::user()->id,
+                    'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                     'ref_jenis_kegiatan_id' => 10
                 ]);
             }
 
             $karyaMahasiswa = Hki::create([
-                'siakad_mhspt_id'   => Auth::user()->id,
+                'siakad_mhspt_id'   => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'nama_hki'          => $request->nama_hki,
                 'nomor_sertifikat'  => $request->nomor_sertifikat,
                 'tgl_mulai_berlaku' => $request->tgl_mulai_berlaku,
@@ -101,13 +101,13 @@ class KaryaMahasiswaController extends Controller
                 $files = Files::create([
                     'nama'                  => $filename,
                     'path'                  => $filePath,
-                    'siakad_mhspt_id'       => Auth::user()->id,
+                    'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                     'ref_jenis_kegiatan_id' => 10
                 ]);
             }
 
             $karyaMahasiswa = Publikasi::create([
-                'siakad_mhspt_id'     => Auth::user()->id,
+                'siakad_mhspt_id'     => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'judul'               => $request->judul,
                 'tgl_terbit'          => $request->tgl_terbit,
                 'penerbit'            => $request->penerbit,

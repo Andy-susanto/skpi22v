@@ -18,7 +18,7 @@ class OrganisasiController extends Controller
      */
     public function index()
     {
-        $data['utama'] = Organisasi::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = Organisasi::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('organisasi.index',compact('data'));
     }
 
@@ -61,13 +61,13 @@ class OrganisasiController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 5
             ]);
             $fileSK = Files::create([
                 'nama'                  => $fileSK,
                 'path'                  => $fileSKPath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 5
             ]);
 
@@ -93,7 +93,7 @@ class OrganisasiController extends Controller
             'ref_peran_prestasi_id'               => $request->prestasi,
             'ref_kategori_id'                     => $request->kategori_organisasi ?? 1,   //kategori
             'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
-            'siakad_mhspt_id'                     => Auth::user()->id,
+            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
             'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
             'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
             'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,

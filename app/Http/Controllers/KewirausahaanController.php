@@ -19,7 +19,7 @@ class KewirausahaanController extends Controller
      */
     public function index()
     {
-        $data['utama'] = Kewirausahaan::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = Kewirausahaan::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         return view('kewirausahaan.index', compact('data'));
     }
 
@@ -57,13 +57,13 @@ class KewirausahaanController extends Controller
             $files = Files::create([
                 'nama'                  => $filename,
                 'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->id,
+                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
                 'ref_jenis_kegiatan_id' => 9
             ]);
         }
 
         $kewirausahaan = Kewirausahaan::create([
-            'siakad_mhspt_id'                     => Auth::user()->id,
+            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
             'nama_usaha'                          => $request->nama_usaha,
             'alamat_usaha'                        => $request->alamat_usaha,
             'no_izin'                             => $request->no_izin,
