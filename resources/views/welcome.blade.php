@@ -74,7 +74,7 @@
 
                 <div class="hf-item" style="width:470px;">
 
-                    <p style="float: right;"><span>Alamat:</span>Jl. Rayaa Jambi - Muara Bulian Km. 15,
+                    <p style="float: right;"><span>Alamat:</span>Jl. Raya Jambi - Muara Bulian Km. 15,
                         Mendalo Indah, Jambi Luar Kota, Jambi 36361</p>
                 </div>
             </div>
