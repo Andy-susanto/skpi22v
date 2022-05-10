@@ -136,7 +136,7 @@
                         name: 'nama_mahasiswa'
                     },
                     {
-                        data: 'n im',
+                        data: 'nim',
                         name: 'nim'
                     },
                     {
