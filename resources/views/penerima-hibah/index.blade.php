@@ -9,6 +9,7 @@
             </h1>
         </div>
         <div class="col-12">
+            @if(Auth::user()->siakad_mhspt()->exists())
             <div class="card">
                 <div class="card-body">
                     <table class="table table-bordered">
@@ -38,6 +39,7 @@
                     </table>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @stop
@@ -180,11 +182,13 @@
                                         </ol>
                                         </p>
                                     </div>
+                                    @if (Auth::user()->siakad_mhspt()->exists())
                                     <div class="text-center mb-2">
                                         <button type="button" onclick="confirmation('form-penerima-hibah')"
                                             class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
                                                 class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                                     </div>
+                                    @endif
                             </div>
                             </form>
                         </div>

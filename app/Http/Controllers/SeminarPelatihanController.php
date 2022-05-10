@@ -18,7 +18,11 @@ class SeminarPelatihanController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->siakad_mhspt()->exists()){
         $seminar = SeminarPelatihan::where('siakad_mhspt_id',Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        }else{
+            $seminar = [];
+        }
         return view('seminar-pelatihan.index',compact('seminar'));
     }
 

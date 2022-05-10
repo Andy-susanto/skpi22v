@@ -23,7 +23,11 @@ class PenerimaHibahController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->siakad_mhspt()->exists()){
         $data['utama'] = PenerimaHibah::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        }else{
+            $data['utama'] = [];
+        }
         return view('penerima-hibah.index',compact('data'));
     }
 

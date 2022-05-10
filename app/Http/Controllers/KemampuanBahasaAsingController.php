@@ -17,7 +17,11 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function index()
     {
-        $data['utama'] = KemampuanBahasaAsing::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        if(Auth::user()->siakad_mhspt()->exists()){
+            $data['utama'] = KemampuanBahasaAsing::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        }else{
+            $data['utama'] = [];
+        }
         return view('kemampuan-bahasa-asing.index', compact('data'));
     }
 

@@ -21,8 +21,13 @@ class KaryaMahasiswaController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->siakad_mhspt()->exists()){
         $data['utama']['hki']       = Hki::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
         $data['utama']['publikasi'] = Publikasi::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        }else{
+            $data['utama']['hki'] = [];
+            $data['utama']['publikasi'] = [];
+        }
         return view('karya-mahasiswa.index', compact('data'));
     }
 

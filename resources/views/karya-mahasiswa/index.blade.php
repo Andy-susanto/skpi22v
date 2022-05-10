@@ -172,10 +172,12 @@
                                                         <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 </div>
                                             </div>
+                                            @if (Auth::user()->siakad_mhspt()->exists())
                                             <div class="card-footer">
                                                 <button type="submit"
                                                     class="btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 rounded-full text-white btn-sm">Simpan</button>
                                             </div>
+                                            @endif
                                         </form>
                                     </div>
                                 </div>
@@ -233,10 +235,12 @@
                                                         <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 </div>
                                             </div>
+                                            @if (Auth::user()->siakad_mhspt()->exists())
                                             <div class="card-footer">
                                                 <button type="submit"
                                                     class="btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 rounded-full text-white btn-sm">Simpan</button>
                                             </div>
+                                            @endif
                                     </form>
                                 </div>
                             </div>
