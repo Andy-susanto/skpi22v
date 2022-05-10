@@ -113,7 +113,7 @@
             var table = $('#table').DataTable({
                 bAutoWidth: false,
                 bLengthChange: true,
-                iDisplayLength: 20,
+                iDisplayLength: 10,
                 searching: true,
                 processing: true,
                 serverSide: true,
@@ -136,7 +136,7 @@
                         name: 'nama_mahasiswa'
                     },
                     {
-                        data: 'nim',
+                        data: 'n im',
                         name: 'nim'
                     },
                     {
@@ -145,7 +145,9 @@
                     },
                     {
                         data: 'jenis_kegiatan',
-                        name: 'jenis_kegiatan'
+                        name: 'jenis_kegiatan',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'nama_kegiatan',
@@ -153,7 +155,9 @@
                     },
                     {
                         data: 'bukti_kegiatan',
-                        name: 'bukti_kegiatan'
+                        name: 'bukti_kegiatan',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'validasi',
@@ -166,14 +170,7 @@
                         orderable:false,searchable:false
                     }
                 ],
-                aLengthMenu: [
-                    [10, 15, 25, 35, 50, 100, -1],
-                    [10, 15, 25, 35, 50, 100, "All"]
-                ],
                 responsive: !0,
-                drawCallback: function() {
-                    this.api().state.clear();
-                }
             });
         }
 
