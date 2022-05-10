@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organisasi;
+use App\Models\PenerimaHibah;
+use App\Models\PengabdianMasyarakat;
 use Exception;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -23,6 +26,12 @@ class CetakController extends Controller
         $data['seminar'] = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
 
         $data['penghargaan'] = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['pengabdian'] = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['hibah'] = PenerimaHibah::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['organisasi'] = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
 
         return view('cetak.index',compact('data'));
     }
@@ -55,6 +64,14 @@ class CetakController extends Controller
     {
         if ($request->jenis == 'seminar') {
             SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',$request->id)->update(['nama_eng'=>$request->translate]);
+        }elseif($request->jenis == 'penghargaan'){
+            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',$request->id)->update(['nama_eng'=>$request->translate]);
+        }elseif($request->jenis == 'pengabdian'){
+            PengabdianMasyarakat::where('id_pengabdian_masyarakat',$request->id)->update(['nama_eng'=>$request->translate]);
+        }elseif($request->jenis == 'hibah'){
+            PenerimaHibah::where('id_penerima_hibah',$request->id)->update(['nama_eng'=>$request->translate]);
+        }elseif($request->jenis == 'organisasi'){
+            Organisasi::where('id_organisasi',$request->id)->update(['nama_eng'=>$request->translate]);
         }
 
         return response()->json(['success'=>'Data Berhasil di update']);
