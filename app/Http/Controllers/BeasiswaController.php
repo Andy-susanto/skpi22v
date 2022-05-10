@@ -19,7 +19,11 @@ class BeasiswaController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->siakad_mhspt()->exists()){
         $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
+        }else{
+            $data['utama'] = [];
+        }
         return view('beasiswa.index', compact('data'));
     }
 
