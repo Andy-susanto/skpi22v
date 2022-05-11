@@ -232,28 +232,9 @@ class Helpers
 
     public static function hitung_bobot(){
 
-            $data = 0;
-            $getDataPenghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-            $getDataSeminar = SeminarPelatihan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-            $getDataPengabdian = PengabdianMasyarakat::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
-            $getDataOrganisasi = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
 
-            foreach ($getDataPenghargaan as $value) {
-                $data += $value->bobot_nilai->bobot;
-            }
-
-            foreach ($getDataSeminar as $value) {
-                $data += $value->bobot_nilai->bobot;
-            }
-
-            foreach ($getDataPengabdian as $value) {
-                $data += $value->bobot_nilai->bobot;
-            }
-            foreach ($getDataOrganisasi as $value) {
-                $data += $value->bobot_nilai->bobot;
-            }
-
-         return $data;
+        $bobot = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->first();
+         return $bobot->bobot;
     }
 
     public static function min_bobot(){

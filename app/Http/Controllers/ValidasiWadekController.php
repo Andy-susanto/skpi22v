@@ -41,6 +41,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -62,6 +63,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -83,6 +85,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
                 $data = $data->merge($penerimaHibahMap);
@@ -104,6 +107,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -125,6 +129,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -145,6 +150,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -166,6 +172,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -187,6 +194,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->bahasa->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -208,6 +216,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama_usaha,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -229,6 +238,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->judul_hasil_karya,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
                     ];
                 });
 
@@ -334,7 +344,7 @@ class ValidasiWadekController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$type, $id)
+    public function update(Request $request,$type, $id,$mhspt_id)
     {
         if($type == 'penghargaan'){
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',$id)->update([
@@ -377,6 +387,34 @@ class ValidasiWadekController extends Controller
                 'status_validasi' => '4'
             ]);
         }
+
+        $data = 0;
+        $getDataPenghargaan = PenghargaanKejuaraan::where('siakad_mhspt_id',$mhspt_id)->where('status_validasi',4)->get();
+        $getDataSeminar = SeminarPelatihan::where('siakad_mhspt_id',$mhspt_id)->where('status_validasi',4)->get();
+        $getDataPengabdian = PengabdianMasyarakat::where('siakad_mhspt_id',$mhspt_id)->where('status_validasi',4)->get();
+        $getDataOrganisasi = Organisasi::where('siakad_mhspt_id',$mhspt_id)->where('status_validasi',4)->get();
+
+        foreach ($getDataPenghargaan as $value) {
+            $data += $value->bobot_nilai->bobot;
+        }
+
+        foreach ($getDataSeminar as $value) {
+            $data += $value->bobot_nilai->bobot;
+        }
+
+        foreach ($getDataPengabdian as $value) {
+            $data += $value->bobot_nilai->bobot;
+        }
+        foreach ($getDataOrganisasi as $value) {
+            $data += $value->bobot_nilai->bobot;
+        }
+
+        DB::table('rekap_bobot_mahasiswa')->updateOrInsert([
+            'siakad_mhspt_id'=>$mhspt_id
+        ],[
+            'bobot'=> $data
+        ]);
+
         toastr()->success('Berhasil menvalidasi data');
         return back();
     }

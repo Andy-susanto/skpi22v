@@ -9,7 +9,7 @@
             <a class="dropdown-item text-success"
                 onclick="konfirmasi('update'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#"><i class="fa fa-check" aria-hidden="true"></i> Validasi</a>
-            <form action="{{ route('validasi-wadek.update', [$row['jenis_kegiatan'],$row['id'] ]) }}"
+            <form action="{{ route('validasi-wadek.update', [$row['jenis_kegiatan'],$row['id'],$row['siakad_mhspt_id']]) }}"
                 id="update{{ $row['id'] . $row['jenis_kegiatan'] }}" method="post">
                 @csrf
                 @method('put')

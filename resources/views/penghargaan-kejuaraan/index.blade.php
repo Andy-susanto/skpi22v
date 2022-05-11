@@ -15,8 +15,8 @@
                     <table class="table table-bordered">
                         <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
                             <tr>
-                                <th>Capaian Bobot</th>
-                                <th>Bobot saat ini</th>
+                                <th>Bobot Minimum Wajib di Capai</th>
+                                <th>Total Bobot Saat Ini </th>
                             </tr>
                         </thead>
                         <tbody>
