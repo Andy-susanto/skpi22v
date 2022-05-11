@@ -43,8 +43,8 @@ class rekap_bobot extends Command
     public function handle()
     {
         $data        = 0;
-        $collect     = collect();
-        $penghargaan = PenghargaanKejuaraan::where('status_validasi',4)->get();
+        //$penghargaan = PenghargaanKejuaraan::join('bobot_nilai', 'bobot_nilai.id_bobot_nilai', '=', 'penghargaan_kejuaraan.bobot_nilai_id')->with('bobot_nilai')->where('status_validasi',4)->select('bobot_nilai.bobot')->get();
+        $penghargaan     = PenghargaanKejuaraan::where('status_validasi',4)->get();
         $seminar     = SeminarPelatihan::where('status_validasi',4)->get();
         $pengabdian  = PengabdianMasyarakat::where('status_validasi',4)->get();
         $organisasi  = Organisasi::where('status_validasi',4)->get();
@@ -55,7 +55,6 @@ class rekap_bobot extends Command
                 'bobot'    => $item->bobot_nilai->bobot,
             ];
         });
-        $collect = $collect->merge($mapPenghargaan);
 
         $mapSeminar = $seminar->map(function ($item) {
             return [
@@ -63,40 +62,49 @@ class rekap_bobot extends Command
                 'bobot'    => $item->bobot_nilai->bobot,
             ];
         });
-        $collect = $collect->merge($mapSeminar);
+
         $mapPengabdian = $pengabdian->map(function ($item) {
             return [
                 'mhspt_id' => $item->siakad_mhspt_id,
                 'bobot'    => $item->bobot_nilai->bobot,
             ];
         });
-        $collect = $collect->merge($mapPengabdian);
+
         $mapOrganisasi = $organisasi->map(function ($item) {
             return [
                 'mhspt_id' => $item->siakad_mhspt_id,
                 'bobot'    => $item->bobot_nilai->bobot,
             ];
         });
-        $collect = $collect->merge($mapOrganisasi);
-        $collect->each(function ($item,$key) {
-            DB::table('rekap_bobot_mahasiswa')->insert([
-                'siakad_mhspt_id'=>$item['mhspt_id'],
-                'bobot'=> $item['bobot']
-            ]);
-        });
 
-        $total = DB::table('rekap_bobot_mahasiswa')->select("*",DB::raw("SUM(bobot) as total_bobot"))->groupBy('siakad_mhspt_id')->get();
+        $collection = $mapPenghargaan->merge($mapSeminar)->merge($mapPengabdian)->merge($mapOrganisasi);
 
-        foreach($total as $dataTotal){
-            DB::table('rekap_bobot_mahasiswa')->updateOrInsert(
-                ['siakad_mhspt_id' => $dataTotal->siakad_mhspt_id],
-                [
-                'bobot'=> $dataTotal->total_bobot,
-                'aktif' => 1
-            ]);
+        $data = [];
+        $dataFinal = [];
+
+        foreach($collection as $item) {
+            $temp = [];
+            if(!array_key_exists($item['mhspt_id'], $data)) {
+                $temp[$item['mhspt_id']] = $item['bobot'];
+
+            }else{
+                $temp[$item['mhspt_id']] += $item['bobot'];
+            }
+
+            array_push($data, $temp);
         }
 
-        DB::table('rekap_bobot_mahasiswa')->where('aktif',2)->delete();
+        foreach($data as $key => $i) {
+            array_push($dataFinal, ['id_mhspt' => key($i), 'bobot' => $i[key($i)]]);
+        }
+
+        foreach($dataFinal as $dataTotal){
+            DB::table('rekap_bobot_mahasiswa')->updateOrInsert(
+                ['siakad_mhspt_id' => $dataTotal['id_mhspt']],
+                [
+                'bobot'=> $dataTotal['bobot'],
+            ]);
+        }
 
         echo 'Rekap Bobot Berhasil';
 

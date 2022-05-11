@@ -83,7 +83,7 @@
             <li class="user-footer">
                 <a name="" id="" class="btn btn-default btn-flat btn-block"
                     href="{{ route('logout-as', encrypt(Auth::user()->id)) }}" role="button"><i
-                        class="fa fa-power-off" aria-hidden="true"></i> Logout As @if (Auth::user()->usertype == '1' || auth()->user()->SiakadUser->usertype == 'mahasiswa')
+                        class="fa fa-power-off" aria-hidden="true"></i> Logout As @if (auth()->user()->SiakadUser->usertype == 'mahasiswa')
                         {{ strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}
                     @else
                         {{ strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai)) }}
