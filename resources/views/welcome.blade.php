@@ -217,7 +217,7 @@
                     <h6 class="fw-title">TAUTAN TERKAIT</h6>
                     <div class="dobule-link">
                         <ul>
-                            <li><a href="https://www.gerbang.ac.id">Gerbang Universitas Jambi</a></li>
+                            <li><a href="https://www.gerbang.unja.ac.id">Gerbang Universitas Jambi</a></li>
                             <li><a href="https://www.unja.ac.id">WEB UNJA</a></li>
                             <li><a href="https://www.siakad.unja.ac.id">Sistem Akademik</a></li>
                             <li><a href="https://simawa.unja.ac.id/">Sistem Informasi Mahasiswa</a></li>

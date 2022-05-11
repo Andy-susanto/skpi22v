@@ -234,7 +234,7 @@ class Helpers
 
 
         $bobot = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->first();
-         return $bobot->bobot;
+         return $bobot->bobot ?? 0;
     }
 
     public static function min_bobot(){
