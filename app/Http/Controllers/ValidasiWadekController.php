@@ -315,7 +315,10 @@ class ValidasiWadekController extends Controller
                     ->addColumn("action",function($row){
                         return view('validasi-wadek.aksi',compact('row'));
                     })
-                    ->rawColumns(['action','nama_mahasiswa','nim','program_studi','jenis_kegiatan','nama_kegiatan','bukti_kegiatan'])
+                    ->addColumn("validasi",function($row){
+                        return view('validasi-wadek.status',compact('row'));
+                    })
+                    ->rawColumns(['validasi','action','nama_mahasiswa','nim','program_studi','jenis_kegiatan','nama_kegiatan','bukti_kegiatan'])
                     ->make(true);
                 }
         return view('validasi-wadek.index');
