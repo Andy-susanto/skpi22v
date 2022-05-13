@@ -23,6 +23,16 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Status Kegiatan</label>
+                            <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
+                                <option value="1">di Validasi Operator</option>
+                                <option value="4">di Validasi</option>
+                                <option value="2">Tidak di Terima</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-body table-responsive">
@@ -35,6 +45,7 @@
                             <th>Program Studi</th>
                             <th>Jenis Kegiatan</th>
                             <th>Nama Kegiatan / Nama Promotor / Nama Beasiswa / Bahasa / Nama Usaha / Judul Hasil Karya</th>
+                            <th>Status</th>
                             <th>Bukti Kegiatan</th>
                             <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                         </tr>
@@ -70,6 +81,7 @@
                 ajax: {
                     data: {
                         id_jenis_kegiatan: $('#jenis_kegiatan').val(),
+                        status_validasi: $('#status_validasi').val()
                     },
                     url: "{{ route('validasi-wadek.index') }}",
                 },
@@ -99,6 +111,10 @@
                     {
                         data: 'nama_kegiatan',
                         name: 'nama_kegiatan'
+                    },
+                    {
+                        data: 'validasi',
+                        name: 'validasi'
                     },
                     {
                         data: 'bukti_kegiatan',
