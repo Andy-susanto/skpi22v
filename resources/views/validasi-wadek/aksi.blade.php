@@ -1,9 +1,9 @@
-<div class="dropdown">
+<div class="dropdown z-0">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         Proses
     </button>
-    <div class="dropdown-menu" aria-labelledby="triggerId">
+    <div class="dropdown-menu z-50" aria-labelledby="triggerId">
 
         {{-- Validasi Form --}}
             <a class="dropdown-item text-success"
