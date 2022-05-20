@@ -85,7 +85,7 @@
                                     <th>Download Dokumen</th>
                                     <td>:</td>
                                     <td>
-                                    <canvas id="my_canvas"></canvas>
+                                        <div id="pspdfkit" style="height: 100vh"></div>
                                      <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
                                             class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
                                     <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
@@ -100,22 +100,18 @@
         </div>
     @endif
 @stop
+@include('plugins.pspdfkit')
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.14.305/build/pdf.min.js"></script>
 <script>
-    pdfjsLib.getDocument({ url: "https://skpi.unja.ac.id/storage/{{$data->files->path}}" }).then(function (pdf) {
-        pdf.getPage(1).then(function (page) {
-            var scale = 1.5;
-            var viewport = page.getViewport({ scale: scale });
-            var canvas = document.getElementById('the-canvas');
-            var context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            page.render({
-                canvasContext: context,
-                viewport: viewport
-            });
-        });
+    PSPDFKit.load({
+        container: "#pspdfkit",
+        document: "{{ asset('storage/' . $data->files->path) }}", // Add the path to your document here.
+    })
+    .then(function(instance) {
+        console.log("PSPDFKit loaded", instance);
+    })
+    .catch(function(error) {
+        console.error(error.message);
     });
 </script>
 @endsection
