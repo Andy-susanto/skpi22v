@@ -85,11 +85,18 @@
                                     <th>Download Dokumen</th>
                                     <td>:</td>
                                     <td>
-                                        <div id="pspdfkit" style="height: 100vh"></div>
-                                     <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
-                                            class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
-                                    <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
-                                            class="fa fa-paperclip" aria-hidden="true"></i> File SK</a>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div id="sertifikat" style="height: 50vh"></div>
+                                                <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
+                                                    class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="file-sk" style="height: 50vh"></div>
+                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
+                                                    class="fa fa-paperclip" aria-hidden="true"></i> File SK</a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -104,8 +111,20 @@
 @section('js')
 <script>
     PSPDFKit.load({
-        container: "#pspdfkit",
+        container: "#sertifikat",
         document: "{{ asset('storage/' . $data->files->path) }}", // Add the path to your document here.
+    })
+    .then(function(instance) {
+        console.log("PSPDFKit loaded", instance);
+    })
+    .catch(function(error) {
+        console.error(error.message);
+    });
+</script>
+<script>
+    PSPDFKit.load({
+        container: "#file-sk",
+        document: "{{ asset('storage/' . $data->file_sk->path) }}", // Add the path to your document here.
     })
     .then(function(instance) {
         console.log("PSPDFKit loaded", instance);
