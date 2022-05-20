@@ -29,11 +29,11 @@
                             <div class="form-group">
                                 <label for="">Status Kegiatan</label>
                                 <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
-                                    <option value="" selected>Semua</option>
-                                    <option value="3">Menunggu Validasi Operator</option>
+                                    <option value="3" selected>Menunggu Validasi Operator</option>
                                     <option value="1">Menunggu Validasi Wakil Dekan</option>
                                     <option value="4">di Validasi</option>
                                     <option value="2">Tidak di Terima</option>
+                                    <option value="">Semua</option>
                                 </select>
                             </div>
                         </div>
