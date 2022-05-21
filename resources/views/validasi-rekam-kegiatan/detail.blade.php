@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">Detail Validasi <a name="" id="" class="btn btn-secondary btn-xs" href="{{route('validasi-rekam-kegiatan.index')}}" role="button"><i class="fa fa-reply" aria-hidden="true"></i> Kembali</a></div>
+                    <div class="card-header"><a name="" id="" class="btn btn-secondary btn-xs" href="{{route('validasi-rekam-kegiatan.index')}}" role="button"><i class="fa fa-reply" aria-hidden="true"></i> Kembali</a></div>
                     <div class="card-body">
                         <table class="table table-hover">
                             <tbody>
