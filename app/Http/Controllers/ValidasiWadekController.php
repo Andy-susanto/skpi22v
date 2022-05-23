@@ -375,7 +375,7 @@ class ValidasiWadekController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id,$type,$mhspt_id)
+    public function update(Request $request,$type,$id,$mhspt_id)
     {
         if($type == 'penghargaan'){
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi',$id)->update([
