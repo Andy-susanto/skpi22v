@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organisasi;
-use App\Models\PenerimaHibah;
-use App\Models\PengabdianMasyarakat;
 use Exception;
+use App\Models\Magang;
+use App\Models\Beasiswa;
 use Barryvdh\DomPDF\PDF;
+use App\Models\Organisasi;
 use Illuminate\Http\Request;
+use App\Models\Kewirausahaan;
+use App\Models\PenerimaHibah;
 use PhpOffice\PhpWord\PhpWord;
 use Elibyy\TCPDF\Facades\TCPDF;
 use App\Models\SeminarPelatihan;
+use App\Models\KemampuanBahasaAsing;
+use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\View;
 
@@ -32,6 +36,14 @@ class CetakController extends Controller
         $data['hibah'] = PenerimaHibah::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
 
         $data['organisasi'] = Organisasi::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['magang'] = Magang::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['kewirausahaan'] = Kewirausahaan::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['bahasa'] = KemampuanBahasaAsing::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
+
+        $data['beasiswa'] = Beasiswa::where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->where('status_validasi',4)->get();
 
         return view('cetak.index',compact('data'));
     }
