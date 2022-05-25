@@ -46,7 +46,6 @@
                             <th>Jenis Kegiatan</th>
                             <th>Nama Kegiatan / Nama Promotor / Nama Beasiswa / Bahasa / Nama Usaha / Judul Hasil Karya</th>
                             <th>Status</th>
-                            <th>Bukti Kegiatan</th>
                             <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                         </tr>
                     </thead>
@@ -115,12 +114,6 @@
                     {
                         data: 'validasi',
                         name: 'validasi'
-                    },
-                    {
-                        data: 'bukti_kegiatan',
-                        name: 'bukti_kegiatan',
-                        orderable: false,
-                        searchable: false
                     },
                     {
                         data: 'action',

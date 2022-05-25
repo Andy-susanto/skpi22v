@@ -49,7 +49,6 @@
                                 <th>Program Studi</th>
                                 <th>Jenis Kegiatan</th>
                                 <th>Nama Kegiatan / Nama Promotor / Nama Beasiswa / Bahasa / Nama Usaha / Judul Hasil Karya</th>
-                                <th>Bukti Kegiatan</th>
                                 <th>Status</th>
                                 <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                             </tr>
@@ -142,12 +141,6 @@
                     {
                         data: 'program_studi',
                         name: 'program_studi'
-                    },
-                    {
-                        data: 'jenis_kegiatan',
-                        name: 'jenis_kegiatan',
-                        orderable: false,
-                        searchable: false
                     },
                     {
                         data: 'nama_kegiatan',
