@@ -12,7 +12,7 @@
                     <div class="col-md-1">
                         <div class="form-group">
                           <label for="">Tahun Kegiatan</label>
-                          <select class="form-control" name="" id="">
+                          <select class="form-control" name="" id="tahun" onchange="load_data();">
                            @php
                                $tahun_sekarang = date('Y');
                                $tahun_minimal = $tahun_sekarang - 15;
@@ -48,6 +48,11 @@
                                 <option value="2">Tidak di Terima</option>
                             </select>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a name="" id="" class="btn btn-success" href="#" role="button"> Export Data To Excel</a>
                     </div>
                 </div>
             </div>
@@ -96,7 +101,8 @@
                 ajax: {
                     data: {
                         id_jenis_kegiatan: $('#jenis_kegiatan').val(),
-                        status_validasi: $('#status_validasi').val()
+                        status_validasi: $('#status_validasi').val(),
+                        tahun:$('#tahun').val()
                     },
                     url: "{{ route('validasi-wadek.index') }}",
                 },

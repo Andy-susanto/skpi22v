@@ -24,4 +24,8 @@ class Hki extends Model
         return $this->belongsTo(Files::class,'file_bukti_id','id_files');
     }
 
+    public function mhspt(){
+        return $this->belongsTo(SiakadMhspt::class,'siakad_mhspt_id');
+    }
+
 }

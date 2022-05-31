@@ -24,4 +24,8 @@ class Publikasi extends Model
         return $this->belongsTo('App\Models\Files', 'bukti', 'id_files');
     }
 
+    public function mhspt(){
+        return $this->belongsTo('App\Models\SiakadMhspt', 'siakad_mhspt_id');
+    }
+
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hki;
 use App\Models\Magang;
 use App\Models\Beasiswa;
+use App\Models\Publikasi;
 use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use App\Models\Kewirausahaan;
@@ -246,27 +248,50 @@ class ValidasiRekamKegiatanController extends Controller
             }
 
             if ($request->id_jenis_kegiatan == 10 || $request->id_jenis_kegiatan == '') {
-                $karyaMahasiswa = KaryaMahasiswa::with('mhspt')->whereHas('mhspt',function($qp){
+
+                $hki = Hki::with('mhspt')->whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
                 })->orderBy('status_validasi','asc')->get();
 
-                $karyaMahasiswaMap = $karyaMahasiswa->map(function($item){
+                $hkiMap = $hki->map(function($item){
                     return [
-                        'id'             => $item->id_karya_mahasiswa,
+                        'id'             => $item->id_hki_mahasiswa,
                         'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                         'nim'            => $item->mhspt->no_mhs,
                         'prodi'          => $item->mhspt->prodi->nama_prodi,
-                        'jenis_kegiatan' => 'karya',
-                        'nama_kegiatan'  => $item->judul_hasil_karya,
+                        'jenis_kegiatan' => 'HKI',
+                        'nama_kegiatan'  => $item->nama_hki,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
                         'pesan'         => $item->pesan
                     ];
                 });
 
-                $data = $data->merge($karyaMahasiswaMap);
+                $data = $data->merge($hkiMap);
+
+                $publikasi = Publikasi::with('mhspt')->whereHas('mhspt',function($qp){
+                    $qp->FilterUnit();
+                })->when($request->status_validasi,function($q)use($request){
+                    $q->where('status_validasi',$request->status_validasi);
+                })->orderBy('status_validasi','asc')->get();
+
+                $publikasiMap = $publikasi->map(function($item){
+                    return [
+                        'id'             => $item->id_publikasi,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'publikasi',
+                        'nama_kegiatan'  => $item->judul,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($publikasiMap);
             }
 
             return DataTables::of($data)
@@ -372,6 +397,8 @@ class ValidasiRekamKegiatanController extends Controller
             $data = Kewirausahaan::find($id);
         }elseif($jenis == 'karya'){
             $data = KaryaMahasiswa::find($id);
+        }elseif($jenis == 'publikasi'){
+            $data = Publikasi::find($id);
         }
         return view('validasi-rekam-kegiatan.detail',compact('data','jenis'));
     }
@@ -434,7 +461,11 @@ class ValidasiRekamKegiatanController extends Controller
                 'status_validasi' => '1'
             ]);
         }else if($type == 'karya'){
-            KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
+            Hki::where('id_hki_mahasiswa',$id)->update([
+                'status_validasi' => '1'
+            ]);
+        }elseif ($type == 'publikasi') {
+            Publikasi::where('id_publikasi',$id)->update([
                 'status_validasi' => '1'
             ]);
         }
@@ -496,7 +527,12 @@ class ValidasiRekamKegiatanController extends Controller
                 'pesan' => $request->pesan
             ]);
         }else if($type == 'karya'){
-            KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
+            Hki::where('id_hki_mahasiswa',$id)->update([
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
+            ]);
+        }elseif($type == 'publikasi'){
+            Publikasi::where('id_publikasi',$id)->update([
                 'status_validasi' => '2',
                 'pesan' => $request->pesan
             ]);

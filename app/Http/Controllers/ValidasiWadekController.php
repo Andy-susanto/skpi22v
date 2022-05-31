@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\Models\Hki;
 use App\Models\Magang;
 use App\Models\Beasiswa;
+use App\Models\Publikasi;
 use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use App\Models\Kewirausahaan;
@@ -14,7 +17,6 @@ use Yajra\DataTables\DataTables;
 use App\Models\KemampuanBahasaAsing;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
-use DB;
 
 class ValidasiWadekController extends Controller
 {
@@ -32,6 +34,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
+                })->when($request->tahun,function($q) use ($request){
+                    $q->whereDate('tgl_mulai',$request->tahun);
                 })->orderBy('status_validasi','asc')->get();
 
                 $penghargaanMap = $penghargaan->map(function($item){
@@ -57,6 +61,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
+                })->when($request->tahun,function($q) use ($request){
+                    $q->whereDate('tgl_mulai',$request->tahun);
                 })->orderBy('status_validasi','asc')->get();
 
                 $seminarMap = $seminar->map(function($item){
@@ -82,6 +88,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
+                })->when($request->tahun,function($q) use ($request){
+                    $q->whereDate('tgl_mulai',$request->tahun);
                 })->orderBy('status_validasi','asc')->get();
 
                 $penerimaHibahMap = $penerimaHibah->map(function($item){
@@ -107,6 +115,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
+                })->when($request->tahun,function($q) use ($request){
+                    $q->whereDate('tgl_mulai',$request->tahun);
                 })->orderBy('status_validasi','asc')->get();
 
                 $pengabdianMasyarakatMap = $pengabdianMasyarakat->map(function($item){
@@ -132,6 +142,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
+                })->when($request->tahun,function($q) use ($request){
+                    $q->whereDate('tgl_mulai',$request->tahun);
                 })->orderBy('status_validasi','asc')->get();
 
                 $organisasiMap = $organisasi->map(function($item){
@@ -156,6 +168,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi,function($q)use($request){
                     $q->where('status_validasi',$request->status_validasi);
+                })->when($request->tahun,function($q) use ($request){
+                    $q->whereDate('tgl_mulai',$request->tahun);
                 })->orderBy('status_validasi','asc')->get();
 
                 $magangMap = $magang->map(function($item){
@@ -251,26 +265,49 @@ class ValidasiWadekController extends Controller
             }
 
             if ($request->id_jenis_kegiatan == 10 || $request->id_jenis_kegiatan == '') {
-                $karyaMahasiswa = KaryaMahasiswa::with('mhspt')->whereHas('mhspt',function($qp){
+                $hki = Hki::with('mhspt')->whereHas('mhspt',function($qp){
                     $qp->FilterUnit();
-                })->where('status_validasi','1')->orderBy('status_validasi','asc')->get();
+                })->when($request->status_validasi,function($q)use($request){
+                    $q->where('status_validasi',$request->status_validasi);
+                })->orderBy('status_validasi','asc')->get();
 
-                $karyaMahasiswaMap = $karyaMahasiswa->map(function($item){
+                $hkiMap = $hki->map(function($item){
                     return [
-                        'id'             => $item->id_karya_mahasiswa,
+                        'id'             => $item->id_hki_mahasiswa,
                         'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                         'nim'            => $item->mhspt->no_mhs,
                         'prodi'          => $item->mhspt->prodi->nama_prodi,
-                        'jenis_kegiatan' => 'karya',
-                        'nama_kegiatan'  => $item->judul_hasil_karya,
+                        'jenis_kegiatan' => 'HKI',
+                        'nama_kegiatan'  => $item->nama_hki,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'pesan'         => $item->pesan,
-                        'siakad_mhspt_id'=> $item->siakad_mhspt_id,
+                        'pesan'         => $item->pesan
                     ];
                 });
 
-                $data = $data->merge($karyaMahasiswaMap);
+                $data = $data->merge($hkiMap);
+
+                $publikasi = Publikasi::with('mhspt')->whereHas('mhspt',function($qp){
+                    $qp->FilterUnit();
+                })->when($request->status_validasi,function($q)use($request){
+                    $q->where('status_validasi',$request->status_validasi);
+                })->orderBy('status_validasi','asc')->get();
+
+                $publikasiMap = $publikasi->map(function($item){
+                    return [
+                        'id'             => $item->id_publikasi,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'publikasi',
+                        'nama_kegiatan'  => $item->judul,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'         => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($publikasiMap);
             }
 
             return DataTables::of($data)
@@ -414,7 +451,11 @@ class ValidasiWadekController extends Controller
                 'status_validasi' => '4'
             ]);
         }else if($type == 'karya'){
-            KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
+            Hki::where('id_hki_mahasiswa',$id)->update([
+                'status_validasi' => '4'
+            ]);
+        }elseif($type == 'publikasi'){
+            Publikasi::where('id_publikasi',$id)->update([
                 'status_validasi' => '4'
             ]);
         }
@@ -504,7 +545,12 @@ class ValidasiWadekController extends Controller
                 'pesan' => $request->pesan
             ]);
         }else if($type == 'karya'){
-            KaryaMahasiswa::where('id_karya_mahasiswa',$id)->update([
+            Hki::where('id_hki_mahasiswa',$id)->update([
+                'status_validasi' => '2',
+                'pesan' => $request->pesan
+            ]);
+        }elseif($type == 'publikasi'){
+            Publikasi::where('id_publikasi',$id)->update([
                 'status_validasi' => '2',
                 'pesan' => $request->pesan
             ]);
