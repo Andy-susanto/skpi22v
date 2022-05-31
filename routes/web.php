@@ -134,6 +134,8 @@ Route::middleware(['auth'])->group(function () {
         'update'
     ]);
 
+    Route::get('exportExcel',[ValidasiWadekController::class,'exportExcel'])->name('exportExcel');
+
     // Tabbed View
     Route::get('tabbed-menu',function(){
         return view('tab-menu');

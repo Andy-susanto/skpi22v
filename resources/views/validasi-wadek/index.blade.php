@@ -52,7 +52,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <a name="" id="" class="btn btn-success" href="#" role="button"> Export Data To Excel</a>
+                        <a name="" onclick="exportExcel();" id="" class="btn btn-success" href="#" role="button"> Export Data To Excel</a>
                     </div>
                 </div>
             </div>
@@ -153,6 +153,14 @@
             }, function() {
 
             })
+        }
+
+        function exportExcel(){
+            var tahun = $('#tahun').val();
+            var jenis_kegiatan = $('#jenis_kegiatan').val();
+            var status_validasi = $('#status_validasi').val();
+            var url = "{{ route('exportExcel') }}";
+            window.location.href = url + '?tahun=' + tahun + '&id_jenis_kegiatan=' + jenis_kegiatan + '&status_validasi=' + status_validasi;
         }
 
         function tolak(id,text){
