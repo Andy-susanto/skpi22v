@@ -20,6 +20,7 @@
                           @for ($i = $tahun_minimal; $i <= $tahun_sekarang; $i++)
                             <option value="{{ $i }}" {{ $i == $tahun_sekarang ? 'selected' : '' }}>{{ $i }}</option>
                           @endfor
+                          <option value="">Semua</option>
                           </select>
                         </div>
                     </div>
