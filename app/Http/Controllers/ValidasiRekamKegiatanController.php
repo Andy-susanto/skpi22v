@@ -30,6 +30,7 @@ class ValidasiRekamKegiatanController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('akses-kegiatan-mahasiswa');
         if($request->ajax()){
             $data = collect();
             if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {

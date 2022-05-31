@@ -1,3 +1,4 @@
+@if(Auth::user()->can('update-kegiatan-mahasiswa'))
 <div class="dropdown z-0">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -27,3 +28,4 @@
         </a>
     </div>
 </div>
+@endif
