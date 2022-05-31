@@ -86,16 +86,20 @@
                                     <td>:</td>
                                     <td>
                                         <div class="row">
+                                            @if ($data->files()->exists())
                                             <div class="col-md-6">
                                                 <div id="sertifikat" style="height: 50vh"></div>
                                                 <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
                                                     class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
                                             </div>
+                                            @endif
+                                            @if($data->file_sk()->exists())
                                             <div class="col-md-6">
                                                 <div id="file-sk" style="height: 50vh"></div>
                                                 <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
                                                     class="fa fa-paperclip" aria-hidden="true"></i> File SK</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -109,6 +113,7 @@
 @stop
 @include('plugins.pspdfkit')
 @section('js')
+@if ($data->files()->exists())
 <script>
     PSPDFKit.load({
         container: "#sertifikat",
@@ -121,6 +126,8 @@
         console.error(error.message);
     });
 </script>
+@endif
+@if($data->file_sk()->exits())
 <script>
     PSPDFKit.load({
         container: "#file-sk",
@@ -133,4 +140,5 @@
         console.error(error.message);
     });
 </script>
+@endif
 @endsection

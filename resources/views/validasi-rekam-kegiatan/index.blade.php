@@ -143,14 +143,14 @@
                         name: 'program_studi'
                     },
                     {
-                        data: 'nama_kegiatan',
-                        name: 'nama_kegiatan'
-                    },
-                    {
-                        data: 'bukti_kegiatan',
-                        name: 'bukti_kegiatan',
+                        data: 'jenis_kegiatan',
+                        name: 'jenis_kegiatan',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'nama_kegiatan',
+                        name: 'nama_kegiatan'
                     },
                     {
                         data: 'validasi',
