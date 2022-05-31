@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header bg-white">
                 <div class="row">
-                    <div class="col-md-1">
+                    <div class="col-md-4">
                         <div class="form-group">
                           <label for="">Tahun Kegiatan</label>
                           <select class="form-control" name="" id="tahun" onchange="load_data();">
