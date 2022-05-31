@@ -9,6 +9,22 @@
         <div class="card">
             <div class="card-header bg-white">
                 <div class="row">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                          <label for="">Tahun Kegiatan</label>
+                          <select class="form-control" name="" id="">
+                           @php
+                               $tahun_sekarang = date('Y');
+                               $tahun_minimal = $tahun_sekarang - 15;
+                           @endphp
+                          @for ($i = $tahun_minimal; $i <= $tahun_sekarang; $i++)
+                            <option value="{{ $i }}" {{ $i == $tahun_sekarang ? 'selected' : '' }}>{{ $i }}</option>
+                          @endfor
+                          </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Jenis Kegiatan</label>
