@@ -127,7 +127,7 @@
     });
 </script>
 @endif
-@if($data->file_sk()->exits())
+@if($data->file_sk()->exists())
 <script>
     PSPDFKit.load({
         container: "#file-sk",
