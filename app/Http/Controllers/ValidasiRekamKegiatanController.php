@@ -340,8 +340,8 @@ class ValidasiRekamKegiatanController extends Controller
                     ->addColumn("action",function($row){
                         return view('validasi-rekam-kegiatan.aksi',compact('row'));
                     })
-                    ->rawColumns(['action','nama_mahasiswa','nim','program_studi','jenis_kegiatan','nama_kegiatan','bukti_kegiatan'])
-                    ->make(true);
+                    ->rawColumns(['action','validasi','bukti_kegiatan'])
+                    ->toJson();
                 }
 
         return view('validasi-rekam-kegiatan.index');

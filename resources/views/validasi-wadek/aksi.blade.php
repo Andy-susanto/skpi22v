@@ -23,7 +23,7 @@
                 id="hapus{{ $row['id'] . $row['jenis_kegiatan'] }}" method="post">
                 @csrf
                 @method('delete') --}}
-            </form>
+            {{-- </form> --}}
 
         {{-- Detail Form --}}
         <a class="dropdown-item" href="{{route('validasi.show',[$row['id'],$row['jenis_kegiatan']])}}">
