@@ -89,15 +89,13 @@
                                             @if ($data->files()->exists())
                                             <div class="col-md-6">
                                                 <div id="sertifikat" style="height: 50vh"></div>
-                                                <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
-                                                    class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
+                                                <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i class="fa fa-download" aria-hidden="true"></i> Download File Sertifikat</a>
                                             </div>
                                             @endif
                                             @if($data->file_sk()->exists())
                                             <div class="col-md-6">
                                                 <div id="file-sk" style="height: 50vh"></div>
-                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
-                                                    class="fa fa-paperclip" aria-hidden="true"></i> File SK</a>
+                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i class="fa fa-download" aria-hidden="true"></i>Download File SK</a>
                                             </div>
                                             @endif
                                         </div>
