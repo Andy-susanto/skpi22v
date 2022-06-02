@@ -219,15 +219,15 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-            <div class="col-2">
-                <a name="" id="" class="btn btn-success btn-lg" href="#" role="button">Validasi</a>
-            </div>
-            <div class="col-2">
-                <a name="" id="" class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
-            </div>
-        </div>
     @endif
+    <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
+        <div class="col-2">
+            <a name="" id="" class="btn btn-success btn-lg" href="#" role="button">Validasi</a>
+        </div>
+        <div class="col-2">
+            <a name="" id="" class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+        </div>
+    </div>
 @stop
 @include('plugins.pspdfkit')
 @section('js')
