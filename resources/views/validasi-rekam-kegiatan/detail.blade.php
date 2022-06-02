@@ -107,11 +107,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
-                <a name="" id="" class="btn btn-success btn-lg" href="#" role="button">Validasi</a>
-            </div>
-        </div>
     @elseif ($jenis == 'seminar')
         <div class="row">
             <div class="col-12">
