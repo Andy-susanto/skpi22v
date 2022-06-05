@@ -2,14 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-md-6">
-                        <a name="" id="" class="btn btn-secondary btn-xs" href="{{route('validasi-rekam-kegiatan.index')}}" role="button"><i class="fa fa-reply" aria-hidden="true"></i> Kembali</a>
-                    </div>
-                    <div class="col-md-6">
-                        <span class="badge badge-primary">Total Bobot : {{Helper::hitung_bobot($data->id_mhspt)}}</span>
-                    </div>
-                </div>
+                @include('partials.detail-button-header', ['data' => $data])
             </div>
             <div class="card-body">
                 <nav>
