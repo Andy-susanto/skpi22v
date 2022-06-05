@@ -541,4 +541,8 @@ class ValidasiRekamKegiatanController extends Controller
         toastr()->success('Berhasil menvalidasi data');
         return back();
     }
+
+    public function riwayat_kegiatan(Request $request){
+
+    }
 }

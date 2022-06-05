@@ -133,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('print', CetakController::class)->except([
         'update'
     ]);
+    Route::resource('cetak-sementara', CetakSementaraController::class);
 
     Route::get('exportExcel',[ValidasiWadekController::class,'exportExcel'])->name('exportExcel');
 
