@@ -3,6 +3,7 @@
 use App\Http\Controllers\BeasiswaController;
 use App\Http\Controllers\CetakController;
 use App\Http\Controllers\CetakOperatorController;
+use App\Http\Controllers\CetakSementaraController;
 use App\Http\Controllers\FungsiAjaxController;
 use App\Http\Controllers\KaryaMahasiswaController;
 use App\Http\Controllers\KemampuanBahasaAsingController;
@@ -133,7 +134,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('print', CetakController::class)->except([
         'update'
     ]);
-    Route::resource('cetak-sementara', CetakSementaraController::class);
+    Route::resource('cetak-surat-keterangan', CetakSementaraController::class);
 
     Route::get('exportExcel',[ValidasiWadekController::class,'exportExcel'])->name('exportExcel');
 
