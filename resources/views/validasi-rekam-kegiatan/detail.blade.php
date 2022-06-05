@@ -116,9 +116,9 @@
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th class="bg-teal-400">Nama</th>
                                     <td>:</td>
-                                    <td>{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
+                                    <td class="bg-lime-400">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
                                 </tr>
                                 <tr>
                                     <th>NIM</th>
@@ -152,9 +152,19 @@
                                 </td>
                                 </tr>
                                 <tr>
-                                    <th>Status Validasi</th>
+                                    <th class="bg-teal-400">Status Validasi</th>
                                     <td>:</td>
-                                    <td>
+                                    <td class="
+                                            @if ($data->status_validasi == '3')
+                                              bg-orange-300
+                                            @elseif($data->status_validasi == '1')
+                                                bg-blue-300
+                                            @elseif($data->status_validasi == '4')
+                                                bg-green-300
+                                            @elseif($data->status_validasi == '2')
+                                                bg-red-300
+                                            @endif
+                                    ">
                                         @if ($data->status_validasi == '3')
                                         <span class="badge badge-warning"><i>Menunggu Verifikasi
                                                 Operator</i></span>
@@ -192,15 +202,13 @@
                                             @if ($data->files()->exists())
                                             <div class="col-md-6">
                                                 <div id="sertifikat" style="height: 50vh"></div>
-                                                <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i
-                                                    class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a>
+                                                <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i class="fa fa-download" aria-hidden="true"></i> Download File Sertifikat</a>
                                             </div>
                                             @endif
                                             @if($data->file_sk()->exists())
                                             <div class="col-md-6">
                                                 <div id="file-sk" style="height: 50vh"></div>
-                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i
-                                                    class="fa fa-paperclip" aria-hidden="true"></i> File SK</a>
+                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i class="fa fa-download" aria-hidden="true"></i> Download File SK</a>
                                             </div>
                                             @endif
                                         </div>
@@ -223,6 +231,7 @@
     </div>
 @stop
 @include('plugins.pspdfkit')
+@include('plugins.alertify')
 @section('js')
 @if ($data->files()->exists())
 <script>
@@ -238,6 +247,7 @@
     });
 </script>
 @endif
+@if (method_exists($data,'file_sk'))
 @if($data->file_sk()->exists())
 <script>
     PSPDFKit.load({
@@ -251,5 +261,6 @@
         console.error(error.message);
     });
 </script>
+@endif
 @endif
 @endsection
