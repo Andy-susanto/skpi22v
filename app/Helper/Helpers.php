@@ -230,10 +230,9 @@ class Helpers
         return $now;
     }
 
-    public static function hitung_bobot(){
-
-
-        $bobot = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id',auth()->user()->siakad_mhspt->id_mhs_pt)->first();
+    public static function hitung_bobot($mhspt=null){
+        $id = $mhspt = null ? auth()->user()->siakad_mhspt->id_mhs_pt : $mhspt;
+        $bobot = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id',$id)->first();
          return $bobot->bobot ?? 0;
     }
 
