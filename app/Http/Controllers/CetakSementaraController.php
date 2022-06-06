@@ -111,7 +111,63 @@ class CetakSementaraController extends Controller
         $pdf::ln(5);
         $nomor = '<p style="line-height: 0px;font-weight:bold;text-align:center;font-size:10px;margin-top:100px">SURAT KETERANGAN</p>';
         $nomor .= '<p style="line-height: 0px;text-align:center;font-size:8px;margin-top:-10px">Nomor : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/UN21.9/PK.05.05/2022</span></p>';
-        $pdf::writeHtml($nomor  ,true,false,true,false,'');
+        $pdf::writeHTML($nomor  ,true,false,true,false,'');
+        $pdf::ln(5);
+        $main = 'Yang bertanda tangan dibawah ini :';
+        $pdf::writeHTML($main  ,true,false,true,false,'');
+        $main1 = '<table border="0" cellspadding="0" cellspacing="0">
+                    <tr>
+                        <td width="30"></td><td width="120">Nama</td><td width="300">: <b></b></td>
+                    </tr>
+                    <tr>
+                    <td width="30"></td><td width="120">NIP</td><td width="300">: <b></b></td>
+                    </tr>
+                    <tr>
+                    <td width="30"></td><td width="120">Pangkat / Golongan</td><td width="300">: <b></b></td>
+                    </tr>
+                    <tr>
+                    <td width="30"></td><td width="120">Jabatan</td><td width="300">: <b></b></td>
+                    </tr>
+                    <tr>
+                    <td width="30"></td><td width="120">Instansi</td><td width="300">: <b></b></td>
+                    </tr></table>';
+        $pdf::writeHTML($main1, true, false, true, false, '');
+        // $pdf::ln(5);
+        $main2 = 'Dengan ini menerangkan bahwa :';
+        $pdf::writeHTML($main2,true,false,true,false,'');
+        $main3 = '<table border="0" cellspadding="0" cellspacing="0">
+                    <tr>
+                    <td width="30"></td><td width="120">Nama</td><td width="300">: <b></b></td>
+                    </tr>
+                    <tr>
+                    <td width="30"></td><td width="120">NIM</td><td width="300">: <b></b></td>
+                    </tr>
+                    <tr>
+                    <td width="30"></td><td width="120">Prodi</td><td width="300">: <b></b></td>
+                    </tr></table>';
+        $pdf::writeHTML($main3, true, false, true, false, '');
+        // $pdf::ln(5);
+        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif 180</span>';
+        $close.="</body></html>";
+        $pdf::writeHTML($close,true,false,true,false,'');
+
+        // $pdf::ln(5);
+        $pejabat='<table border="0" cellpadding="0" cellspacing="0">';
+        $pejabat.='<tr><td width="260"></td><td width="220">dikeluarkan di JAMBI,</td></tr>';
+        $pejabat.='<tr><td width="260"></td><td width="220">pada tanggal,</td></tr>';
+        $pejabat.='<tr><td width="260"></td><td width="220">Wakil Dekan Bidang Kemahasiswaan dan Alumni,</td></tr>';
+        $pejabat.='</table>';
+        $pdf::writeHTML($pejabat, true, false, true, false, '');
+        $pdf::ln(15);
+        $nmpejabat='<table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="260"></td><td width="220"><b><b>'.'nama pejabat'.'</b></b></td>
+                </tr>
+                <tr>
+                    <td width="260"></td><td width="220">NIP '.'000000000'.'</td>
+                </tr>
+                </table>';
+        $pdf::writeHTML($nmpejabat, true, false, true, false, '');
         $pdf::Output('surat_tugas.pdf');
     }
 
