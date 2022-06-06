@@ -75,17 +75,17 @@ class CetakSementaraController extends Controller
      */
     public function show($id)
     {
-        // $filename = 'Surat Keterangan';
-        // $html = view('cetak.draft-cetak')->render();
+        $filename = 'Surat Keterangan';
+        $html = view('cetak.draft-cetak')->render();
 
-        // $pdf = new TCPDF;
-        // $pdf::SetTitle('Surat Keterangan');
-        // $pdf::AddPage();
-        // $pdf::writeHtml($html,true,false,true,false,'');
-        // $pdf::Output(public_path($filename),'F');
-        // return response()->download(public_path($filename));
+        $pdf = new TCPDF;
+        $pdf::SetTitle('Surat Keterangan');
+        $pdf::AddPage();
+        $pdf::writeHtml($html,true,false,true,false,'');
+        $pdf::Output(public_path($filename),'F');
+        return response()->download(public_path($filename));
 
-        return view('cetak.draft-cetak');
+        // return view('cetak.draft-cetak');
 
     }
 
