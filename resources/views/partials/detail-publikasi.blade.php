@@ -10,12 +10,12 @@
                         <tr>
                             <th class="bg-teal-400">Nama</th>
                             <td>:</td>
-                            <td class="bg-lime-400">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
+                            <td class="bg-lime-400 font-bold text-xl">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
                         </tr>
                         <tr>
-                            <th>NIM</th>
+                            <th class="bg-teal-400">NIM</th>
                             <td>:</td>
-                            <td>{{ $data->mhspt->no_mhs }}</td>
+                            <td class="bg-blue-400 font-bold text-lg">{{ $data->mhspt->no_mhs }}</td>
                         </tr>
                         <tr>
                             <th>Program Studi</th>

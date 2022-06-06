@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PengaturanUmum;
+use App\Models\RekapBobot;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CetakSementaraController extends Controller
 {
@@ -11,8 +14,34 @@ class CetakSementaraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $min_bobot = PengaturanUmum::where('id',1)->first();
+        if($request->ajax()){
+            $data = RekapBobot::with('mhspt')->whereHas('mhspt',function($q){
+                $q->FilterUnit();
+            })->where('bobot','>=',$min_bobot->value);
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn("nama_mahasiswa",function($row){
+                        return $row->mhspt->mahasiswa->nama_mahasiswa;
+                    })
+                    ->addColumn("nim",function($row){
+                        return $row->mhspt->no_mhs;
+                    })
+                    ->addColumn('nama_prodi',function($row){
+                        return $row->mhspt->prodi->nama_prodi;
+                    })
+                    ->addColumn('total_bobot',function($row){
+                        return $row->bobot;
+                    })
+                    ->addColumn('action',function($row){
+                        return view('cetak.cetak-aksi',compact('row'));
+                    })
+                    ->rawColumns(['action'])
+                    ->toJson();
+        }
         return view('cetak.sementara');
     }
 
