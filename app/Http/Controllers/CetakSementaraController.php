@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PengaturanUmum;
 use App\Models\RekapBobot;
 use Illuminate\Http\Request;
+use Elibyy\TCPDF\Facades\TCPDF;
 use Yajra\DataTables\DataTables;
 
 class CetakSementaraController extends Controller
@@ -52,7 +53,7 @@ class CetakSementaraController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -74,7 +75,18 @@ class CetakSementaraController extends Controller
      */
     public function show($id)
     {
-        //
+        // $filename = 'Surat Keterangan';
+        // $html = view('cetak.draft-cetak')->render();
+
+        // $pdf = new TCPDF;
+        // $pdf::SetTitle('Surat Keterangan');
+        // $pdf::AddPage();
+        // $pdf::writeHtml($html,true,false,true,false,'');
+        // $pdf::Output(public_path($filename),'F');
+        // return response()->download(public_path($filename));
+
+        return view('cetak.draft-cetak');
+
     }
 
     /**
