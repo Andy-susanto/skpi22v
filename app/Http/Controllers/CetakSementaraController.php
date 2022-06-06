@@ -75,18 +75,41 @@ class CetakSementaraController extends Controller
      */
     public function show($id)
     {
-        $filename = 'Surat Keterangan';
-        $html = view('cetak.draft-cetak')->render();
-
         $pdf = new TCPDF;
-        $pdf::SetTitle('Surat Keterangan');
-        $pdf::AddPage();
-        $pdf::writeHtml($html,true,false,true,false,'');
-        $pdf::Output(public_path($filename),'F');
-        return response()->download(public_path($filename));
+        $pdf::SetTItle('Surat Keterangan');
+        $pdf::SetFont('times');
+        $pdf::SetFontSize(12);
+        $pdf::setMargins(20,5,20,5);
+		$pdf::AddPage('P', 'A4');
+		$pdf::SetAutoPageBreak(TRUE, 0);
 
-        // return view('cetak.draft-cetak');
-
+        $logo = 'https://skpi.unja.ac.id/cetak/logo.png';
+        $pdf::Image($logo, 15, 7, 23, 23, '', '', '', false, 300, '', false, false, 0);
+        $tb=0;
+        $surat = '';
+        $surat.= "<html><head></head><body><style>body {font-family: Times New Roman, Helvetica;} </style>";
+        $surat.='<div style="text-align:center; padding:0px; margin:0px;">';
+        $surat.='<p style="line-height: 0px; font-size: 12px; color:blue; ">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET DAN TEKNOLOGI</p>';
+        $surat.='<p style="line-height: 0px; font-size: 12px; color: orange; ">UNIVERSITAS JAMBI</p>';
+        $surat.='<p style="line-height: 0px; color: orange; font-size: 14px">FAKULTAS SAINS DAN TEKNOLOGI</p>';
+        $tb+=3.5;
+        $surat.='<p style="line-height: 0px; font-size: 10px; color:  blue; ">Jalan Raya Jambi - Ma. Bulian KM. 15 Mendalo Indah, Kode Pos 36361</p>';
+        $surat.='<p style="line-height: 0px; font-size: 10px; color: blue; ">Laman : http://fst.unja.ac.id.</p>';
+        $tb+=5;
+        $surat.="</div>";
+        $pdf::writeHTML($surat, true, false, true, false, '');
+        $ln1=31+$tb;
+        $ln2=31.5+$tb;
+        $ln3=31.6+$tb;
+        $ln4=31.7+$tb;
+        $ln5=31.8+$tb;
+        $pdf::Line(20, $ln1, 190, $ln1);
+		$pdf::Line(20, $ln2, 190, $ln2);
+		$pdf::Line(20, $ln3, 190, $ln3);
+		$pdf::Line(20, $ln4, 190, $ln4);
+        $pdf::Line(20, $ln5, 190, $ln5);
+        $nomor = '<div style="font-weight:bold;">SURAT KETERANGAN</div>';
+        $pdf::Output('surat_tugas.pdf');
     }
 
     /**

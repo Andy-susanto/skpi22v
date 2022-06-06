@@ -18,26 +18,14 @@
         <tr>
             <td><img src="http://skpi.unja.ac.id/cetak/logo.png" height="3cm" width="3cm"></td>
             <td>
-                <table cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td style="color: blue;font-size:small; align: center;">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN,</td>
-                    </tr>
-                    <tr>
-                        <td style="color: blue;font-size:small; align: center;">RISET, DAN TEKNOLOGI</td>
-                    </tr>
-                    <tr>
-                        <td style="color: orange;font-size:small; align: center;">UNIVERSITAS JAMBI</td>
-                    </tr>
-                    <tr>
-                        <td style="color: orange;font-size:small; align: center;">FAKULTAS SAINS DAN TEKNOLOGI</td>
-                    </tr>
-                    <tr>
-                        <td style="color: blue;font-size:small; align: center;">Jalan Raya Jambi - Ma. Bulian KM. 15 Mendalo Indah , Kode Pos 36361</td>
-                    </tr>
-                    <tr>
-                        <td style="color: blue;font-size:small; align: center;">Laman : http://fst.unja.ac.id</td>
-                    </tr>
-                </table>
+                <ol>
+                    <li style="color: blue;font-size:small; align: center;">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN,</li>
+                    <li style="color: blue;font-size:small; align: center;">RISET, DAN TEKNOLOGI</li>
+                    <li style="color: orange;font-size:small; align: center;">UNIVERSITAS JAMBI</li>
+                    <li style="color: orange;font-size:small; align: center;">FAKULTAS SAINS DAN TEKNOLOGI</li>
+                    <li style="color: blue;font-size:small; align: center;">Jalan Raya Jambi - Ma. Bulian KM. 15 Mendalo Indah , Kode Pos 36361</li>
+                    <li style="color: blue;font-size:small; align: center;">Laman : http://fst.unja.ac.id</li>
+                </ol>
             </td>
         </tr>
     </table>
