@@ -108,8 +108,9 @@ class CetakSementaraController extends Controller
 		$pdf::Line(20, $ln3, 190, $ln3);
 		$pdf::Line(20, $ln4, 190, $ln4);
         $pdf::Line(20, $ln5, 190, $ln5);
-        $nomor = '<div style="font-weight:bold;text-align:center">SURAT KETERANGAN</div>';
-        $nomor .= '<div style="text-align:center">Nomor : <span style="padding-left:150px;">/UN21.9/PK.05.05/2022</span></div>';
+        $pdf::ln(5);
+        $nomor = '<p style="line-height: 0px;font-weight:bold;text-align:center;font-size:10px;margin-top:100px">SURAT KETERANGAN</p>';
+        $nomor .= '<p style="line-height: 0px;text-align:center;font-size:8px;margin-top:-10px">Nomor : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/UN21.9/PK.05.05/2022</span></p>';
         $pdf::writeHtml($nomor  ,true,false,true,false,'');
         $pdf::Output('surat_tugas.pdf');
     }
