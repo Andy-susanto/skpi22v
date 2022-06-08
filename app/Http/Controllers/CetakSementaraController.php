@@ -183,7 +183,8 @@ class CetakSementaraController extends Controller
                 </tr>
                 </table>';
         $pdf::writeHTML($nmpejabat, true, false, true, false, '');
-        $pdf::Output('surat_tugas.pdf');
+        $pdf::IncludeJS("print();");
+        $pdf::Output('surat_tugas.pdf','I');
     }
 
     /**
