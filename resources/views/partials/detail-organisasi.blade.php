@@ -10,12 +10,12 @@
                         <tr>
                             <th class="bg-teal-400">Nama</th>
                             <td>:</td>
-                            <td class="bg-lime-400">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
+                            <td class="bg-lime-400 font-bold text-xl">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
                         </tr>
                         <tr>
-                            <th>NIM</th>
+                            <th class="bg-teal-400">NIM</th>
                             <td>:</td>
-                            <td>{{ $data->mhspt->no_mhs }}</td>
+                            <td class="bg-blue-400 font-bold text-lg">{{ $data->mhspt->no_mhs }}</td>
                         </tr>
                         <tr>
                             <th>Program Studi</th>
@@ -111,4 +111,26 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
+    @if (in_array($data->status_validasi, ['2', '3']))
+        <div class="col-2">
+            <a name="" id="" class="btn btn-success btn-lg"
+                onclick="konfirmasi('update'+{{ $data->id_organisasi }}+'organisasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                href="#" role="button">Validasi</a>
+            <form
+                action="{{ route('validasi.update', ['organisasi', $data->id_organisasi]) }}"
+                id="update{{ $data->id_organisasi . 'organisasi' }}" method="post">
+                @csrf
+                @method('put')
+            </form>
+        </div>
+    @endif
+    @if (in_array($data->status_validasi, ['1', '3']))
+        <div class="col-2">
+            <a name="" id="" onclick="tolakModal(this);"
+                data-url="{{ route('validasi.destroy', ['organisasi', $data->id_organisasi]) }}"
+                class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+        </div>
+    @endif
 </div>

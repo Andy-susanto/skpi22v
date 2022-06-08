@@ -10,7 +10,8 @@
                         <tr>
                             <th class="bg-teal-400">Nama</th>
                             <td>:</td>
-                            <td class="bg-lime-400 font-bold text-xl">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}</td>
+                            <td class="bg-lime-400 font-bold text-xl">{{ $data->mhspt->mahasiswa->nama_mahasiswa }}
+                            </td>
                         </tr>
                         <tr>
                             <th class="bg-teal-400">NIM</th>
@@ -20,46 +21,55 @@
                         <tr>
                             <th>Program Studi</th>
                             <td>:</td>
-                            <td>{{$data->mhspt->prodi->nama_prodi}}</td>
+                            <td>{{ $data->mhspt->prodi->nama_prodi }}</td>
                         </tr>
                         <tr>
                             <th>Tanggal Mulai</th>
                             <td>:</td>
-                            <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('dddd, D MMMM Y')}}</td>
+                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('dddd, D MMMM Y') }}</td>
                         </tr>
                         <tr>
                             <th>Tanggal Selesai</th>
                             <td>:</td>
-                            <td>{{\Carbon\Carbon::parse($data->selesai)->isoFormat('dddd, D MMMM Y')}}</td>
+                            <td>{{ \Carbon\Carbon::parse($data->selesai)->isoFormat('dddd, D MMMM Y') }}</td>
                         </tr>
                         <tr>
                             <th>Dosen Pembimbing</th>
                             <td>:</td>
                             <td>
-                            @if ($data->kepeg_pegawai()->exists())
-                                {{ $data->kepeg_pegawai->nip }} - {{ Helper::nama_gelar($data->kepeg_pegawai) }}
-                            @else
-                                -
-                            @endif
-                        </td>
+                                @if ($data->kepeg_pegawai()->exists())
+                                    {{ $data->kepeg_pegawai->nip }} - {{ Helper::nama_gelar($data->kepeg_pegawai) }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                         </tr>
                         <tr>
-                            <th>Status Validasi</th>
+                            <th class="bg-teal-400">Status Validasi</th>
                             <td>:</td>
-                            <td>
+                            <td
+                                class="
+                                @if ($data->status_validasi == '3') bg-orange-300
+                                @elseif($data->status_validasi == '1')
+                                    bg-blue-300
+                                @elseif($data->status_validasi == '4')
+                                    bg-green-300
+                                @elseif($data->status_validasi == '2')
+                                    bg-red-300 @endif
+                        ">
                                 @if ($data->status_validasi == '3')
-                                <span class="badge badge-warning"><i>Menunggu Verifikasi
-                                        Operator</i></span>
-                            @elseif($data->status_validasi == '1')
-                                <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
-                                        Dekan</i></span>
-                            @elseif($data->status_validasi == '4')
-                                <span class="badge badge-success">diValidasi</span>
-                            @elseif($data->status_validasi == '2')
-                                <span class="badge badge-danger"><i>di Tolak</i></span>
-                                <p class="italic"> Pesan : {{$data->pesan}}</p>
-                            @endif
-                        </td>
+                                    <span class="badge badge-warning"><i>Menunggu Verifikasi
+                                            Operator</i></span>
+                                @elseif($data->status_validasi == '1')
+                                    <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
+                                            Dekan</i></span>
+                                @elseif($data->status_validasi == '4')
+                                    <span class="badge badge-success">diValidasi</span>
+                                @elseif($data->status_validasi == '2')
+                                    <span class="badge badge-danger"><i>di Tolak</i></span>
+                                    <p class="italic"> Pesan : {{ $data->pesan }}</p>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <th>Penyelenggara</th>
@@ -82,16 +92,20 @@
                             <td>
                                 <div class="row">
                                     @if ($data->files()->exists())
-                                    <div class="col-md-6">
-                                        <div id="sertifikat" style="height: 50vh"></div>
-                                        <a href="{{ asset('storage/' . $data->files->path) }}" class="btn btn-sm btn-info text-white"><i class="fa fa-download" aria-hidden="true"></i> Download File Sertifikat</a>
-                                    </div>
+                                        <div class="col-md-6">
+                                            <div id="sertifikat" style="height: 50vh"></div>
+                                            <a href="{{ asset('storage/' . $data->files->path) }}"
+                                                class="btn btn-sm btn-info text-white"><i class="fa fa-download"
+                                                    aria-hidden="true"></i> Download File Sertifikat</a>
+                                        </div>
                                     @endif
-                                    @if($data->file_sk()->exists())
-                                    <div class="col-md-6">
-                                        <div id="file-sk" style="height: 50vh"></div>
-                                        <a href="{{ asset('storage/' . $data->file_sk->path) }}" class="btn btn-sm btn-info text-white"><i class="fa fa-download" aria-hidden="true"></i> Download File SK</a>
-                                    </div>
+                                    @if ($data->file_sk()->exists())
+                                        <div class="col-md-6">
+                                            <div id="file-sk" style="height: 50vh"></div>
+                                            <a href="{{ asset('storage/' . $data->file_sk->path) }}"
+                                                class="btn btn-sm btn-info text-white"><i class="fa fa-download"
+                                                    aria-hidden="true"></i> Download File SK</a>
+                                        </div>
                                     @endif
                                 </div>
                             </td>
@@ -101,4 +115,26 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
+    @if (in_array($data->status_validasi, ['2', '3']))
+        <div class="col-2">
+            <a name="" id="" class="btn btn-success btn-lg"
+                onclick="konfirmasi('update'+{{ $data->id_penghargaan_kejuaraan_kompetensi }}+'penghargaan','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                href="#" role="button">Validasi</a>
+            <form
+                action="{{ route('validasi.update', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
+                id="update{{ $data->id_penghargaan_kejuaraan_kompetensi . 'penghargaan' }}" method="post">
+                @csrf
+                @method('put')
+            </form>
+        </div>
+    @endif
+    @if (in_array($data->status_validasi, ['1', '3']))
+        <div class="col-2">
+            <a name="" id="" onclick="tolakModal(this);"
+                data-url="{{ route('validasi.destroy', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
+                class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+        </div>
+    @endif
 </div>

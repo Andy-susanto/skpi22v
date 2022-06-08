@@ -9,9 +9,9 @@
     @elseif ($jenis == 'seminar')
         @include('partials.detail-seminar', ['data' => $data])
     @elseif ($jenis == 'hibah')
-        @include('partials.hibah.validasi-hibah', ['data' => $data])
+        @include('partials.detail-hibah', ['data' => $data])
     @elseif ($jenis == 'pengabdian')
-        @include('partials.detial-pengabdian', ['data' => $data])
+        @include('partials.detail-pengabdian', ['data' => $data])
     @elseif ($jenis == 'organisasi')
        @include('partials.detail-organisasi',['data' => $data])
         {{-- Panel Magang --}}
@@ -33,14 +33,34 @@
     @elseif ($jenis == 'publikasi')
         @include('partials.detail-publikasi',['data' => $data])
     @endif
-    <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-        <div class="col-2">
-            <a name="" id="" class="btn btn-success btn-lg" href="#" role="button">Validasi</a>
-        </div>
-        <div class="col-2">
-            <a name="" id="" class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+
+     <!-- Modal -->
+<div class="modal fade" id="modalTolak" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form method="post" action="" id="form-tolak-modal">
+                @csrf
+                @method('delete')
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="">Alasan Penolakan</label>
+                  <textarea class="form-control" name="pesan" id="" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">OK</button>
+            </div>
+            </form>
         </div>
     </div>
+</div>
 @stop
 @include('plugins.pspdfkit')
 @include('plugins.alertify')
@@ -75,4 +95,28 @@
 </script>
 @endif
 @endif
+
+<script>
+     function tolakModal(id){
+            $url = $(id).data('url');
+            $('#modalTolak').modal('show');
+            $('#form-tolak-modal').attr('action',$url);
+        }
+        function konfirmasi(id,text) {
+            alertify.confirm("Konfirmasi!",text, function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
+        function tolak(id,text){
+            alertify.prompt('Konfirmasi !!','Alasan Penolakan',text,function(evt, value) {
+                console.log(value);
+                // $('#' + id).submit();
+            },function(){
+
+            });
+
+        }
+</script>
 @endsection
