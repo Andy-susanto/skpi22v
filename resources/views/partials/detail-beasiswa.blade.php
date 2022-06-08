@@ -61,11 +61,6 @@
                         </td>
                         </tr>
                         <tr>
-                            <th>Penyelenggara</th>
-                            <td>:</td>
-                            <td>{{ $data->penyelenggara->nama }}</td>
-                        </tr>
-                        <tr>
                             <th>Tingkat</th>
                             <td>:</td>
                             <td>{{ $data->tingkat->nama }}</td>
