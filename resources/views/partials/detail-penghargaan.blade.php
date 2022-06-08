@@ -99,6 +99,7 @@
                                                     aria-hidden="true"></i> Download File Sertifikat</a>
                                         </div>
                                     @endif
+                                    @if (method_exists($data,'file_sk'))
                                     @if ($data->file_sk()->exists())
                                         <div class="col-md-6">
                                             <div id="file-sk" style="height: 50vh"></div>
@@ -106,6 +107,7 @@
                                                 class="btn btn-sm btn-info text-white"><i class="fa fa-download"
                                                     aria-hidden="true"></i> Download File SK</a>
                                         </div>
+                                    @endif
                                     @endif
                                 </div>
                             </td>
