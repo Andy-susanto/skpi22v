@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                @include('partials.detail-button-header', ['data' => $data])
+                @include('partials.detail-button-header', ['data' => $data,'type'=>$type])
             </div>
             <div class="card-body">
                 <nav>
