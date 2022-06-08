@@ -61,21 +61,6 @@
                         </td>
                         </tr>
                         <tr>
-                            <th>Penyelenggara</th>
-                            <td>:</td>
-                            <td>{{ $data->penyelenggara->nama }}</td>
-                        </tr>
-                        <tr>
-                            <th>Tingkat</th>
-                            <td>:</td>
-                            <td>{{ $data->tingkat->nama }}</td>
-                        </tr>
-                        <tr>
-                            <th>Prestasi</th>
-                            <td>:</td>
-                            <td>{{ $data->peran_prestasi->nama }}</td>
-                        </tr>
-                        <tr>
                             <th>Download Dokumen</th>
                             <td>:</td>
                             <td>
