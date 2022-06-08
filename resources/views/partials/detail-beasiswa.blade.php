@@ -33,17 +33,6 @@
                             <td>{{\Carbon\Carbon::parse($data->selesai)->isoFormat('dddd, D MMMM Y')}}</td>
                         </tr>
                         <tr>
-                            <th>Dosen Pembimbing</th>
-                            <td>:</td>
-                            <td>
-                            @if ($data->kepeg_pegawai()->exists())
-                                {{ $data->kepeg_pegawai->nip }} - {{ Helper::nama_gelar($data->kepeg_pegawai) }}
-                            @else
-                                -
-                            @endif
-                        </td>
-                        </tr>
-                        <tr>
                             <th class="bg-teal-400">Status Validasi</th>
                             <td>:</td>
                             <td class="
