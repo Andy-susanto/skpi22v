@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helpers;
 use App\Models\PengaturanUmum;
 use App\Models\RekapBobot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Elibyy\TCPDF\Facades\TCPDF;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class CetakSementaraController extends Controller
@@ -75,6 +78,18 @@ class CetakSementaraController extends Controller
      */
     public function show($id)
     {
+
+        $mahasiswa = RekapBobot::with('mhspt')->where('siakad_mhspt_id',$id)->first();
+        $wadek3 = DB::table('kepeg.unit_kerja_jabatan as a')
+                ->join('kepeg.pegawai as b','b.id_pegawai','=','a.id_pegawai')
+                ->join('kepeg.jabatan as c','c.id_jabatan','=','a.jabatan_id')
+                ->join('kepeg.unit_kerja as d','d.id_unit_kerja','=','a.unit_kerja_id')
+                ->join('kepeg.referensi_unit_kerja as e','e.id_ref_unit_kerja','=','d.referensi_unit_kerja_id')
+                ->join('kepeg.pangkat_golongan as f','f.id_pangkat_golongan','=','b.pangkat_golongan_id')
+                ->where('c.id_jabatan',45)
+                ->where('e.id_unit_kerja_siakad',11)
+                ->first();
+
         $pdf = new TCPDF;
         $pdf::SetTItle('Surat Keterangan');
         $pdf::SetFont('times');
@@ -117,19 +132,19 @@ class CetakSementaraController extends Controller
         $pdf::writeHTML($main  ,true,false,true,false,'');
         $main1 = '<table border="0" cellspadding="0" cellspacing="0">
                     <tr>
-                        <td width="30"></td><td width="120">Nama</td><td width="300">: <b></b></td>
+                        <td width="30"></td><td width="120">Nama</td><td width="300">: '.Helpers::nama_gelar($wadek3).'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">NIP</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">NIP</td><td width="300">: '.$wadek3->nip.'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">Pangkat / Golongan</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">Pangkat / Golongan</td><td width="300">: '.$wadek3->nama_pangkat.'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">Jabatan</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">Jabatan</td><td width="300">: '.$wadek3->nama_jabatan.'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">Instansi</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">Instansi</td><td width="300">: '.$wadek3->nama_ref_unit_kerja.'<b></b></td>
                     </tr></table>';
         $pdf::writeHTML($main1, true, false, true, false, '');
         // $pdf::ln(5);
@@ -137,34 +152,34 @@ class CetakSementaraController extends Controller
         $pdf::writeHTML($main2,true,false,true,false,'');
         $main3 = '<table border="0" cellspadding="0" cellspacing="0">
                     <tr>
-                    <td width="30"></td><td width="120">Nama</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">Nama</td><td width="300">: '.$mahasiswa->mhspt->mahasiswa->nama_mahasiswa.'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">NIM</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">NIM</td><td width="300">: '.$mahasiswa->mhspt->no_mhs.'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">Prodi</td><td width="300">: <b></b></td>
+                    <td width="30"></td><td width="120">Prodi</td><td width="300">: '.$mahasiswa->mhspt->prodi->nama_prodi.'<b></b></td>
                     </tr></table>';
         $pdf::writeHTML($main3, true, false, true, false, '');
         // $pdf::ln(5);
-        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif 180</span>';
+        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif '.Helpers::hitung_bobot($id).'</span>';
         $close.="</body></html>";
         $pdf::writeHTML($close,true,false,true,false,'');
 
         // $pdf::ln(5);
         $pejabat='<table border="0" cellpadding="0" cellspacing="0">';
         $pejabat.='<tr><td width="260"></td><td width="220">dikeluarkan di JAMBI,</td></tr>';
-        $pejabat.='<tr><td width="260"></td><td width="220">pada tanggal,</td></tr>';
+        $pejabat.='<tr><td width="260"></td><td width="220">pada tanggal '.Carbon::parse(now())->isoFormat('D MMMM Y').'</td></tr>';
         $pejabat.='<tr><td width="260"></td><td width="220">Wakil Dekan Bidang Kemahasiswaan dan Alumni,</td></tr>';
         $pejabat.='</table>';
         $pdf::writeHTML($pejabat, true, false, true, false, '');
         $pdf::ln(15);
         $nmpejabat='<table border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td width="260"></td><td width="220"><b><b>'.'nama pejabat'.'</b></b></td>
+                    <td width="260"></td><td width="220"><b><b>'.Helpers::nama_gelar($wadek3).'</b></b></td>
                 </tr>
                 <tr>
-                    <td width="260"></td><td width="220">NIP '.'000000000'.'</td>
+                    <td width="260"></td><td width="220">NIP '.$wadek3->nip.'</td>
                 </tr>
                 </table>';
         $pdf::writeHTML($nmpejabat, true, false, true, false, '');
