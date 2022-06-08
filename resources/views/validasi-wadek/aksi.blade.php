@@ -26,7 +26,7 @@
             {{-- </form> --}}
 
         {{-- Detail Form --}}
-        <a class="dropdown-item" href="{{route('validasi.show',[$row['id'],$row['jenis_kegiatan']])}}">
+        <a class="dropdown-item" href="{{route('validasi.show',[$row['id'],$row['jenis_kegiatan'],'wadek'])}}">
             <i class="fa fa-info" aria-hidden="true"></i> Detail
         </a>
     </div>

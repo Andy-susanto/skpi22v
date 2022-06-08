@@ -115,23 +115,42 @@
     </div>
 </div>
 <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-    @if (in_array($data->status_validasi, ['2', '3']))
+    @if ($type == 'operator')
+        @if (in_array($data->status_validasi, ['2', '3']))
+            <div class="col-2">
+                <a name="" id="" class="btn btn-success btn-lg"
+                    onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                    href="#" role="button">Validasi</a>
+                <form
+                    action="{{ route('validasi.update', ['publikasi', $data->id_publikasi]) }}"
+                    id="update{{ $data->id_publikasi . 'publikasi' }}" method="post">
+                    @csrf
+                    @method('put')
+                </form>
+            </div>
+        @endif
+        @if (in_array($data->status_validasi, ['1', '3']))
+            <div class="col-2">
+                <a name="" id="" onclick="tolakModal(this);"
+                    data-url="{{ route('validasi.destroy', ['publikasi', $data->id_publikasi]) }}"
+                    class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+            </div>
+        @endif
+    @elseif($type == 'wadek')
         <div class="col-2">
             <a name="" id="" class="btn btn-success btn-lg"
                 onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#" role="button">Validasi</a>
             <form
-                action="{{ route('validasi.update', ['publikasi', $data->id_publikasi]) }}"
+                action="{{ route('validasi-wadek.update', ['publikasi', $data->id_publikasi, $data->siakad_mhspt_id]) }}"
                 id="update{{ $data->id_publikasi . 'publikasi' }}" method="post">
                 @csrf
                 @method('put')
             </form>
         </div>
-    @endif
-    @if (in_array($data->status_validasi, ['1', '3']))
         <div class="col-2">
             <a name="" id="" onclick="tolakModal(this);"
-                data-url="{{ route('validasi.destroy', ['publikasi', $data->id_publikasi]) }}"
+                data-url="{{ route('validasi-wadek.destroy', ['publikasi', $data->id_publikasi]) }}"
                 class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
         </div>
     @endif

@@ -115,6 +115,7 @@
     </div>
 </div>
 <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
+    @if ($type == 'operator')
     @if (in_array($data->status_validasi, ['2', '3']))
         <div class="col-2">
             <a name="" id="" class="btn btn-success btn-lg"
@@ -135,4 +136,22 @@
                 class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
         </div>
     @endif
+@elseif($type == 'wadek')
+    <div class="col-2">
+        <a name="" id="" class="btn btn-success btn-lg"
+            onclick="konfirmasi('update'+{{ $data->id_pengabdian_masyarakat }}+'pengabdian','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+            href="#" role="button">Validasi</a>
+        <form
+            action="{{ route('validasi-wadek.update', ['pengabdian', $data->id_pengabdian_masyarakat, $data->siakad_mhspt_id]) }}"
+            id="update{{ $data->id_pengabdian_masyarakat . 'pengabdian' }}" method="post">
+            @csrf
+            @method('put')
+        </form>
+    </div>
+    <div class="col-2">
+        <a name="" id="" onclick="tolakModal(this);"
+            data-url="{{ route('validasi-wadek.destroy', ['pengabdian', $data->id_pengabdian_masyarakat]) }}"
+            class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+    </div>
+@endif
 </div>

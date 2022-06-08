@@ -158,23 +158,42 @@
     </div>
 </div>
 <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-    @if (in_array($data->status_validasi, ['2', '3']))
+    @if ($type == 'operator')
+        @if (in_array($data->status_validasi, ['2', '3']))
+            <div class="col-2">
+                <a name="" id="" class="btn btn-success btn-lg"
+                    onclick="konfirmasi('update'+{{ $data->id_seminar_pelatihan_workshop_diklat }}+'seminar','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                    href="#" role="button">Validasi</a>
+                <form
+                    action="{{ route('validasi.update', ['seminar', $data->id_seminar_pelatihan_workshop_diklat]) }}"
+                    id="update{{ $data->id_seminar_pelatihan_workshop_diklat . 'seminar' }}" method="post">
+                    @csrf
+                    @method('put')
+                </form>
+            </div>
+        @endif
+        @if (in_array($data->status_validasi, ['1', '3']))
+            <div class="col-2">
+                <a name="" id="" onclick="tolakModal(this);"
+                    data-url="{{ route('validasi.destroy', ['seminar', $data->id_seminar_pelatihan_workshop_diklat]) }}"
+                    class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+            </div>
+        @endif
+    @elseif($type == 'wadek')
         <div class="col-2">
             <a name="" id="" class="btn btn-success btn-lg"
                 onclick="konfirmasi('update'+{{ $data->id_seminar_pelatihan_workshop_diklat }}+'seminar','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#" role="button">Validasi</a>
             <form
-                action="{{ route('validasi.update', ['seminar', $data->id_seminar_pelatihan_workshop_diklat]) }}"
+                action="{{ route('validasi-wadek.update', ['seminar', $data->id_seminar_pelatihan_workshop_diklat, $data->siakad_mhspt_id]) }}"
                 id="update{{ $data->id_seminar_pelatihan_workshop_diklat . 'seminar' }}" method="post">
                 @csrf
                 @method('put')
             </form>
         </div>
-    @endif
-    @if (in_array($data->status_validasi, ['1', '3']))
         <div class="col-2">
             <a name="" id="" onclick="tolakModal(this);"
-                data-url="{{ route('validasi.destroy', ['seminar', $data->id_seminar_pelatihan_workshop_diklat]) }}"
+                data-url="{{ route('validasi-wadek.destroy', ['seminar', $data->id_seminar_pelatihan_workshop_diklat]) }}"
                 class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
         </div>
     @endif

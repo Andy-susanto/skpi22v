@@ -384,7 +384,7 @@ class ValidasiRekamKegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $jenis)
+    public function show($id, $jenis,$type)
     {
         $data = [];
         if ($jenis == 'penghargaan') {
@@ -410,7 +410,7 @@ class ValidasiRekamKegiatanController extends Controller
         } elseif ($jenis == 'publikasi') {
             $data = Publikasi::find($id);
         }
-        return view('validasi-rekam-kegiatan.detail', compact('data', 'jenis'));
+        return view('validasi-rekam-kegiatan.detail', compact('data', 'jenis','type'));
     }
 
     /**

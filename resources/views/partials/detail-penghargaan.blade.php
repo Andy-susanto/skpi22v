@@ -99,15 +99,15 @@
                                                     aria-hidden="true"></i> Download File Sertifikat</a>
                                         </div>
                                     @endif
-                                    @if (method_exists($data,'file_sk'))
-                                    @if ($data->file_sk()->exists())
-                                        <div class="col-md-6">
-                                            <div id="file-sk" style="height: 50vh"></div>
-                                            <a href="{{ asset('storage/' . $data->file_sk->path) }}"
-                                                class="btn btn-sm btn-info text-white"><i class="fa fa-download"
-                                                    aria-hidden="true"></i> Download File SK</a>
-                                        </div>
-                                    @endif
+                                    @if (method_exists($data, 'file_sk'))
+                                        @if ($data->file_sk()->exists())
+                                            <div class="col-md-6">
+                                                <div id="file-sk" style="height: 50vh"></div>
+                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}"
+                                                    class="btn btn-sm btn-info text-white"><i class="fa fa-download"
+                                                        aria-hidden="true"></i> Download File SK</a>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                             </td>
@@ -119,23 +119,42 @@
     </div>
 </div>
 <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-    @if (in_array($data->status_validasi, ['2', '3']))
+    @if ($type == 'operator')
+        @if (in_array($data->status_validasi, ['2', '3']))
+            <div class="col-2">
+                <a name="" id="" class="btn btn-success btn-lg"
+                    onclick="konfirmasi('update'+{{ $data->id_penghargaan_kejuaraan_kompetensi }}+'penghargaan','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                    href="#" role="button">Validasi</a>
+                <form
+                    action="{{ route('validasi.update', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
+                    id="update{{ $data->id_penghargaan_kejuaraan_kompetensi . 'penghargaan' }}" method="post">
+                    @csrf
+                    @method('put')
+                </form>
+            </div>
+        @endif
+        @if (in_array($data->status_validasi, ['1', '3']))
+            <div class="col-2">
+                <a name="" id="" onclick="tolakModal(this);"
+                    data-url="{{ route('validasi.destroy', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
+                    class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+            </div>
+        @endif
+    @elseif($type == 'wadek')
         <div class="col-2">
             <a name="" id="" class="btn btn-success btn-lg"
                 onclick="konfirmasi('update'+{{ $data->id_penghargaan_kejuaraan_kompetensi }}+'penghargaan','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#" role="button">Validasi</a>
             <form
-                action="{{ route('validasi.update', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
+                action="{{ route('validasi-wadek.update', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi, $data->siakad_mhspt_id]) }}"
                 id="update{{ $data->id_penghargaan_kejuaraan_kompetensi . 'penghargaan' }}" method="post">
                 @csrf
                 @method('put')
             </form>
         </div>
-    @endif
-    @if (in_array($data->status_validasi, ['1', '3']))
         <div class="col-2">
             <a name="" id="" onclick="tolakModal(this);"
-                data-url="{{ route('validasi.destroy', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
+                data-url="{{ route('validasi-wadek.destroy', ['penghargaan', $data->id_penghargaan_kejuaraan_kompetensi]) }}"
                 class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
         </div>
     @endif
