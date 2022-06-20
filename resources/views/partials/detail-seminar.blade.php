@@ -113,24 +113,27 @@
                                                 <div class="row">
                                                     @if ($data->files()->exists())
                                                         <div class="col-md-6">
-                                                            <div id="sertifikat" style="height: 50vh"></div>
+                                                            <object height="100%" width="100%" data="{{ asset('storage/' . $data->files->path) }}" type="application/pdf">
+                                                                <iframe height="100%" width="100%" src="https://docs.google.com/viewer?url={{ asset('storage/' . $data->files->path) }}&embedded=true"></iframe>
+                                                            </object>
                                                             <a href="{{ asset('storage/' . $data->files->path) }}"
-                                                                class="btn btn-sm btn-info text-white"><i
-                                                                    class="fa fa-download" aria-hidden="true"></i>
-                                                                Download File Sertifikat</a>
+                                                                class="btn btn-sm btn-info text-white"><i class="fa fa-download"
+                                                                    aria-hidden="true"></i> Download File Sertifikat</a>
                                                         </div>
                                                     @endif
-                                                    @if (method_exists($data,'file_sk'))
-                                                    @if ($data->file_sk()->exists())
-                                                        <div class="col-md-6">
-                                                            <div id="file-sk" style="height: 50vh"></div>
-                                                            <a href="{{ asset('storage/' . $data->file_sk->path) }}"
-                                                                class="btn btn-sm btn-info text-white"><i
-                                                                    class="fa fa-download" aria-hidden="true"></i>
-                                                                Download File SK</a>
-                                                        </div>
+                                                    @if (method_exists($data, 'file_sk'))
+                                                        @if ($data->file_sk()->exists())
+                                                            <div class="col-md-6">
+                                                                <object height="100%" width="100%" data="{{ asset('storage/' . $data->file_sk->path) }}" type="application/pdf">
+                                                                    <iframe height="100%" width="100%" src="https://docs.google.com/viewer?url={{ asset('storage/' . $data->file_sk->path) }}&embedded=true"></iframe>
+                                                                </object>
+                                                                <a href="{{ asset('storage/' . $data->file_sk->path) }}"
+                                                                    class="btn btn-sm btn-info text-white"><i class="fa fa-download"
+                                                                        aria-hidden="true"></i> Download File SK</a>
+                                                            </div>
+                                                        @endif
                                                     @endif
-                                                    @endif
+                                                </div>
                                                 </div>
                                             </td>
                                         </tr>

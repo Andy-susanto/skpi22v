@@ -62,40 +62,8 @@
     </div>
 </div>
 @stop
-@include('plugins.pspdfkit')
 @include('plugins.alertify')
 @section('js')
-@if ($data->files()->exists())
-<script>
-    PSPDFKit.load({
-        container: "#sertifikat",
-        document: "{{ asset('storage/' . $data->files->path) }}", // Add the path to your document here.
-    })
-    .then(function(instance) {
-        console.log("PSPDFKit loaded", instance);
-    })
-    .catch(function(error) {
-        console.error(error.message);
-    });
-</script>
-@endif
-@if (method_exists($data,'file_sk'))
-@if($data->file_sk()->exists())
-<script>
-    PSPDFKit.load({
-        container: "#file-sk",
-        document: "{{ asset('storage/' . $data->file_sk->path) }}", // Add the path to your document here.
-    })
-    .then(function(instance) {
-        console.log("PSPDFKit loaded", instance);
-    })
-    .catch(function(error) {
-        console.error(error.message);
-    });
-</script>
-@endif
-@endif
-
 <script>
      function tolakModal(id){
             $url = $(id).data('url');
