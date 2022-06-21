@@ -110,7 +110,7 @@
                                                 <div class="row">
                                                     @if ($data->files()->exists())
                                                         <div class="col-md-6">
-                                                            <object height="100%" width="100%" data="{{ asset('storage/' . $data->files->path) }}" type="application/pdf">
+                                                            <object height="400" width="100%" data="{{ asset('storage/' . $data->files->path) }}" type="application/pdf">
                                                                 <iframe height="100%" width="100%" src="https://docs.google.com/viewer?url={{ asset('storage/' . $data->files->path) }}&embedded=true"></iframe>
                                                             </object>
                                                             <a href="{{ asset('storage/' . $data->files->path) }}"
