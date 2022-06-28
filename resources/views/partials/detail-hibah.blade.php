@@ -105,7 +105,7 @@
                                         @if ($data->file_sk()->exists())
                                             <div class="col-md-6">
                                                 <object height="100%" width="100%" data="{{ asset('storage/' . $data->file_sk->path) }}" type="application/pdf">
-                                                    <iframe height="800" width="800" src="https://docs.google.com/viewer?url={{ asset('storage/' . $data->file_sk->path) }}&embedded=true"></iframe>
+                                                    <iframe height="100%" width="100%" src="https://docs.google.com/viewer?url={{ asset('storage/' . $data->file_sk->path) }}&embedded=true"></iframe>
                                                 </object>
                                                 <a href="{{ asset('storage/' . $data->file_sk->path) }}"
                                                     class="btn btn-sm btn-info text-white"><i class="fa fa-download"
