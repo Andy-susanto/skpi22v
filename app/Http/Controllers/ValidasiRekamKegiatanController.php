@@ -18,6 +18,7 @@ use App\Models\KemampuanBahasaAsing;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
@@ -28,16 +29,23 @@ class ValidasiRekamKegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
+        $durasi = 600;
         if ($request->ajax()) {
             $data = collect();
             if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
-                $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {
-                    $qp->FilterUnit();
-                })->when($request->status_validasi, function ($q) use ($request) {
-                    $q->where('status_validasi', $request->status_validasi);
-                })->orderBy('status_validasi', 'asc')->get();
+                if(Cache::has("kegiatan:penghargaan")){
+                    $penghargaan = Cache::get("kegiatan:penghargaan");
+                }else{
+                    $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {
+                        $qp->FilterUnit();
+                    })->when($request->status_validasi, function ($q) use ($request) {
+                        $q->where('status_validasi', $request->status_validasi);
+                    })->orderBy('status_validasi', 'asc')->get();
+                    Cache::put("kegiatan:penghargaan",$penghargaan,$durasi);
+                }
 
                 $penghargaanMap = $penghargaan->map(function ($item) {
                     return [

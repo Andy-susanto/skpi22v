@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Validasi Rekam Kegiatan')
+@section('title',__("app.title.validasi.admin"))
 
 @section('content_header')
-    <h1 class="m-0 text-dark font-bold uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Validasi Rekam Kegiatan</h1>
+    <h1 class="m-0 text-dark font-bold"><i class="fa fa-bookmark" aria-hidden="true"></i> {{ucwords(__("app.title.validasi.admin"))}}</h1>
 @stop
 @section('content')
     <div class="row">
