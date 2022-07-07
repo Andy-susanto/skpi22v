@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use App\Models\Menu;
+use Illuminate\Support\Facades\Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,9 +34,14 @@ class AppServiceProvider extends ServiceProvider
                 foreach (auth()->user()->roles as $role) {
                     $role_ids[] = $role->id_role;
                 }
-                $menus = Menu::where('parent_id', 0)->whereHas('roles', function ($q) use ($role_ids) {
-                    $q->whereIn('id_role', $role_ids);
-                })->orderBy('urutan', 'asc')->get();
+                if(Session::has('menus')){
+                    $menus = Session("menus");
+                }else{
+                    $menus = Menu::where('parent_id', 0)->whereHas('roles', function ($q) use ($role_ids) {
+                        $q->whereIn('id_role', $role_ids);
+                    })->orderBy('urutan', 'asc')->get();
+                    Session("menus",$menus);
+                }
 
                 foreach ($menus as $menu) {
                     if (count($menu->submenus) == 0) {
@@ -43,9 +49,14 @@ class AppServiceProvider extends ServiceProvider
                     } else {
 
                         $event->menu->add($menu->nama_menu);
-                        $submenus = Menu::where('parent_id', $menu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
-                            $q->whereIn('id_role', $role_ids);
-                        })->orderBy('urutan', 'asc')->get();
+                        if(Session::has('submenus')){
+                            $submenus = Session("submenus");
+                        }else{
+                            $submenus = Menu::where('parent_id', $menu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
+                                $q->whereIn('id_role', $role_ids);
+                            })->orderBy('urutan', 'asc')->get();
+                            Session("submenus",$submenus);
+                        }
 
                         foreach ($submenus as $submenu) {
                             if (count($submenu->submenus) == 0) {
@@ -55,9 +66,14 @@ class AppServiceProvider extends ServiceProvider
                             } else {
 
                                 $anothermenu = [];
-                                $subsubmenus = Menu::where('parent_id', $submenu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
-                                    $q->whereIn('id_role', $role_ids);
-                                })->orderBy('nama_menu', 'asc')->get();
+                                if(Session::has("subsubmenus")){
+                                    $subsubmenus = Session("subsubmenus");
+                                }else{
+                                    $subsubmenus = Menu::where('parent_id', $submenu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
+                                        $q->whereIn('id_role', $role_ids);
+                                    })->orderBy('nama_menu', 'asc')->get();
+                                    Session("subsubmenus",$subsubmenus);
+                                }
 
                                 foreach ($subsubmenus as $subsubmenu) {
                                     $subsubmenu2['text'] = $subsubmenu->nama_menu;
@@ -72,6 +88,10 @@ class AppServiceProvider extends ServiceProvider
 
                     }
                 }
+            }else{
+                Session::forget("menus");
+                Session::forget("submenus");
+                Session::forget("subsubmenus");
             }
         });
     }
