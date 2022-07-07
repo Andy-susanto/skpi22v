@@ -33,6 +33,9 @@ class AuthController extends Controller
     {
         Session::flush();
         KeycloakWeb::forgetToken();
+        Session::forget("menus");
+        Session::forget("submenus");
+        Session::forget("subsubmenus");
 
         $url = KeycloakWeb::getLogoutUrl();
         return redirect($url);
