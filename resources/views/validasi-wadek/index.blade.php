@@ -125,6 +125,10 @@
                         name: 'program_studi'
                     },
                     {
+                        data: 'tahun',
+                        name: 'tahun'
+                    },
+                    {
                         data: 'jenis_kegiatan',
                         name: 'jenis_kegiatan',
                         orderable: false,

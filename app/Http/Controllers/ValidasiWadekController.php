@@ -42,15 +42,16 @@ class ValidasiWadekController extends Controller
 
                 $penghargaanMap = $penghargaan->map(function ($item) {
                     return [
-                        'id'             => $item->id_penghargaan_kejuaraan_kompetensi,
-                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
-                        'nim'            => $item->mhspt->no_mhs,
-                        'prodi'          => $item->mhspt->prodi->nama_prodi,
-                        'jenis_kegiatan' => 'penghargaan',
-                        'nama_kegiatan'  => $item->nama,
-                        'path'           => $item->files->path,
-                        'validasi'       => $item->status_validasi,
-                        'pesan'         => $item->pesan,
+                        'id'              => $item->id_penghargaan_kejuaraan_kompetensi,
+                        'nama_mahasiswa'  => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'             => $item->mhspt->no_mhs,
+                        'prodi'           => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan'  => 'penghargaan',
+                        'nama_kegiatan'   => $item->nama,
+                        'path'            => $item->files->path,
+                        'validasi'        => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'pesan'           => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
                 });
@@ -77,6 +78,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -104,6 +106,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -130,6 +133,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -157,6 +161,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -183,6 +188,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -196,6 +202,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
+                })->when($request->tahun, function ($q) use ($request) {
+                    $q->whereDate('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $beasiswaMap = $beasiswa->map(function ($item) {
@@ -208,6 +216,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -221,6 +230,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
+                })->when($request->tahun, function ($q) use ($request) {
+                    $q->whereDate('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
                 $bahasaMap = $bahasa->map(function ($item) {
                     return [
@@ -232,6 +243,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->bahasa->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -245,6 +257,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
+                })->when($request->tahun, function ($q) use ($request) {
+                    $q->whereDate('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $kewirausahaanMap = $kewirausahaan->map(function ($item) {
@@ -257,6 +271,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama_usaha,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -270,6 +285,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
+                })->when($request->tahun, function ($q) use ($request) {
+                    $q->whereDate('tgl_mulai_berlaku', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $hkiMap = $hki->map(function ($item) {
@@ -282,6 +299,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama_hki,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_mulai_berlaku)),
                         'pesan'         => $item->pesan
                     ];
                 });
@@ -292,6 +310,8 @@ class ValidasiWadekController extends Controller
                     $qp->FilterUnit();
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
+                })->when($request->tahun, function ($q) use ($request) {
+                    $q->whereDate('tgl_terbit', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $publikasiMap = $publikasi->map(function ($item) {
@@ -304,6 +324,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->judul,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
+                        'tahun'           => date('Y',strtotime($item->tgl_terbit)),
                         'pesan'         => $item->pesan
                     ];
                 });
@@ -577,6 +598,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'penghargaan',
                     'nama_kegiatan'  => $item->nama,
@@ -599,6 +621,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'seminar',
                     'nama_kegiatan'  => $item->nama,
@@ -621,6 +644,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'hibah',
                     'nama_kegiatan'  => $item->nama,
@@ -642,6 +666,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'pengabdian',
                     'nama_kegiatan'  => $item->nama,
@@ -664,6 +689,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'organisasi',
                     'nama_kegiatan'  => $item->nama,
@@ -685,6 +711,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'magang',
                     'nama_kegiatan'  => $item->nama,
@@ -699,12 +726,15 @@ class ValidasiWadekController extends Controller
                 $qp->FilterUnit();
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
+            })->when($request->tahun, function ($q) use ($request) {
+                $q->whereDate('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $beasiswaMap = $beasiswa->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'beasiswa',
                     'nama_kegiatan'  => $item->nama,
@@ -719,11 +749,14 @@ class ValidasiWadekController extends Controller
                 $qp->FilterUnit();
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
+            })->when($request->tahun, function ($q) use ($request) {
+                $q->whereDate('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
             $bahasaMap = $bahasa->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'bahasa',
                     'nama_kegiatan'  => $item->bahasa->nama,
@@ -738,12 +771,15 @@ class ValidasiWadekController extends Controller
                 $qp->FilterUnit();
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
+            })->when($request->tahun, function ($q) use ($request) {
+                $q->whereDate('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $kewirausahaanMap = $kewirausahaan->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'kewirausahaan',
                     'nama_kegiatan'  => $item->nama_usaha,
@@ -758,12 +794,15 @@ class ValidasiWadekController extends Controller
                 $qp->FilterUnit();
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
+            })->when($request->tahun, function ($q) use ($request) {
+                $q->whereDate('tgl_mulai_berlaku', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $hkiMap = $hki->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai_berlaku)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'HKI',
                     'nama_kegiatan'  => $item->nama_hki,
@@ -776,12 +815,15 @@ class ValidasiWadekController extends Controller
                 $qp->FilterUnit();
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
+            })->when($request->tahun, function ($q) use ($request) {
+                $q->whereDate('tgl_terbit', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $publikasiMap = $publikasi->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
+                    'tahun'           => date('Y',strtotime($item->tgl_terbit)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'publikasi',
                     'nama_kegiatan'  => $item->judul,
