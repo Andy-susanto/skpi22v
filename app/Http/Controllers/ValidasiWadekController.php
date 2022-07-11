@@ -621,7 +621,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'seminar',
                     'nama_kegiatan'  => $item->nama,
@@ -644,7 +644,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'hibah',
                     'nama_kegiatan'  => $item->nama,
@@ -666,7 +666,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'pengabdian',
                     'nama_kegiatan'  => $item->nama,
@@ -689,7 +689,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'organisasi',
                     'nama_kegiatan'  => $item->nama,
@@ -711,7 +711,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'magang',
                     'nama_kegiatan'  => $item->nama,
@@ -734,7 +734,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'beasiswa',
                     'nama_kegiatan'  => $item->nama,
@@ -756,7 +756,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'bahasa',
                     'nama_kegiatan'  => $item->bahasa->nama,
@@ -779,7 +779,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'kewirausahaan',
                     'nama_kegiatan'  => $item->nama_usaha,
@@ -802,7 +802,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai_berlaku)),
+                    'tahun'           => date('Y',strtotime($item->tgl_mulai_berlaku)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'HKI',
                     'nama_kegiatan'  => $item->nama_hki,
@@ -823,7 +823,7 @@ class ValidasiWadekController extends Controller
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_terbit)),
+                    'tahun'           => date('Y',strtotime($item->tgl_terbit)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'publikasi',
                     'nama_kegiatan'  => $item->judul,
