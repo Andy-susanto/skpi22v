@@ -65,6 +65,7 @@
                             <th>Nama Mahasiswa</th>
                             <th>NIM</th>
                             <th>Program Studi</th>
+                            <th>Tahun</th>
                             <th>Jenis Kegiatan</th>
                             <th>Nama Kegiatan / Nama Promotor / Nama Beasiswa / Bahasa / Nama Usaha / Judul Hasil Karya</th>
                             <th>Status</th>
