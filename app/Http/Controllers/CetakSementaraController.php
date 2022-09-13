@@ -86,7 +86,7 @@ class CetakSementaraController extends Controller
                 ->join('kepeg.unit_kerja as d','d.id_unit_kerja','=','a.unit_kerja_id')
                 ->join('kepeg.referensi_unit_kerja as e','e.id_ref_unit_kerja','=','d.referensi_unit_kerja_id')
                 ->join('kepeg.pangkat_golongan as f','f.id_pangkat_golongan','=','b.pangkat_golongan_id')
-                ->where('c.id_jabatan',45)
+                ->where('c.id_jabatan',1118)
                 ->where('e.id_unit_kerja_siakad',11)
                 ->first();
 
@@ -162,7 +162,7 @@ class CetakSementaraController extends Controller
                     </tr></table>';
         $pdf::writeHTML($main3, true, false, true, false, '');
         // $pdf::ln(5);
-        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif '.Helpers::hitung_bobot($id).'</span>';
+        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Sidang Tugas Akhir / Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif '.Helpers::hitung_bobot($id).'</span>';
         $close.="</body></html>";
         $pdf::writeHTML($close,true,false,true,false,'');
 
@@ -170,7 +170,7 @@ class CetakSementaraController extends Controller
         $pejabat='<table border="0" cellpadding="0" cellspacing="0">';
         $pejabat.='<tr><td width="260"></td><td width="220">dikeluarkan di JAMBI,</td></tr>';
         $pejabat.='<tr><td width="260"></td><td width="220">pada tanggal '.Carbon::parse(now())->isoFormat('D MMMM Y').'</td></tr>';
-        $pejabat.='<tr><td width="260"></td><td width="220">Wakil Dekan Bidang Kemahasiswaan dan Alumni,</td></tr>';
+        $pejabat.='<tr><td width="260"></td><td width="220">'.$wadek3->nama_jabatan.',</td></tr>';
         $pejabat.='</table>';
         $pdf::writeHTML($pejabat, true, false, true, false, '');
         $pdf::ln(15);
