@@ -104,7 +104,8 @@ class CetakSementaraController extends Controller
         $surat = '';
         $surat.= "<html><head></head><body><style>body {font-family: Times New Roman, Helvetica;} </style>";
         $surat.='<div style="text-align:center; padding:0px; margin:0px;">';
-        $surat.='<p style="line-height: 0px; font-size: 12px; color:blue; ">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET DAN TEKNOLOGI</p>';
+        $surat.='<p style="line-height: 0px; font-size: 12px; color:blue; ">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN,</p>';
+        $surat.='<p style="line-height: 0px; font-size: 12px; color:blue; ">RISET DAN TEKNOLOGI</p>';
         $surat.='<p style="line-height: 0px; font-size: 12px; color: orange; ">UNIVERSITAS JAMBI</p>';
         $surat.='<p style="line-height: 0px; color: orange; font-size: 14px">FAKULTAS SAINS DAN TEKNOLOGI</p>';
         $tb+=3.5;
@@ -124,7 +125,7 @@ class CetakSementaraController extends Controller
 		$pdf::Line(20, $ln4, 190, $ln4);
         $pdf::Line(20, $ln5, 190, $ln5);
         $pdf::ln(5);
-        $nomor = '<p style="line-height: 0px;font-weight:bold;text-align:center;font-size:10px;margin-top:100px">SURAT KETERANGAN</p>';
+        $nomor = '<p style="line-height: 0px;font-weight:bold;text-align:center;font-size:14px;margin-top:100px">SURAT KETERANGAN</p>';
         $nomor .= '<p style="line-height: 0px;text-align:center;font-size:8px;margin-top:-10px">Nomor : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/UN21.9/PK.05.05/2022</span></p>';
         $pdf::writeHTML($nomor  ,true,false,true,false,'');
         $pdf::ln(5);
@@ -162,13 +163,13 @@ class CetakSementaraController extends Controller
                     </tr></table>';
         $pdf::writeHTML($main3, true, false, true, false, '');
         // $pdf::ln(5);
-        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Sidang Tugas Akhir / Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif '.Helpers::hitung_bobot($id).'</span>';
+        $close = 'Telah melengkapi data SKPI untuk keperluan pendaftaran <span style="font-weight:bold;">Sidang Tugas Akhir / Yudisium</span> dengan jumlah <span style="font-weight:bold;">skor kumulatif '.Helpers::hitung_bobot($id).'.</span>';
         $close.="</body></html>";
         $pdf::writeHTML($close,true,false,true,false,'');
 
         // $pdf::ln(5);
         $pejabat='<table border="0" cellpadding="0" cellspacing="0">';
-        $pejabat.='<tr><td width="260"></td><td width="220">dikeluarkan di JAMBI,</td></tr>';
+        $pejabat.='<tr><td width="260"></td><td width="220">Dikeluarkan di JAMBI,</td></tr>';
         $pejabat.='<tr><td width="260"></td><td width="220">pada tanggal '.Carbon::parse(now())->isoFormat('D MMMM Y').'</td></tr>';
         $pejabat.='<tr><td width="260"></td><td width="220">'.$wadek3->nama_jabatan.',</td></tr>';
         $pejabat.='</table>';
