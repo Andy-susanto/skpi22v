@@ -129,7 +129,7 @@ class CetakSementaraController extends Controller
         $nomor = '<p style="line-height: 0px;font-weight:bold;text-align:center;font-size:14px;margin-top:100px">SURAT KETERANGAN</p>';
         $nomor .= '<p style="line-height: 0px;text-align:center;font-size:12px;margin-top:-10px">Nomor : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/UN21.9/PK.05.05/2022</span></p>';
         $pdf::writeHTML($nomor  ,true,false,true,false,'');
-        $pdf::ln(5);
+        $pdf::ln(10);
         $main = 'Yang bertanda tangan dibawah ini :';
         $pdf::writeHTML($main  ,true,false,true,false,'');
         $main1 = '<table border="0" cellspadding="0" cellspacing="0">
