@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BeasiswaRequest;
 use App\Models\Files;
 use App\Models\Beasiswa;
 use Illuminate\Http\Request;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
+use App\Repositories\BeasiswaRepository;
+use App\Repositories\FileRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,14 +20,19 @@ class BeasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $beasiswaRepository, $fileRepository;
+    public function __construct(BeasiswaRepository $beasiswaRepository, FileRepository $fileRepository)
+    {
+        $this->beasiswaRepository = $beasiswaRepository;
+        $this->fileRepository = $fileRepository;
+    }
     public function index()
     {
-        if(Auth::user()->siakad_mhspt()->exists()){
-        $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
-        }else{
-            $data['utama'] = [];
-        }
-        return view('beasiswa.index', compact('data'));
+        $options = [
+            'mhspt' => Auth::user()->siakad_mhspt()->exists() ? Auth::user()->siakad_mhspt->id_mhs_pt : ''
+        ];
+        $this->data['data'] = $this->beasiswaRepository->findAll($options);
+        return view('beasiswa.index', $this->data);
     }
 
     /**
@@ -43,40 +51,25 @@ class BeasiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BeasiswaRequest $request)
     {
-        $request->validate([
-            'nama'                    => 'required|string',
-            'nama_promotor'           => 'required',
-            'ref_kategori_id'         => 'required',
-            'ref_cakupan_beasiswa_id' => 'required',
-            'bukti_kegiatan'          => 'required|mimes:jpg,png,pdf,docx'
-        ]);
-
-        if ($request->file('bukti_kegiatan')) {
-            $filename      = time() . '_' . 'bukti_beasiswa' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-            $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
-
-            $files = Files::create([
-                'nama'                  => $filename,
-                'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
-                'ref_jenis_kegiatan_id' => 1
-            ]);
+        $params = $request->validated();
+        $BuktiKegiatanParams = [
+            'tag' => 'bukti-beasiswa',
+            'jenis_kegiatan' => 7,
+            'id_mhspt' => $this->mhspt
+        ];
+        $createBuktiKegiatanParams = array_merge($params, $BuktiKegiatanParams);
+        $CreateFileBukti = $this->fileRepository->create($createBuktiKegiatanParams);
+        if ($CreateFileBukti) {
+            $FileBuktiParams = array(
+                'file_kegiatan_id'=> $CreateFileBukti->id_files,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $CreateFileBukti->ref_jenis_kegiatan_id,
+                'siakad_mhspt_id'=>$this->mhspt
+            );
+            $params = array_merge($params, $FileBuktiParams);
         }
-
-        $beasiswa = Beasiswa::create([
-            'nama'                                => $request->nama,
-            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
-            'nama_promotor'                       => $request->nama_promotor,
-            'ref_kategori_id'                     => $request->ref_kategori_id,
-            'ref_cakupan_beasiswa_id'             => $request->ref_cakupan_beasiswa_id,
-            'file_kegiatan_id'                    => $files->id_files,
-            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-        ]);
-
-        if ($beasiswa) {
+        if ($this->beasiswaRepository->create($params)) {
             toastr()->success('Berhasil Tambah Data');
         } else {
             toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
@@ -93,8 +86,8 @@ class BeasiswaController extends Controller
      */
     public function show($id)
     {
-        $data = Beasiswa::findOrFail(decrypt($id));
-        return view('beasiswa.show', compact('data'));
+       $this->data['data'] = $this->beasiswaRepository->findById(decrypt($id));
+        return view('beasiswa.show', $this->data);
     }
 
     /**
@@ -105,8 +98,8 @@ class BeasiswaController extends Controller
      */
     public function edit($id)
     {
-        $data['utama'] = Beasiswa::findOrFail(decrypt($id));
-        return view('beasiswa.edit', compact('data'));
+        $this->data['utama'] = $this->beasiswaRepository->findById(decrypt($id));
+        return view('beasiswa.edit', $this->data);
     }
 
     /**
@@ -116,62 +109,33 @@ class BeasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BeasiswaRequest $request, $id)
     {
-        $request->validate([
-            'nama'                    => 'required|string',
-            'nama_promotor'           => 'required',
-            'ref_kategori_id'         => 'required',
-            'ref_cakupan_beasiswa_id' => 'required',
-            'bukti_kegiatan'          => 'mimes:jpg,png,pdf,docx'
-        ]);
 
-        $data_utama = Beasiswa::findOrFail(decrypt($id));
-
-        if ($request->file('bukti_kegiatan')) {
-            $extension = ['jpg,pdf,docx'];
-            $file = $request->bukti_kegiatan->getClientOriginalExtension();
-            if (in_array($file, $extension)) {
-                $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-
-
-                $filePath   = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
-
-                $files = Files::where('id_file', $data_utama->files->id_files)->updateOrCreate(
-                    [
-                        'id_file' => $data_utama->files->id_files
-                    ],
-                    [
-                        'nama'                  => $filename,
-                        'path'                  => $filePath,
-                    ]
-                );
-
-                Beasiswa::where('id_beasiswa', decrypt($id))->update([
-                    'nama'                                => $request->nama ?? $data_utama->nama_kegiatan,
-                    'nama_promotor'                       => $request->nama_promotor ?? $data_utama->nama_promotor,
-                    'ref_kategori_id'                      => $request->ref_kategori_id ?? $data_utama->ref_kategori_id,
-                    'ref_cakupan_beasiswa_id'               => $request->ref_cakupan_beasiswa_id ?? $data_utama->ref_cakupan_beasiswa_id,
-                    'file_kegiatan_id'                    => $files->id_files,
-                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-                ]);
-
-                toastr()->success('Berhasil Update Data');
-                return back();
-            } else {
-                toastr()->error(' Terjadi Kesalahan :( ');
-            }
-        } else {
-            Beasiswa::where('id_beasiswa', decrypt($id))->update([
-                'nama'                                => $request->nama ?? $data_utama->nama_kegiatan,
-                'nama_promotor'                       => $request->nama_promotor ?? $data_utama->nama_promotor,
-                'ref_kategori_id'                      => $request->ref_kategori_id ?? $data_utama->ref_kategori_id,
-                'ref_cakupan_beasiswa_id'               => $request->ref_cakupan_beasiswa_id ?? $data_utama->ref_cakupan_beasiswa_id,
-            ]);
-
-            toastr()->success('Berhasil Update Data');
-            return redirect()->route('beasiswa.index');
+        $params = $request->validated();
+        $beasiswa = $this->beasiswaRepository->findById(decrypt($id));
+        $BuktiKegiatanParams = [
+            'tag' => 'bukti-beasiswa',
+            'jenis_kegiatan' => 7,
+            'id_mhspt' => $this->mhspt
+        ];
+        $BuktiKegiatanParams = array_merge($params, $BuktiKegiatanParams);
+        $FileBukti = $this->fileRepository->update($beasiswa->file_kegiatan_id,$BuktiKegiatanParams);
+        if ($FileBukti) {
+            $FileBuktiParams = array(
+                'file_kegiatan_id'                    => $FileBukti->id_files,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $FileBukti->ref_jenis_kegiatan_id,
+                'siakad_mhspt_id'                     => $this->mhspt
+            );
+            $params = array_merge($params, $FileBuktiParams);
         }
+        if ($this->beasiswaRepository->update(decrypt($id),$params)) {
+            toastr()->success('Berhasil Tambah Data');
+        } else {
+            toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
+        }
+        return back();
+
     }
 
     /**
@@ -182,13 +146,14 @@ class BeasiswaController extends Controller
      */
     public function destroy($id)
     {
-        $data = Beasiswa::findOrFail(decrypt($id));
-        $file = Files::findOrFail($data->file_kegiatan_id);
-        if (Storage::exists($file->path)) {
-            Storage::delete($file->path);
+        $beasiswa = $this->beasiswaRepository->findById(decrypt($id));
+        $this->fileRepository->delete($beasiswa->file_kegiatan_id);
+        if($this->beasiswaRepository->delete(decrypt($id))){
+            toastr()->success('Berhasil Hapus Data');
+        }else{
+            toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
         }
-        $data->files()->delete();
-        toastr()->success('Berhasil Hapus Data');
+
         return back();
     }
 }

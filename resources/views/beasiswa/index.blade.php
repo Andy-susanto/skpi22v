@@ -78,8 +78,9 @@
                                             </div>
                                             <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
-                                                <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
+                                                <input type="file" class="form-control-file" name="file" id=""
                                                     placeholder="" aria-describedby="fileHelpId">
+
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +121,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data['utama'] as $loopUtama)
+                                            @forelse ($data as $loopUtama)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $loopUtama->nama }}</td>

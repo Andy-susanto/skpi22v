@@ -9,7 +9,14 @@ class Files extends Model
 {
     use HasFactory;
     protected $table        = 'file_kegiatan';
-    protected $guarded      = [];
+    protected $fillable      = [
+        'id_files',
+        'nama',
+        'path',
+        'tag',
+        'ref_jenis_kegiatan_id',
+        'siakadd_mhspt_id'
+    ];
     protected $primaryKey   = 'id_files';
     public    $incrementing = true;
 }

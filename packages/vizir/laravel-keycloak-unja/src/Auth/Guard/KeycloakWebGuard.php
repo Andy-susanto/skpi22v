@@ -68,7 +68,6 @@ class KeycloakWebGuard implements Guard
 
         return $this->user;
     }
-
     /**
      * Set the current user.
      *
@@ -209,6 +208,11 @@ class KeycloakWebGuard implements Guard
      *
      * @return boolean
      */
+
+    public function hasUser()
+    {
+
+    }
     public function hasRole($roles, $resource = '')
     {
         if (empty($resource)) {

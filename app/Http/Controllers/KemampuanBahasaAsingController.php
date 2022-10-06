@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\KBAsingRequest;
 use App\Models\Files;
 use Illuminate\Http\Request;
 use App\Models\KemampuanBahasaAsing;
+use App\Repositories\KBAsingRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,14 +17,20 @@ class KemampuanBahasaAsingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $kbAsingRepository;
+    public function __construct(KBAsingRepository $kbAsingReposiory)
+    {
+        parent::__construct();
+        $this->kbAsingRepository = $kbAsingReposiory;
+    }
     public function index()
     {
-        if(Auth::user()->siakad_mhspt()->exists()){
-            $data['utama'] = KemampuanBahasaAsing::where('siakad_mhspt_id', Auth::user()->siakad_mhspt->id_mhs_pt)->get();
-        }else{
-            $data['utama'] = [];
-        }
-        return view('kemampuan-bahasa-asing.index', compact('data'));
+        $options = [
+            'mhspt' => $this->mhspt
+        ];
+        $this->data['data'] = $this->kbAsingRepository->findAll($options);
+        return view('kemampuan-bahasa-asing.index', $this->data);
     }
 
     /**
@@ -41,39 +49,30 @@ class KemampuanBahasaAsingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(KBAsingRequest $request)
     {
-        $request->validate([
-            'nilai_tes'                => 'required',
-            'ref_bahasa_id'            => 'required|integer',
-            'ref_level_bahasa_id'      => 'required|integer',
-            'ref_jenis_tes_id'         => 'required|integer',
-            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
-        ]);
-
-        if ($request->file('bukti_kegiatan')) {
-            $filename      = time() . '_' . 'bukti_kemampuan_bahasa_asing' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
-            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
-
-            $files = Files::create([
-                'nama'                  => $filename,
-                'path'                  => $filePath,
-                'siakad_mhspt_id'       => Auth::user()->siakad_mhspt->id_mhs_pt,
-                'ref_jenis_kegiatan_id' => 8
-            ]);
+        $params = $request->validated();
+        $buktiKegiatanParams = [
+            'tag'            => 'bukti-kemampuan-bahasa-asing',
+            'jenis_kegiatan' => 8,
+            'id_mhspt'       => $this->mhspt
+        ];
+        $createBuktiKegiatanParams = array_merge($params, $buktiKegiatanParams);
+        $CreateFileBukti = $this->fileRepository->create($createBuktiKegiatanParams);
+        if ($CreateFileBukti) {
+            $FileBuktiParams = array(
+                'file_kegiatan_id'=> $CreateFileBukti->id_files,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $CreateFileBukti->ref_jenis_kegiatan_id,
+                'siakad_mhspt_id'=>$this->mhspt
+            );
+            $params = array_merge($params, $FileBuktiParams);
+        }
+        if ($this->kbAsingRepository->create($params)) {
+            toastr()->success('Berhasil Tambah Data');
+        } else {
+            toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
         }
 
-        KemampuanBahasaAsing::create([
-            'nilai_tes'                           => $request->nilai_tes,
-            'ref_bahasa_id'                       => $request->ref_bahasa_id,
-            'ref_level_bahasa_id'                 => $request->ref_level_bahasa_id,
-            'ref_jenis_tes_id'                    => $request->ref_jenis_tes_id,
-            'file_kegiatan_id'                    => $files->id_files,
-            'siakad_mhspt_id'                     => Auth::user()->siakad_mhspt->id_mhs_pt,
-            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-        ]);
-
-        toastr()->success('Berhasil Tambah Data');
         return back();
     }
 
@@ -85,7 +84,7 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function show($id)
     {
-        $data = KemampuanBahasaAsing::findOrFail(decrypt($id));
+        $this->data['data'] = $this->kbAsingRepository->findById(decrypt($id));
         return view('kemampuan-bahasa-asing.show',compact('data'));
     }
 
@@ -97,8 +96,8 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function edit($id)
     {
-        $data['utama'] = KemampuanBahasaAsing::findOrFail(decrypt($id));
-        return view('kemampuan-bahasa-asing.edit', compact('data'));
+        $data['utama'] = $this->kbAsingRepository->findById(decrypt($id));
+        return view('kemampuan-bahasa-asing.edit', $this->data);
     }
 
     /**
@@ -110,51 +109,29 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'ref_bahasa_id'       => 'required|integer',
-            'ref_level_bahasa_id' => 'required|integer',
-            'ref_jenis_tes_id'    => 'required|integer',
-            'nilai_tes'           => 'required|integer',
-            'file_kegiatan_id'    => 'mime:jpg,png,pdf,docx',
-        ]);
-
-        $data_utama = KemampuanBahasaAsing::findOrFail(decrypt($id));
-        if ($request->hasFile('file_kegiatan_id')) {
-            $extension = ['jpg','pdf','docx'];
-            $file = $request->file_kegiatan_id->getClientOriginalExtension();
-            if (in_array($file, $extension)) {
-                $filename      = time() . '_' . 'bukti_kemampuan_bahasa_asing' . '_' . Auth::user()->username . '.' . $request->file_kegiatan_id->getClientOriginalExtension();
-
-                $filePath   = $request->file('file_kegiatan_id')->storeAs('uploads', $filename, 'public');
-
-                $files = Files::where('id_files', $data_utama->files->id_files)->updateOrCreate(
-                    [
-                        'id_files' => $data_utama->files->id_files
-                    ],
-                    [
-                    'nama'                  => $filename,
-                    'path'                  => $filePath,
-                    ]
-                 );
-
-                KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',decrypt($id))->update([
-                    'file_kegiatan_id'                    => $files->id_files,
-                ]);
-
-            } else {
-                toastr()->error(' Terjadi Kesalahan :( ');
-            }
+        $params = $request->validated();
+        $data = $this->kbAsingRepository->findById(decrypt($id));
+        $BuktiKegiatanParams = [
+            'tag'            => 'bukti-beasiswa',
+            'jenis_kegiatan' => 8,
+            'id_mhspt'       => $this->mhspt
+        ];
+        $BuktiKegiatanParams = array_merge($params, $BuktiKegiatanParams);
+        $FileBukti = $this->fileRepository->update($data->file_kegiatan_id,$BuktiKegiatanParams);
+        if ($FileBukti) {
+            $FileBuktiParams = array(
+                'file_kegiatan_id'                    => $FileBukti->id_files,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $FileBukti->ref_jenis_kegiatan_id,
+                'siakad_mhspt_id'                     => $this->mhspt
+            );
+            $params = array_merge($params, $FileBuktiParams);
         }
-
-        KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing',decrypt($id))->update([
-            'nilai_tes'           => $request->nilai_tes ?? $data_utama->nilai_tes,
-            'ref_bahasa_id'       => $request->ref_bahasa_id ?? $data_utama->ref_bahasa_id,
-            'ref_level_bahasa_id' => $request->ref_level_bahasa_id ?? $data_utama->ref_level_bahasa_id,
-            'ref_jenis_tes_id'    => $request->ref_jenis_tes_id ?? $data_utama->ref_jenis_tes_id,
-        ]);
-
-        toastr()->success('Berhasil Update Data');
-        return redirect()->route('kemampuan-bahasa-asing.index');
+        if ($this->kbAsingRepository->update(decrypt($id),$params)) {
+            toastr()->success('Berhasil Tambah Data');
+        } else {
+            toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
+        }
+        return back();
     }
 
     /**
@@ -165,17 +142,14 @@ class KemampuanBahasaAsingController extends Controller
      */
     public function destroy($id)
     {
-        $data = KemampuanBahasaAsing::findOrFail(decrypt($id));
-        $file = Files::findOrFail($data->file_kegiatan_id);
-        if(!empty($file)){
-            if(Storage::exists($file->path)){
-                Storage::delete($file->path);
-                $data->files->delete();
-            }
+        $data = $this->kbAsingRepository->findById(decrypt($id));
+        $this->fileRepository->delete($data->file_kegiatan_id);
+        if($this->beasiswaRepository->delete(decrypt($id))){
+            toastr()->success('Berhasil Hapus Data');
+        }else{
+            toastr()->error('Terjadi Kesalahan, Silahkan Ulangi lagi');
         }
 
-        $data->delete();
-        toastr()->success('Berhasil Hapus Data');
         return back();
     }
 }

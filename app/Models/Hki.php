@@ -2,15 +2,30 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Hki extends Model
 {
-    use HasFactory;
+    use HasFactory,UuidTrait;
     protected $table      = 'hki_mahasiswa';
     protected $primaryKey = 'id_hki_mahasiswa';
-    protected $guarded    = [];
+    protected $fillable    = [
+        'id_hki_mahasiswa',
+        'nomor_sertifikat',
+        'tgl_mulai_berlaku',
+        'tgl_berakhir',
+        'nama_hki',
+        'nama_hki_eng',
+        'pemegang_hki_eng',
+        'siakad_mhspt_id',
+        'deskripsi_hki',
+        'status_validasi',
+        'jenis_hki_id',
+        'jenis_ciptaan_id',
+        'file_bukti_id'
+    ];
 
     public function jenis_hki(){
         return $this->belongsTo(JenisHki::class,'jenis_hki_id');

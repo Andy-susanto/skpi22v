@@ -13,20 +13,20 @@
                     <h4 class="font-bold card-title">Ubah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('karya-mahasiswa.update',encrypt($data['utama']->id_seminar_pelatihan_workshop_diklat))}}" method="post" enctype="multipart/form-data" id="form-seminar">
+                    <form action="{{route('karya-mahasiswa.update',encrypt($data->id_seminar_pelatihan_workshop_diklat))}}" method="post" enctype="multipart/form-data" id="form-seminar">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
                             <label for="">Nama Kegiatan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="nama_kegiatan" id="" aria-describedby="helpId"
-                                placeholder="" value="{{ $data['utama']->nama }}">
+                                placeholder="" value="{{ $data->nama }}">
                         </div>
                         <div class="form-group">
                             <label for="">Penyelenggara Kegiatan <span class="text-danger">*</span></label>
                             <select class="form-control" name="penyelenggara" id="penyelenggara" onchange="load_bobot()">
                                 @forelse (Helper::penyelenggara(2) as $penyelenggara)
                                     <option value="{{ $penyelenggara->id_ref_penyelenggara }}"
-                                        {{ $data['utama']->penyelenggara->id_ref_penyelenggara == $penyelenggara->id_ref_penyelenggara ? 'selected' : '' }}>
+                                        {{ $data->penyelenggara->id_ref_penyelenggara == $penyelenggara->id_ref_penyelenggara ? 'selected' : '' }}>
                                         {{ $penyelenggara->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -38,7 +38,7 @@
                             <select class="form-control" name="tingkat" id="tingkat" onchange="load_bobot()">
                                 @forelse (Helper::tingkat(2) as $tingkat)
                                     <option value="{{ $tingkat->id_ref_tingkat }}"
-                                        {{ $data['utama']->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
+                                        {{ $data->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
                                         {{ $tingkat->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -50,7 +50,7 @@
                             <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot()">
                                 @forelse (Helper::prestasi(2) as $prestasi)
                                     <option value="{{ $prestasi->id_ref_peran_prestasi }}"
-                                        {{ $data['utama']->peran_prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
+                                        {{ $data->peran_prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
                                         {{ $prestasi->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -64,8 +64,8 @@
                                 class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
                                 name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
                                 placeholder="" value="01/01/2022 - 01/12/2022">
-                            <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan"  value="{{$data['utama']->tgl_mulai}}">
-                            <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan" value="{{$data['utama']->tgl_selesai}}">
+                            <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan"  value="{{$data->tgl_mulai}}">
+                            <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan" value="{{$data->tgl_selesai}}">
                             @error('tanggal_kegiatan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -75,19 +75,19 @@
                         <div class="form-group">
                           <label for="">Bukti Kegiatan ( File Sertifikat ) <span class="text-danger">*</span></label>
                           <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
-                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a></small>
+                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File Sertifikat</a></small>
                         </div>
                         <div class="form-group">
                           <label for="">Bukti Kegiatan ( File SK ) <span class="text-danger">*</span></label>
                           <input type="file" class="form-control-file" name="file_sk" id="" placeholder="" aria-describedby="fileHelpId">
-                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->file_sk->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File SK</a></small>
+                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data->file_sk->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> File SK</a></small>
                         </div>
                         <div class="form-group">
                             <label for="">Dosen Pembimbing</label>
                             <select class="form-control" name="dosen_pembimbing"
                                 id="dosen_pembimbing">
-                                @if ($data['utama']->kepeg_pegawai()->exists())
-                                <option value="{{$data['utama']->kepeg_pegawai->id_pegawai}}">{{$data['utama']->kepeg_pegawai->nip}} - {{Helper::nama_gelar($data['utama']->kepeg_pegawai)}}</option>
+                                @if ($data->kepeg_pegawai()->exists())
+                                <option value="{{$data->kepeg_pegawai->id_pegawai}}">{{$data->kepeg_pegawai->nip}} - {{Helper::nama_gelar($data->kepeg_pegawai)}}</option>
                                 @endif
                             </select>
                         </div>
@@ -115,8 +115,8 @@
          $(function() {
             $('#tanggal_kegiatan').daterangepicker({
                 opens: 'left',
-                startDate: "{{\Carbon\Carbon::parse($data['utama']->tgl_mulai)->format('d M Y')}}",
-                endDate: "{{\Carbon\Carbon::parse($data['utama']->tgl_selesai)->format('d M Y')}}",
+                startDate: "{{\Carbon\Carbon::parse($data->tgl_mulai)->format('d M Y')}}",
+                endDate: "{{\Carbon\Carbon::parse($data->tgl_selesai)->format('d M Y')}}",
                 locale:{
                     format: 'DD MMMM YYYY'
                 }

@@ -181,7 +181,7 @@ class UserController extends Controller
 
     public function cari_user(Request $request)
     {
-        $this->authorize('read-user');
+        // $this->authorize('read-user');
         if ($request->ajax()) {
             $user = DB::table('siakad.users')->where('status','1');
             return DataTables::of($user)
@@ -196,7 +196,7 @@ class UserController extends Controller
 
     public function login_as($id)
     {
-        $this->authorize('read-user');
+        // $this->authorize('read-user');
         $cek = DB::table('siakad.users')->where('id',decrypt($id))->first();
         if ($cek) {
             session(['kamuflase' => $cek->username]);

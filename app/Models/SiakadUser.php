@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Psy\Command\ListCommand\FunctionEnumerator;
 
 class SiakadUser extends Model
 {
@@ -13,7 +12,11 @@ class SiakadUser extends Model
     protected $guarded = [];
 
     public function siakad_file(){
-        return $this->hasOne(SiakadFiles::class,'user','id')->latestOfMany();
+        return $this->hasOne(SiakadFiles::class,'user','id')->where('jenis','like',"%Photo Profil");
+    }
+
+    public function mhspt(){
+        return $this->hasOne(SiakadMhspt::class,'no_mhs','username');
     }
 
 }

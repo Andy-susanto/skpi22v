@@ -2,15 +2,30 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class KemampuanBahasaAsing extends Model
 {
-    use HasFactory;
+    use HasFactory,UuidTrait;
     protected $table      = 'kemampuan_bahasa_asing';
     protected $primaryKey = 'id_kemampuan_bahasa_asing';
-    protected $guarded    = [];
+    protected $fillable    = [
+        'id_kemampuan_bahasa_asing',
+        'siakad_mhspt_id',
+        'nilai_tes',
+        'ref_bahasa_id',
+        'ref_level_bahasa_id',
+        'ref_jenis_tes_id',
+        'file_kegiatan_id',
+        'file_kegiatan_ref_jenis_kegiatan_id',
+        'status_validasi',
+        'pesan',
+        'validator_id',
+        'tgl_mulai',
+        'tgl_selesai'
+    ];
 
     public function bahasa(){
         return $this->belongsTo(Bahasa::class,'ref_bahasa_id');

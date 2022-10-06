@@ -122,7 +122,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data['utama'] as $loopUtama)
+                                            @forelse ($data as $loopUtama)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $loopUtama->bahasa->nama }}</td>

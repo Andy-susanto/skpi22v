@@ -2,15 +2,36 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Organisasi extends Model
 {
-    use HasFactory;
+    use HasFactory,UuidTrait;
     protected $table      = 'organisasi';
     protected $primaryKey = 'id_organisasi';
-    protected $guarded    = [];
+    protected $incrementing = false;
+    protected $fillable    = [
+        'siakad_mhspt_id',
+        'kepeg_pegawai_id',
+        'ref_kategori_id',
+        'ref_penyelenggara',
+        'ref_peran_prestasi_id',
+        'ref_tingkat_id',
+        'bobot_nilai_id',
+        'file_kegiatan_id',
+        'file_kegiatan_ref_jenis_kegiatan_id',
+        'file_sk_id',
+        'ref_jenis_id',
+        'validator_id',
+        'nama',
+        'nama_eng',
+        'tgl_mulai',
+        'tgl_selesai',
+        'status_validasi',
+        'pesan',
+    ];
 
     public function penyelenggara(){
         return $this->belongsTo(Penyelenggara::class,'ref_penyelenggara_id');

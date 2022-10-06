@@ -31,6 +31,7 @@ use App\Http\Controllers\SettingCetakController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidasiRekamKegiatanController;
 use App\Http\Controllers\ValidasiWadekController;
+use App\Models\KaryaMahasiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +105,9 @@ Route::middleware(['auth'])->group(function () {
     // fungsi
     Route::get('load-bobot', [FungsiAjaxController::class, 'load_bobot'])->name('fungsi.load-bobot');
 
+    Route::get('karyamahasiswa/{$jenis}/{$id}/edit',[KaryaMahasiswaController::class,'edit'])->name('karyaMahasiswa.edit');
+    Route::get('karyamahasiswa/{$jenis}/{$id}/show',[KaryaMahasiswaController::class,'show'])->name('karya-mahasiswa.show');
+
     Route::resource('penghargaan-kejuaraan', PenghargaanKejuaraanController::class);
     Route::resource('seminar-pelatihan', SeminarPelatihanController::class);
     Route::resource('penerima-hibah', PenerimaHibahController::class);
@@ -113,7 +117,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('beasiswa', BeasiswaController::class);
     Route::resource('kemampuan-bahasa-asing', KemampuanBahasaAsingController::class);
     Route::resource('kewirausahaan', KewirausahaanController::class);
-    Route::resource('karya-mahasiswa', KaryaMahasiswaController::class);
+    Route::resource('karya-mahasiswa', KaryaMahasiswaController::class)->except(['edit','show']);
 
     // Master
     Route::resource('bobot-nilai', MasterBobotNilaiController::class);

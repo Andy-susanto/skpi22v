@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Vizir\KeycloakWebGuard\KeycloakWebGuardServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Providers\AdminServiceProvider::class,
 
     ],
 
