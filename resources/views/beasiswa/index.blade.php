@@ -29,17 +29,21 @@
                             <div class="card">
                                 <form action="{{ route('beasiswa.store') }}" method="post" enctype="multipart/form-data"
                                     id="form-beasiswa">
-                                    @if ($errors->any())
-                                        <div class="card-header">
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                    <div class="card-header">
+                                        <div class="alert alert-warning" role="alert">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            <strong>Data yang dimasukan adalah data beasiswa selama masa kuliah. Bukti kegiatan berupa sertifikat ataupun dokumen lain yang berkaitan dengan beasiswa tersebut</strong>
                                         </div>
-                                    @endif
+                                        @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                        @endif
+                                    </div>
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
@@ -94,8 +98,8 @@
                                     @if (Auth::user()->siakad_mhspt()->exists())
                                     <div class="text-center mb-2">
                                         <button type="button" onclick="confirmation('form-beasiswa')"
-                                            class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
-                                                class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                            class="btn bg-green-500 btn-success"><i
+                                                class="fas fa-save" aria-hidden="true"></i>  Kirim Data</button>
                                     </div>
                                     @endif
                             </div>
@@ -107,9 +111,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-body table-responsive">
+                                <div class="card-body table-responsive" data-theme="bumblebee">
                                     <table class="table table-bordered table-stripped shadow-sm" id="table">
-                                        <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+                                        <thead >
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama Beasiswa</th>

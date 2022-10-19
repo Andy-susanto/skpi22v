@@ -13,18 +13,18 @@ class Hki extends Model
     protected $primaryKey = 'id_hki_mahasiswa';
     protected $fillable    = [
         'id_hki_mahasiswa',
+        'siakad_mhspt_id',
+        'jenis_hki_id',
+        'jenis_ciptaan_id',
+        'file_bukti_id',
         'nomor_sertifikat',
         'tgl_mulai_berlaku',
         'tgl_berakhir',
         'nama_hki',
         'nama_hki_eng',
-        'pemegang_hki_eng',
-        'siakad_mhspt_id',
+        'pemegang_hki',
         'deskripsi_hki',
-        'status_validasi',
-        'jenis_hki_id',
-        'jenis_ciptaan_id',
-        'file_bukti_id'
+        'status_validasi'
     ];
 
     public function jenis_hki(){

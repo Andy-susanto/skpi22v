@@ -2,15 +2,28 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Publikasi extends Model
 {
-    use HasFactory;
+    use HasFactory,UuidTrait;
     protected $table      = 'publikasi_mahasiswa';
     protected $primaryKey = 'id_publikasi';
-    protected $guarded    = [];
+    protected $fillable    = [
+        'id_publikasi',
+        'siakad_mhspt_id',
+        'kategori_capaian_id',
+        'id_usulan',
+        'jenis_id',
+        'validator_id',
+        'file_bukti_id',
+        'judul',
+        'tgl_terbit',
+        'penerbit',
+        'tautan_eksternal',
+    ];
 
     public function jenis_publikasi(){
         return $this->belongsTo('App\Models\JenisPublikasi', 'jenis_id');
@@ -21,7 +34,7 @@ class Publikasi extends Model
     }
 
     public function files(){
-        return $this->belongsTo('App\Models\Files', 'bukti', 'id_files');
+        return $this->belongsTo('App\Models\Files', 'file_bukti_id', 'id_files');
     }
 
     public function mhspt(){

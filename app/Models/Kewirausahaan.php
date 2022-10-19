@@ -11,7 +11,7 @@ class Kewirausahaan extends Model
     use HasFactory,UuidTrait;
     protected $table      = 'kewirausahaan';
     protected $primaryKey = 'id_kewirausahaan';
-    protected $incrementing = false;
+    public $incrementing = false;
     protected $fillable    = [
         'siakad_mhspt_id',
         'ref_kategori_id',

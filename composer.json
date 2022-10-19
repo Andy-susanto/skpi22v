@@ -9,6 +9,7 @@
         "elibyy/tcpdf-laravel": "^9.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.4",
+        "inertiajs/inertia-laravel": "^0.6.3",
         "jeroennoten/laravel-adminlte": "^3.7",
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^9.0",

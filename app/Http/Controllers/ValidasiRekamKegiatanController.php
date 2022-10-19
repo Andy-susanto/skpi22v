@@ -30,22 +30,21 @@ class ValidasiRekamKegiatanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     protected function getData(){
+
+     }
+
     public function index(Request $request)
     {
         $durasi = 600;
         if ($request->ajax()) {
             $data = collect();
             if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
-                if(Cache::has("kegiatan:penghargaan")){
-                    $penghargaan = Cache::get("kegiatan:penghargaan");
-                }else{
-                    $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {
-                        $qp->FilterUnit();
-                    })->when($request->status_validasi, function ($q) use ($request) {
-                        $q->where('status_validasi', $request->status_validasi);
-                    })->orderBy('status_validasi', 'asc')->get();
-                    Cache::put("kegiatan:penghargaan",$penghargaan,$durasi);
-                }
+                $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {
+                    $qp->FilterUnit();
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
 
                 $penghargaanMap = $penghargaan->map(function ($item) {
                     return [

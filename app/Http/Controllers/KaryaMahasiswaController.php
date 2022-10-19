@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\HkiRequest;
-use App\Http\Requests\PublikasiRequest;
 use App\Models\Hki;
 use App\Models\Files;
 use App\Models\Publikasi;
-use App\Repositories\FileRepository;
-use App\Repositories\HkiRepository;
-use App\Repositories\PublikasiRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\HkiRequest;
+use App\Repositories\HkiRepository;
+use App\Repositories\FileRepository;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\PublikasiRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\PublikasiRepository;
+
 class KaryaMahasiswaController extends Controller
 {
     /**
@@ -22,8 +23,8 @@ class KaryaMahasiswaController extends Controller
      */
     const HKI       = 'hki';
     const PUBLIKASI = 'publikasi';
-    private $hkiRepository,$publikasiRepository,$fileRepository;
-    public function __construct(HkiRepository $hkiRepository,PublikasiRepository $publikasiRepository,FileRepository $fileRepository)
+    private $hkiRepository, $publikasiRepository, $fileRepository;
+    public function __construct(HkiRepository $hkiRepository, PublikasiRepository $publikasiRepository, FileRepository $fileRepository)
     {
         Parent::__construct();
         $this->hkiRepository       = $hkiRepository;
@@ -33,7 +34,7 @@ class KaryaMahasiswaController extends Controller
 
     public function index()
     {
-        $options=[
+        $options = [
             'siakad_mhspt_id' => $this->mhspt
         ];
         $this->data['hki'] = $this->hkiRepository->findAll($options);
@@ -58,55 +59,59 @@ class KaryaMahasiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    protected function HkiStore(HkiRequest $request){
-        $params = $request->validated();
+    protected function HkiStore($request)
+    {
+        $rules               = (new HkiRequest())->rules();
+        $params              = Validator::make($request->all(), $rules)->validated();
         $BuktiKegiatanParams = [
             'tag'            => 'bukti-hki',
             'jenis_kegiatan' => 10,
             'id_mhspt'       => $this->mhspt
         ];
-        $createBuktiKegiatan = array_merge($params,$BuktiKegiatanParams);
+        $createBuktiKegiatan = array_merge($params, $BuktiKegiatanParams);
         $createFileBukti     = $this->fileRepository->create($createBuktiKegiatan);
-        if($createFileBukti){
+
+        if ($createFileBukti) {
             $fileParams = $this->fileParams($createFileBukti);
-            $params = array_merge($params,$fileParams);
+            $params = array_merge($params, $fileParams);
             return $this->hkiRepository->create($params);
         }
         return $createFileBukti;
     }
-    protected function PublikasiStore(PublikasiRequest $request){
-        $params = $request->validated();
+    protected function PublikasiStore($request)
+    {
+        $rules               = (new PublikasiRequest())->rules();
+        $params              = Validator::make($request->all(), $rules)->validated();
         $BuktiKegiatanParams = [
             'tag'            => 'bukti-publikasi',
             'jenis_kegiatan' => 11,
             'id_mhspt'       => $this->mhspt
         ];
-        $createBuktiKegiatan = array_merge($params,$BuktiKegiatanParams);
+        $createBuktiKegiatan = array_merge($params, $BuktiKegiatanParams);
         $createFileBukti     = $this->fileRepository->create($createBuktiKegiatan);
-        if($createFileBukti){
+        if ($createFileBukti) {
             $fileParams = $this->fileParams($createFileBukti);
-            $params     = array_merge($params,$fileParams);
+            $params     = array_merge($params, $fileParams);
             return $this->publikasiRepository->create($params);
         }
         return $createFileBukti;
     }
 
 
-    protected function fileParams($files){
+    protected function fileParams($files)
+    {
         return array(
-            'file_kegiatan_id'                    => $files->id_files,
-            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
-            'siakad_mhspt_id'                     => $this->mhspt
+            'file_bukti_id'   => $files->id_files,
+            'siakad_mhspt_id' => $this->mhspt
         );
     }
 
     public function store(Request $request)
     {
-        if($request->jenis == SELF::HKI){
+        if ($request->jenis == SELF::HKI) {
             $this->HkiStore($request);
         }
-
-        if($request->jenis == SELF::PUBLIKASI){
+        if ($request->jenis == SELF::PUBLIKASI) {
             $this->PublikasiStore($request);
         }
         toastr()->success('Berhasil Tambah Data');
@@ -119,7 +124,7 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($jenis,$id)
+    public function show($jenis, $id)
     {
         if ($jenis == SELF::HKI) {
             $data['utama']['hki'] = $this->hkiRepository->findById(decrypt($id));
@@ -136,14 +141,13 @@ class KaryaMahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($jenis,$id)
+    public function edit($jenis, $id)
     {
         if ($jenis == SELF::HKI) {
             $this->data['data'] = $this->hkiRepository->findById(decrypt($id));
         } else if ($jenis == SELF::PUBLIKASI) {
             $this->data['data'] = $this->publikasiRepository->findById(decrypt($id));
         }
-        dd($this->data['data']);
         return view('karya-mahasiswa.edit', $this->data);
     }
 

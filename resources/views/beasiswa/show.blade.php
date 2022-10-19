@@ -23,6 +23,16 @@
                             <td>{{$data->nama_promotor}}</td>
                         </tr>
                         <tr>
+                            <td>Kategori</td>
+                            <td>:</td>
+                            <td>{{$data->kategori->nama_kategori}}</td>
+                        </tr>
+                        <tr>
+                            <td>Cakupan Beasiswa</td>
+                            <td>:</td>
+                            <td>{{$data->cakupan_beasiswa->nama}}</td>
+                        </tr>
+                        <tr>
                             <td>Bukti Kegiatan</td>
                             <td>:</td>
                             <td><a href="{{asset('storage/'.$data->files->path)}}" class="btn btn-sm btn-info">Lihat Bukti</a></td>

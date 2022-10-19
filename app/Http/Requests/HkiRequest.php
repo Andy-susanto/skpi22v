@@ -24,7 +24,60 @@ class HkiRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'siakad_mhspt_id'  => [
+                'required',
+                'numeric'
+            ],
+            'jenis_hki_id' => [
+                'required',
+                'string'
+            ],
+            'jenis_ciptaan_id' => [
+                'required',
+                'string'
+            ],
+            'file' => [
+                'mimes:pdf,jpg,png',
+                'required_without:file_bukti_id'
+            ],
+            'file_bukti_id' => [
+                'nullable',
+                'string'
+            ],
+            'nomor_sertifikat' => [
+                'required',
+                'string'
+            ],
+            'tgl_mulai_berlaku' => [
+                'required',
+                'date',
+                'before_or_equal:tgl_berakhir'
+            ],
+            'tgl_berakhir' => [
+                'required',
+                'date',
+                'after_or_equal:tgl_mulai_berlaku'
+            ],
+            'nama_hki' => [
+                'string',
+                'required'
+            ],
+            'nama_hki_eng' => [
+                'string',
+                'nullable'
+            ],
+            'pemegang_hki' => [
+                'string',
+                'nullable'
+            ],
+            'deskripsi_hki' => [
+                'string',
+                'nullable'
+            ],
+            'status_validasi' => [
+                'numeric',
+                'required'
+            ]
         ];
     }
 }

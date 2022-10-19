@@ -24,7 +24,43 @@ class PublikasiRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'siakad_mhspt_id' => [
+                'string',
+                'nullable'
+            ],
+            'kategori_capaian_id' => [
+                'string',
+                'required'
+            ],
+            'jenis_id' => [
+                'string',
+                'required'
+            ],
+            'file' => [
+                'mimes:pdf,jpg,png',
+                'max:5000',
+                'required_without:file_bukti_id'
+            ],
+            'file_bukti_id' => [
+                'string',
+                'nullable'
+            ],
+            'judul' => [
+                'string',
+                'required'
+            ],
+            'tgl_terbit' => [
+                'date',
+                'required'
+            ],
+            'penerbit' => [
+                'string',
+                'required'
+            ],
+            'tautan_eksternal' => [
+                'string',
+                'nullable'
+            ]
         ];
     }
 }
