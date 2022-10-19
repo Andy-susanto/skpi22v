@@ -23,6 +23,7 @@ class BeasiswaController extends Controller
     private $beasiswaRepository, $fileRepository;
     public function __construct(BeasiswaRepository $beasiswaRepository, FileRepository $fileRepository)
     {
+        parent::__construct();
         $this->beasiswaRepository = $beasiswaRepository;
         $this->fileRepository = $fileRepository;
     }
