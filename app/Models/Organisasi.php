@@ -11,7 +11,7 @@ class Organisasi extends Model
     use HasFactory,UuidTrait;
     protected $table      = 'organisasi';
     protected $primaryKey = 'id_organisasi';
-    protected $incrementing = false;
+    public $incrementing = false;
     protected $fillable    = [
         'siakad_mhspt_id',
         'kepeg_pegawai_id',
