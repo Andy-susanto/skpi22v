@@ -130,7 +130,7 @@ class CetakSementaraController extends Controller
         $nomor .= '<p style="line-height: 0px;text-align:center;font-size:12px;margin-top:-10px">Nomor : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>/UN21.9/PK.05.05/2022</span></p>';
         $pdf::writeHTML($nomor  ,true,false,true,false,'');
         $pdf::ln(10);
-        $main = 'Yang bertanda tangan dibawah ini :';
+        $main = 'Yang bertanda tangan di bawah ini :';
         $pdf::writeHTML($main  ,true,false,true,false,'');
         $main1 = '<table border="0" cellspadding="0" cellspacing="0">
                     <tr>
@@ -140,7 +140,7 @@ class CetakSementaraController extends Controller
                     <td width="30"></td><td width="120">NIP</td><td width="300">: '.$wadek3->nip.'<b></b></td>
                     </tr>
                     <tr>
-                    <td width="30"></td><td width="120">Pangkat / Golongan</td><td width="300">: '.$wadek3->nama_pangkat.'<b></b></td>
+                    <td width="30"></td><td width="120">Pangkat / Golongan</td><td width="300">: '.$wadek3->nama_pangkat.'/'.$wadek3->kode_golongan.'<b></b></td>
                     </tr>
                     <tr>
                     <td width="30"></td><td width="120">Jabatan</td><td width="300">: '.$wadek3->nama_jabatan.'<b></b></td>
@@ -170,7 +170,7 @@ class CetakSementaraController extends Controller
 
         // $pdf::ln(5);
         $pejabat='<table border="0" cellpadding="0" cellspacing="0">';
-        $pejabat.='<tr><td width="260"></td><td width="220">Dikeluarkan di JAMBI,</td></tr>';
+        $pejabat.='<tr><td width="260"></td><td width="220">Dikeluarkan di Jambi,</td></tr>';
         $pejabat.='<tr><td width="260"></td><td width="220">pada tanggal '.Carbon::parse(now())->isoFormat('D MMMM Y').'</td></tr>';
         $pejabat.='<tr><td width="260"></td><td width="220">'.$wadek3->nama_jabatan.',</td></tr>';
         $pejabat.='</table>';
