@@ -86,7 +86,7 @@ class CetakSementaraController extends Controller
                 ->join('kepeg.unit_kerja as d','d.id_unit_kerja','=','a.unit_kerja_id')
                 ->join('kepeg.referensi_unit_kerja as e','e.id_ref_unit_kerja','=','d.referensi_unit_kerja_id')
                 ->join('kepeg.pangkat_golongan as f','f.id_pangkat_golongan','=','b.pangkat_golongan_id')
-                ->where('c.id_jabatan',45)
+                ->where('c.id_jabatan',26)
                 // ->where('c.id_jabatan',1118)
                 ->where('e.id_unit_kerja_siakad',11)
                 ->first();
