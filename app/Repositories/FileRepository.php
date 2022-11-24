@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use DB;
-use App\models\Files;
+use App\Models\Files;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Interfaces\CrudInterface;
 use Illuminate\Support\Facades\Storage;
