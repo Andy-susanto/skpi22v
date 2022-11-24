@@ -78,22 +78,22 @@
                                         <tr>
                                             <th>Penyelenggara</th>
                                             <td>:</td>
-                                            <td>{{ $data->penyelenggara->nama }}</td>
+                                            <td>{{ $data->penyelenggara()->exists() ? $data->penyelenggara->nama : '-'}}</td>
                                         </tr>
                                         <tr>
                                             <th>Tingkat</th>
                                             <td>:</td>
-                                            <td>{{ $data->tingkat->nama }}</td>
+                                            <td>{{ $data->tingkat()->exists() ? $data->tingkat->nama : '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Prestasi</th>
                                             <td>:</td>
-                                            <td>{{ $data->peran_prestasi->nama }}</td>
+                                            <td>{{ $data->prestasi()->exists() ? $data->prestasi->nama : '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Bobot</th>
                                             <td>:</td>
-                                            <td>{{$data->bobot_nilai->bobot}}</td>
+                                            {{-- <td>{{$data->bobot_nilai->bobot}}</td> --}}
                                         </tr>
                                         <tr>
                                             <th>Download Dokumen</th>
@@ -128,69 +128,51 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-                                @if ($type == 'operator')
-                                    @if (in_array($data->status_validasi, ['2', '3']))
-                                        <div class="col-2">
-                                            <a name="" id="" class="btn btn-success btn-lg"
-                                                onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
-                                                href="#" role="button">Validasi</a>
-                                            <form
-                                                action="{{ route('validasi.update', ['publikasi', $data->id_publikasi]) }}"
-                                                id="update{{ $data->id_publikasi . 'publikasi' }}" method="post">
-                                                @csrf
-                                                @method('put')
-                                            </form>
-                                        </div>
-                                    @endif
-                                    @if (in_array($data->status_validasi, ['1', '3']))
-                                        <div class="col-2">
-                                            <a name="" id="" onclick="tolakModal(this);"
-                                                data-url="{{ route('validasi.destroy', ['publikasi', $data->id_publikasi]) }}"
-                                                class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
-                                        </div>
-                                    @endif
-                                @elseif($type == 'wadek')
-                                    <div class="col-2">
-                                        <a name="" id="" class="btn btn-success btn-lg"
-                                            onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
-                                            href="#" role="button">Validasi</a>
-                                        <form
-                                            action="{{ route('validasi-wadek.update', ['publikasi', $data->id_publikasi, $data->siakad_mhspt_id]) }}"
-                                            id="update{{ $data->id_publikasi . 'publikasi' }}" method="post">
-                                            @csrf
-                                            @method('put')
-                                        </form>
-                                    </div>
-                                    <div class="col-2">
-                                        <a name="" id="" onclick="tolakModal(this);"
-                                            data-url="{{ route('validasi-wadek.destroy', ['publikasi', $data->id_publikasi]) }}"
-                                            class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
-                                    </div>
-                                @endif
-                            </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade show active" id="nav-home">
-								 <table class="table table-striped">
-                            <thead class="thead-inverse">
-                                <tr>
-                                    <th>NO</th>
-                                    <th>Jenis Kegiatan</th>
-                                    <th>Nama Kegiatan / Judul</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Dosen Pembimbing</th>
-                                    <th>Status</th>
-                                    <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
+    @if ($type == 'operator')
+        @if (in_array($data->status_validasi, ['2', '3']))
+            <div class="col-2">
+                <a name="" id="" class="btn btn-success btn-lg"
+                    onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                    href="#" role="button">Validasi</a>
+                <form
+                    action="{{ route('validasi.update', ['publikasi', $data->id_publikasi]) }}"
+                    id="update{{ $data->id_publikasi . 'publikasi' }}" method="post">
+                    @csrf
+                    @method('put')
+                </form>
+            </div>
+        @endif
+        @if (in_array($data->status_validasi, ['1', '3']))
+            <div class="col-2">
+                <a name="" id="" onclick="tolakModal(this);"
+                    data-url="{{ route('validasi.destroy', ['publikasi', $data->id_publikasi]) }}"
+                    class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+            </div>
+        @endif
+    @elseif($type == 'wadek')
+        <div class="col-2">
+            <a name="" id="" class="btn btn-success btn-lg"
+                onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                href="#" role="button">Validasi</a>
+            <form
+                action="{{ route('validasi-wadek.update', ['publikasi', $data->id_publikasi, $data->siakad_mhspt_id]) }}"
+                id="update{{ $data->id_publikasi . 'publikasi' }}" method="post">
+                @csrf
+                @method('put')
+            </form>
+        </div>
+        <div class="col-2">
+            <a name="" id="" onclick="tolakModal(this);"
+                data-url="{{ route('validasi-wadek.destroy', ['publikasi', $data->id_publikasi]) }}"
+                class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
+        </div>
+    @endif
 </div>

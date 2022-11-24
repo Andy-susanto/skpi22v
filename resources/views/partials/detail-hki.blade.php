@@ -78,17 +78,17 @@
                                         <tr>
                                             <th>Penyelenggara</th>
                                             <td>:</td>
-                                            <td>{{ $data->penyelenggara->nama }}</td>
+                                            <td>{{ $data->penyelenggara()->exists() ? $data->penyelenggara->nama : '-'}}</td>
                                         </tr>
                                         <tr>
                                             <th>Tingkat</th>
                                             <td>:</td>
-                                            <td>{{ $data->tingkat->nama }}</td>
+                                            <td>{{ $data->tingkat()->exists() ? $data->tingkat->nama : '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Prestasi</th>
                                             <td>:</td>
-                                            <td>{{ $data->peran_prestasi->nama }}</td>
+                                            <td>{{ $data->prestasi()->exists() ? $data->prestasi->nama : '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Bobot</th>
