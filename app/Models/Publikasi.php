@@ -41,4 +41,20 @@ class Publikasi extends Model
         return $this->belongsTo('App\Models\SiakadMhspt', 'siakad_mhspt_id');
     }
 
+    public function kepeg_pegawai(){
+        return $this->belongsTo(KepegPegawai::class,'kepeg_pegawai_id');
+    }
+
+    public function penyelenggara(){
+        return $this->belongsTo(Penyelenggara::class,'ref_penyelenggara_id');
+    }
+
+    public function tingkat(){
+        return $this->belongsTo(Tingkat::class,'ref_tingkat_id');
+    }
+
+    public function prestasi(){
+        return $this->belongsTo(Prestasi::class,'ref_peran_prestasi_id');
+    }
+
 }
