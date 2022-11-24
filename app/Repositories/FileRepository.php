@@ -16,7 +16,7 @@ class FileRepository implements CrudInterface
 
     public function findById($id)
     {
-        return Files::findOrFail($id);
+        return Files::findOrFail($id );
     }
 
     public function create($params = [])
