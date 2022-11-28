@@ -123,11 +123,11 @@
     </div>
 </div>
 <div class="row pt-5 mb-5 pb-10 justify-content-center bg-slate-800 shadow-sm">
-    @if ($type == 'operator')
+@if ($type == 'operator')
     @if (in_array($data->status_validasi, ['2', '3']))
         <div class="col-2">
             <a name="" id="" class="btn btn-success btn-lg"
-                onclick="konfirmasi('update'+{{ $data->id_organisasi }}+'organisasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                onclick="konfirmasi('update'+'{{ $data->id_organisasi }}'+'organisasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#" role="button">Validasi</a>
             <form
                 action="{{ route('validasi.update', ['organisasi', $data->id_organisasi]) }}"
@@ -147,7 +147,7 @@
 @elseif($type == 'wadek')
     <div class="col-2">
         <a name="" id="" class="btn btn-success btn-lg"
-            onclick="konfirmasi('update'+{{ $data->id_organisasi }}+'organisasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+            onclick="konfirmasi('update'+'{{ $data->id_organisasi }}'+'organisasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
             href="#" role="button">Validasi</a>
         <form
             action="{{ route('validasi-wadek.update', ['organisasi', $data->id_organisasi, $data->siakad_mhspt_id]) }}"

@@ -140,7 +140,7 @@
         @if (in_array($data->status_validasi, ['2', '3']))
             <div class="col-2">
                 <a name="" id="" class="btn btn-success btn-lg"
-                    onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                    onclick="konfirmasi('update'+'{{ $data->id_publikasi }}'+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                     href="#" role="button">Validasi</a>
                 <form
                     action="{{ route('validasi.update', ['publikasi', $data->id_publikasi]) }}"
@@ -160,7 +160,7 @@
     @elseif($type == 'wadek')
         <div class="col-2">
             <a name="" id="" class="btn btn-success btn-lg"
-                onclick="konfirmasi('update'+{{ $data->id_publikasi }}+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+                onclick="konfirmasi('update'+'{{ $data->id_publikasi }}'+'publikasi','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#" role="button">Validasi</a>
             <form
                 action="{{ route('validasi-wadek.update', ['publikasi', $data->id_publikasi, $data->siakad_mhspt_id]) }}"
