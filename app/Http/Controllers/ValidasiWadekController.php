@@ -29,6 +29,7 @@ class ValidasiWadekController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('read-validasi-wadek');
         if ($request->ajax()) {
             $data = collect();
             if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
@@ -436,6 +437,7 @@ class ValidasiWadekController extends Controller
      */
     public function update(Request $request, $type, $id, $mhspt_id)
     {
+        $this->authorize('update-validasi-wadek');
         if ($type == 'penghargaan') {
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', $id)->update([
                 'status_validasi' => '4'
@@ -521,6 +523,7 @@ class ValidasiWadekController extends Controller
      */
     public function destroy(Request $request, $type, $id)
     {
+        $this->authorize('delete-validasi-wadek');
         if ($type == 'penghargaan') {
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', $id)->update([
                 'status_validasi' => '2',
@@ -584,6 +587,7 @@ class ValidasiWadekController extends Controller
 
     public function exportExcel(Request $request)
     {
+        $this->authorize('export-excel');
         $data = collect();
         if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
             $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {

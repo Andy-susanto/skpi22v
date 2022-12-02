@@ -14,6 +14,7 @@ use App\Models\KaryaMahasiswa;
 use App\Models\SeminarPelatihan;
 use Yajra\DataTables\DataTables;
 use App\Models\KegiatanMahasiswa;
+use Illuminate\Support\Facades\DB;
 use App\Models\KemampuanBahasaAsing;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
@@ -30,13 +31,14 @@ class ValidasiRekamKegiatanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     protected function getData(){
-
+     public function __construct(){
+        parent::__construct();
      }
+
 
     public function index(Request $request)
     {
-        $durasi = 600;
+        $this->authorize('read-validasi-rekam-kegiatan');
         if ($request->ajax()) {
             $data = collect();
             if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
@@ -393,6 +395,7 @@ class ValidasiRekamKegiatanController extends Controller
      */
     public function show($id, $jenis,$type)
     {
+        $this->authorize('read-validasi-rekam-kegiatan');
         $data = [];
         if ($jenis == 'penghargaan') {
             $data = PenghargaanKejuaraan::find($id);
@@ -440,7 +443,7 @@ class ValidasiRekamKegiatanController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-
+        $this->authorize('update-validasi-rekam-kegiatan');
         if ($type == 'penghargaan') {
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', $id)->update([
                 'status_validasi' => '1'
@@ -498,6 +501,7 @@ class ValidasiRekamKegiatanController extends Controller
      */
     public function destroy(Request $request, $type, $id)
     {
+        $this->authorize('delete-validasi-rekam-kegiatan');
         if ($type == 'penghargaan') {
             PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', $id)->update([
                 'status_validasi' => '2',
@@ -561,6 +565,8 @@ class ValidasiRekamKegiatanController extends Controller
 
     public function riwayat_kegiatan(Request $request)
     {
+        $this->authorize('read-riwayat-rekam-kegiatan');
+
         if ($request->ajax()) {
             $data = collect();
             $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {
