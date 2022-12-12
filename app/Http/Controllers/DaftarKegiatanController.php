@@ -1,0 +1,338 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Magang;
+use App\Models\Beasiswa;
+use App\Models\Publikasi;
+use App\Models\Organisasi;
+use Illuminate\Http\Request;
+use App\Models\Kewirausahaan;
+use App\Models\PenerimaHibah;
+use App\Models\SeminarPelatihan;
+use App\Models\KemampuanBahasaAsing;
+use App\Models\PengabdianMasyarakat;
+use App\Models\PenghargaanKejuaraan;
+use Yajra\DataTables\Facades\DataTables;
+
+class DaftarKegiatanController extends Controller
+{
+    public function index(Request $request)
+    {
+        $this->authorize('akses-kegiatan-mahasiswa');
+        if ($request->ajax()) {
+            $data = collect();
+            if ($request->id_jenis_kegiatan == 1 || $request->id_jenis_kegiatan == '') {
+                $penghargaan = PenghargaanKejuaraan::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $penghargaanMap = $penghargaan->map(function ($item) {
+                    return [
+                        'id'             => $item->id_penghargaan_kejuaraan_kompetensi,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'jenis_kegiatan' => 'penghargaan',
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($penghargaanMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 2 || $request->id_jenis_kegiatan == '') {
+                $seminar = SeminarPelatihan::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $seminarMap = $seminar->map(function ($item) {
+                    return [
+                        'id'             => $item->id_seminar_pelatihan_workshop_diklat,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'seminar',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($seminarMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 3 || $request->id_jenis_kegiatan == '') {
+                $penerimaHibah = PenerimaHibah::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $penerimaHibahMap = $penerimaHibah->map(function ($item) {
+                    return [
+                        'id'             => $item->id_penerima_hibah_pendanaan,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'hibah',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+                $data = $data->merge($penerimaHibahMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 4 || $request->id_jenis_kegiatan == '') {
+                $pengabdianMasyarakat = PengabdianMasyarakat::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $pengabdianMasyarakatMap = $pengabdianMasyarakat->map(function ($item) {
+                    return [
+                        'id'             => $item->id_pengabdian_masyarakat,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'pengabdian',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($pengabdianMasyarakatMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 5 || $request->id_jenis_kegiatan == '') {
+                $organisasi = Organisasi::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $organisasiMap = $organisasi->map(function ($item) {
+                    return [
+                        'id'             => $item->id_organisasi,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'organisasi',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($organisasiMap);
+            }
+            if ($request->id_jenis_kegiatan == 6 || $request->id_jenis_kegiatan == '') {
+                $magang = Magang::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $magangMap = $magang->map(function ($item) {
+                    return [
+                        'id'             => $item->id_magang,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'magang',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($magangMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 7 || $request->id_jenis_kegiatan == '') {
+                $beasiswa = Beasiswa::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $beasiswaMap = $beasiswa->map(function ($item) {
+                    return [
+                        'id'             => $item->id_beasiswa,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'beasiswa',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($beasiswaMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 8 || $request->id_jenis_kegiatan == '') {
+                $bahasa = KemampuanBahasaAsing::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $bahasaMap = $bahasa->map(function ($item) {
+                    return [
+                        'id'             => $item->id_kemampuan_bahasa_asing,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'bahasa',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->bahasa->nama,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($bahasaMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 9 || $request->id_jenis_kegiatan == '') {
+                $kewirausahaan = Kewirausahaan::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $kewirausahaanMap = $kewirausahaan->map(function ($item) {
+                    return [
+                        'id'             => $item->id_kewirausahaan,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'kewirausahaan',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama_usaha,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($kewirausahaanMap);
+            }
+
+            if ($request->id_jenis_kegiatan == 10 || $request->id_jenis_kegiatan == '') {
+
+                $hki = Hki::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $hkiMap = $hki->map(function ($item) {
+                    return [
+                        'id'             => $item->id_hki_mahasiswa,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'HKI',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->nama_hki,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($hkiMap);
+
+                $publikasi = Publikasi::with('mhspt')->whereHas('mhspt', function ($qp) {
+                })->when($request->status_validasi, function ($q) use ($request) {
+                    $q->where('status_validasi', $request->status_validasi);
+                })->orderBy('status_validasi', 'asc')->get();
+
+                $publikasiMap = $publikasi->map(function ($item) {
+                    return [
+                        'id'             => $item->id_publikasi,
+                        'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
+                        'nim'            => $item->mhspt->no_mhs,
+                        'prodi'          => $item->mhspt->prodi->nama_prodi,
+                        'jenis_kegiatan' => 'publikasi',
+                        'id_mhspt'       => $item->siakad_mhspt_id,
+                        'nama_kegiatan'  => $item->judul,
+                        'path'           => $item->files->path,
+                        'validasi'       => $item->status_validasi,
+                        'pesan'          => $item->pesan
+                    ];
+                });
+
+                $data = $data->merge($publikasiMap);
+            }
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn("nama_mahasiswa", function ($row) {
+                    return $row['nama_mahasiswa'];
+                })
+                ->addColumn("nim", function ($row) {
+                    return $row['nim'];
+                })
+                ->addColumn("program_studi", function ($row) {
+                    return $row['prodi'];
+                })
+                ->addColumn("jenis_kegiatan", function ($row) {
+                    if ($row['jenis_kegiatan'] == 'penghargaan') {
+                        return 'Penghargaan Kejuaraan';
+                    } elseif ($row['jenis_kegiatan'] == 'seminar') {
+                        return 'Seminar Pelatihan';
+                    } elseif ($row['jenis_kegiatan'] == 'hibah') {
+                        return 'Penerima Hibah';
+                    } elseif ($row['jenis_kegiatan'] == 'pengabdian') {
+                        return 'Pengabdian Masyarakat';
+                    } elseif ($row['jenis_kegiatan'] == 'organisasi') {
+                        return 'Organisasi';
+                    } elseif ($row['jenis_kegiatan'] == 'magang') {
+                        return 'Magang';
+                    } elseif ($row['jenis_kegiatan'] == 'beasiswa') {
+                        return 'Beasiswa';
+                    } elseif ($row['jenis_kegiatan'] == 'bahasa') {
+                        return 'Kemampuan Bahasa Asing';
+                    } elseif ($row['jenis_kegiatan'] == 'kewirausahaan') {
+                        return 'Kewirausahaan';
+                    } elseif ($row['jenis_kegiatan'] == 'karya') {
+                        return 'Karya Mahasiswa';
+                    }
+                })
+                ->addColumn("nama_kegiatan", function ($row) {
+                    return $row['nama_kegiatan'];
+                })
+                ->addColumn("bukti_kegiatan", function ($row) {
+                    return view('validasi-rekam-kegiatan.file', compact('row'));
+                })
+                ->addColumn("validasi", function ($row) {
+                    return view('validasi-rekam-kegiatan.status', compact('row'));
+                })
+                ->addColumn("action", function ($row) {
+                    return view('validasi-rekam-kegiatan.aksi', compact('row'));
+                })
+                ->rawColumns(['action', 'validasi', 'bukti_kegiatan'])
+                ->toJson();
+        }
+
+        return view('validasi-rekam-kegiatan.index');
+    }
+}

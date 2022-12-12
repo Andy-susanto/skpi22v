@@ -4,6 +4,7 @@ use App\Http\Controllers\BeasiswaController;
 use App\Http\Controllers\CetakController;
 use App\Http\Controllers\CetakOperatorController;
 use App\Http\Controllers\CetakSementaraController;
+use App\Http\Controllers\DaftarKegiatanController;
 use App\Http\Controllers\FungsiAjaxController;
 use App\Http\Controllers\KaryaMahasiswaController;
 use App\Http\Controllers\KemampuanBahasaAsingController;
@@ -52,9 +53,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/login', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'login'])->name('keycloak.login');
-Route::get('/callback', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'callback'])->name('keycloak.callback');
-Route::post('/logout', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'logout'])->name('keycloak.logout');
+// Route::get('/login', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'login'])->name('keycloak.login');
+// Route::get('/callback', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'callback'])->name('keycloak.callback');
+// Route::post('/logout', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'logout'])->name('keycloak.logout');
 
 
 Route::get('/home', function () {
@@ -79,6 +80,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('user', UserController::class);
 
+    // Daftar kegiatan mahasiswa
+    Route::get('daftar-kegiatan-mahasiswa', [DaftarKegiatanController::class, 'index'])->name('kegiatan.daftar');
+
 
     // Validasi Rekam Kegiatan
 
@@ -99,14 +103,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('validasi-wadek/{type}/{id}/destroy', [ValidasiWadekController::class, 'destroy'])->name('validasi-wadek.destroy');
 
-    Route::resource('validasi-wadek',ValidasiWadekController::class)->except(['update']);
+    Route::resource('validasi-wadek', ValidasiWadekController::class)->except(['update']);
     //
 
     // fungsi
     Route::get('load-bobot', [FungsiAjaxController::class, 'load_bobot'])->name('fungsi.load-bobot');
 
-    Route::get('karyamahasiswa/{$jenis}/{$id}/edit',[KaryaMahasiswaController::class,'edit'])->name('karyaMahasiswa.edit');
-    Route::get('karyamahasiswa/{$jenis}/{$id}/show',[KaryaMahasiswaController::class,'show'])->name('karya-mahasiswa.show');
+    Route::get('karyamahasiswa/{jenis}/{id}/edit', [KaryaMahasiswaController::class, 'edit'])->name('karyaMahasiswa.edit');
+    Route::get('karyamahasiswa/{jenis}/{id}/show', [KaryaMahasiswaController::class, 'show'])->name('karya-mahasiswa.show');
 
     Route::resource('penghargaan-kejuaraan', PenghargaanKejuaraanController::class);
     Route::resource('seminar-pelatihan', SeminarPelatihanController::class);
@@ -117,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('beasiswa', BeasiswaController::class);
     Route::resource('kemampuan-bahasa-asing', KemampuanBahasaAsingController::class);
     Route::resource('kewirausahaan', KewirausahaanController::class);
-    Route::resource('karya-mahasiswa', KaryaMahasiswaController::class)->except(['edit','show']);
+    Route::resource('karya-mahasiswa', KaryaMahasiswaController::class)->except(['edit', 'show']);
 
     // Master
     Route::resource('bobot-nilai', MasterBobotNilaiController::class);
@@ -134,16 +138,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pengaturan-cetak', SettingCetakController::class);
     Route::resource('pengaturan-bobot', PengaturanBobotController::class);
     // Cetak
-    Route::resource('cetak-skpi',CetakOperatorController::class);
+    Route::resource('cetak-skpi', CetakOperatorController::class);
     Route::resource('print', CetakController::class)->except([
         'update'
     ]);
     Route::resource('cetak-surat-keterangan', CetakSementaraController::class);
 
-    Route::get('exportExcel',[ValidasiWadekController::class,'exportExcel'])->name('exportExcel');
+    Route::get('exportExcel', [ValidasiWadekController::class, 'exportExcel'])->name('exportExcel');
 
     // Tabbed View
-    Route::get('tabbed-menu',function(){
+    Route::get('tabbed-menu', function () {
         return view('tab-menu');
     });
 });
