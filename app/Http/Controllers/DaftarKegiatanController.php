@@ -2,18 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Magang;
-use App\Models\Beasiswa;
 use App\Models\Kegiatan;
-use App\Models\Publikasi;
-use App\Models\Organisasi;
 use Illuminate\Http\Request;
-use App\Models\Kewirausahaan;
-use App\Models\PenerimaHibah;
-use App\Models\SeminarPelatihan;
-use App\Models\KemampuanBahasaAsing;
-use App\Models\PengabdianMasyarakat;
-use App\Models\PenghargaanKejuaraan;
 use Yajra\DataTables\Facades\DataTables;
 
 class DaftarKegiatanController extends Controller

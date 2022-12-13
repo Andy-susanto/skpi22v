@@ -14,8 +14,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Jenis Kegiatan</label>
-                                <select class="form-control" name="" id="jenis_kegiatan" onchange="load_data()">
-                                    <option value="" selected>Semua</option>
+                                <select class="form-control" multiple name="jenis_kegiatan[]" id="jenis_kegiatan" onchange="load_data()">
                                     @forelse (Helper::jenis_kegiatan() as $loopJenisKegiatan)
                                         <option value="{{ $loopJenisKegiatan->id_ref_jenis_kegiatan }}">{{ ucwords($loopJenisKegiatan->nama) }}
                                         </option>
@@ -28,12 +27,21 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Status Kegiatan</label>
-                                <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
+                                <select class="form-control" multiple name="status_validasi[]" id="status_validasi" onchange="load_data()">
                                     <option value="3" selected>Menunggu Validasi Operator</option>
                                     <option value="1">Menunggu Validasi Wakil Dekan</option>
                                     <option value="4">di Validasi</option>
                                     <option value="2">Tidak di Terima</option>
-                                    <option value="">Semua</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Program Studi</label>
+                                <select class="form-control" multiple name="prodi[]" id="prodi" onchange="load_data()">
+                                    @foreach ($unit_kerjas as $unit_kerja)
+                                        <option value="{{$unit_kerja->id_unit_kerja_siakad}}">{{$unit_kerja->ref_unit->nama_ref_unit_kerja}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -118,13 +126,14 @@
                 serverSide: true,
                 bDestroy: true,
                 bStateSave: true,
-                scrollY: '50vh',
-                scrollCollapse: true,
-                paging: false,
+                // scrollY: '50vh',
+                // scrollCollapse: true,
+                paging: true,
                 ajax: {
                     data: {
-                        id_jenis_kegiatan: $('#jenis_kegiatan').val(),
-                        status_validasi: $('#status_validasi').val()
+                        jenis_kegiatan: $('#jenis_kegiatan').val(),
+                        status_validasi: $('#status_validasi').val(),
+                        prodi: $('#prodi').val(),
                     },
                     url: "{{ route('validasi-rekam-kegiatan.index') }}",
                 },

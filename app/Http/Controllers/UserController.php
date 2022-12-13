@@ -8,7 +8,7 @@ use App\Helper\Helpers;
 use App\Helper\Tanggal;
 use App\Models\UnitKerja;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -22,9 +22,10 @@ class UserController extends Controller
     {
         $this->authorize('read-user');
         if ($request->ajax()) {
-            $user = User::join('kepeg.pegawai as a', 'a.nip', '=', 'users.nip')->whereIn('a.status_keaktifan_pegawai_id',[1,2,3,4])
+            $user = User::query()->join('kepeg.pegawai as a', 'a.nip', '=', 'users.nip')
+                ->whereIn('a.status_keaktifan_pegawai_id', [1, 2, 3, 4])
                 ->select('users.*', 'a.nama_pegawai');
-            return DataTables::of($user)
+            return DataTables::eloquent($user)
                 ->addColumn('action', function ($q) {
                     return view('user.action', compact('q'));
                 })
@@ -59,7 +60,7 @@ class UserController extends Controller
                 })
 
                 ->addIndexColumn()
-                ->escapeColumns('action', 'roles')->make(true);
+                ->escapeColumns('action', 'roles')->tojson();
         }
         return view('user.index');
     }
@@ -153,7 +154,7 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
         $user = User::where('id', $id);
-        User::where('id',$id)->update([
+        User::where('id', $id)->update([
             'level_akun' => $request->level_akun
         ]);
         $rolesupdate = $user->first()->roles()->sync($request->roles);
@@ -183,11 +184,11 @@ class UserController extends Controller
     {
         // $this->authorize('read-user');
         if ($request->ajax()) {
-            $user = DB::table('siakad.users')->where('status','1');
+            $user = DB::table('siakad.users')->where('status', '1');
             return DataTables::of($user)
                 ->addIndexColumn()
                 ->addColumn('aksi', function ($row) {
-                    return '<a name="" id="" class="btn btn-info btn-sm" href="'.route('login-as',encrypt($row->id)).'" role="button">Login As</a>';
+                    return '<a name="" id="" class="btn btn-info btn-sm" href="' . route('login-as', encrypt($row->id)) . '" role="button">Login As</a>';
                 })
                 ->escapeColumns('aksi')
                 ->toJson();
@@ -197,7 +198,7 @@ class UserController extends Controller
     public function login_as($id)
     {
         // $this->authorize('read-user');
-        $cek = DB::table('siakad.users')->where('id',decrypt($id))->first();
+        $cek = DB::table('siakad.users')->where('id', decrypt($id))->first();
         if ($cek) {
             session(['kamuflase' => $cek->username]);
             toastr()->success('Berhasil melakukan login as');
@@ -207,13 +208,14 @@ class UserController extends Controller
         }
     }
 
-    public function logout_as($id){
+    public function logout_as($id)
+    {
         $cek = User::find(decrypt($id));
         if ($cek) {
             Session()->forget('kamuflase');
             toastr()->success('Kembali Ke Akun Utama');
             return redirect()->route('user.index');
-        }else{
+        } else {
             return back();
         }
     }

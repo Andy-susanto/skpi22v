@@ -28,19 +28,19 @@ class UnitKerja extends Model
     public function scopeFilterUnit($query)
     {
         $unit = [];
-        if (auth()->user()->level_akun == 1){
+        if (auth()->user()->level_akun == 1) {
             $unit[] = auth()->user()->kepeg_pegawai->unit_kerja->id_unit_kerja_siakad;
             foreach (auth()->user()->instansi as $v) {
                 $unit[] = (int) $v->id_unit_kerja_siakad;
-                $cekParent = UnitKerja::where('id_unit_kerja_siakad',$v->id_unit_kerja_siakad)->first();
-                if($cekParent->parent_unit_id == 0){
-                    $child = UnitKerja::where('parent_unit_id',$v->id_unit_kerja)->get();
-                    foreach($child as $v2){
+                $cekParent = UnitKerja::where('id_unit_kerja_siakad', $v->id_unit_kerja_siakad)->first();
+                if ($cekParent->parent_unit_id == 0) {
+                    $child = UnitKerja::where('parent_unit_id', $v->id_unit_kerja)->get();
+                    foreach ($child as $v2) {
                         $unit[] = (int) $v2->id_unit_kerja_siakad;
                     }
                 }
             }
-            return $query->whereIn('id_prodi',$unit);
+            return $query->whereIn('id_prodi', $unit);
         }
     }
 }
