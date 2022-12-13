@@ -48,6 +48,11 @@ class Kegiatan extends Model
         return $this->belongsTo($this->getData($this->ref_jenis_kegiatan_id), 'kegiatan_id');
     }
 
+    public function file()
+    {
+        return $this->belongsTo(Files::class, 'file_id');
+    }
+
     public function getData($jenisKegiatan)
     {
         $data = '';

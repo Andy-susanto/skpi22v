@@ -50,7 +50,8 @@
                                 <th>Jenis Kegiatan</th>
                                 <th>Nama Kegiatan / Nama Promotor / Nama Beasiswa / Bahasa / Nama Usaha / Judul Hasil Karya</th>
                                 <th>Status</th>
-                                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+                                <th>Bukti Kegiatan</th>
+                                {{-- <th><i class="fa fa-cogs" aria-hidden="true"></i></th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -161,8 +162,8 @@
                         orderable:false,searchable:false
                     },
                     {
-                        data: 'action',
-                        name: 'action',
+                        data: 'bukti_kegiatan',
+                        name: 'bukti_kegiatan',
                         orderable:false,searchable:false
                     }
                 ],
