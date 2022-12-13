@@ -118,9 +118,9 @@
                 serverSide: true,
                 bDestroy: true,
                 bStateSave: true,
-                scrollY: '50vh',
-                scrollCollapse: true,
-                paging: false,
+                // scrollY: '50vh',
+                // scrollCollapse: true,
+                paging: true,
                 ajax: {
                     data: {
                         id_jenis_kegiatan: $('#jenis_kegiatan').val(),
