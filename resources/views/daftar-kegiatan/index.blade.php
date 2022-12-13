@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title',__("app.title.validasi.admin"))
+@section('title','Daftar Kegiatan Mahasiswa')
 
 @section('content_header')
     <h1 class="m-0 text-dark font-bold"><i class="fa fa-bookmark" aria-hidden="true"></i> {{ucwords(__("app.title.validasi.admin"))}}</h1>
