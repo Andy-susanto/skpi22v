@@ -31,9 +31,10 @@ class ValidasiRekamKegiatanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
-     }
+    }
 
 
     public function index(Request $request)
@@ -393,7 +394,7 @@ class ValidasiRekamKegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $jenis,$type)
+    public function show($id, $jenis, $type)
     {
         $this->authorize('read-validasi-rekam-kegiatan');
         $data = [];
@@ -420,7 +421,7 @@ class ValidasiRekamKegiatanController extends Controller
         } elseif ($jenis == 'publikasi') {
             $data = Publikasi::find($id);
         }
-        return view('validasi-rekam-kegiatan.detail', compact('data', 'jenis','type'));
+        return view('validasi-rekam-kegiatan.detail', compact('data', 'jenis', 'type'));
     }
 
     /**
