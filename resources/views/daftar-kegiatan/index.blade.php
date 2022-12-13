@@ -3,7 +3,7 @@
 @section('title','Daftar Kegiatan Mahasiswa')
 
 @section('content_header')
-    <h1 class="m-0 text-dark font-bold"><i class="fa fa-bookmark" aria-hidden="true"></i> {{ucwords(__("app.title.validasi.admin"))}}</h1>
+    <h1 class="m-0 text-dark font-bold"><i class="fa fa-bookmark" aria-hidden="true"></i>Daftar Kegiatan Mahasiswa</h1>
 @stop
 @section('content')
     <div class="row">
@@ -14,8 +14,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Jenis Kegiatan</label>
-                                <select class="form-control" name="" id="jenis_kegiatan" onchange="load_data()">
-                                    <option value="" selected>Semua</option>
+                                <select class="form-control" name="jenis_kegiatan[]" id="jenis_kegiatan" multiple onchange="load_data()">
                                     @forelse (Helper::jenis_kegiatan() as $loopJenisKegiatan)
                                         <option value="{{ $loopJenisKegiatan->id_ref_jenis_kegiatan }}">{{ ucwords($loopJenisKegiatan->nama) }}
                                         </option>
@@ -28,12 +27,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Status Kegiatan</label>
-                                <select class="form-control" name="status_validasi" id="status_validasi" onchange="load_data()">
+                                <select class="form-control" multiple name="status_validasi[]" id="status_validasi" onchange="load_data()">
                                     <option value="3" selected>Menunggu Validasi Operator</option>
                                     <option value="1">Menunggu Validasi Wakil Dekan</option>
                                     <option value="4">di Validasi</option>
                                     <option value="2">Tidak di Terima</option>
-                                    <option value="">Semua</option>
                                 </select>
                             </div>
                         </div>
@@ -124,7 +122,7 @@
                 paging: true,
                 ajax: {
                     data: {
-                        id_jenis_kegiatan: $('#jenis_kegiatan').val(),
+                        jenis_kegiatan: $('#jenis_kegiatan').val(),
                         status_validasi: $('#status_validasi').val()
                     },
                     url: "{{ route('kegiatan.daftar') }}",

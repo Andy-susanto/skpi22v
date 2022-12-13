@@ -27,9 +27,11 @@ class DaftarKegiatanController extends Controller
 
             $data = Kegiatan::query();
             $fill = $data->with('jenis_kegiatan', 'mhs_pt')
-                ->where('ref_jenis_kegiatan_id', $request->id_jenis_kegiatan)
+                ->when($request->jenis_kegiatan, function ($q) use ($request) {
+                    $q->whereIn('ref_jenis_kegiatan_id', $request->jenis_kegiatan);
+                })
                 ->when($request->status_validasi, function ($q) use ($request) {
-                    $q->where('validasi', $request->status_validasi);
+                    $q->whereIn('validasi', $request->status_validasi);
                 });
             return DataTables::eloquent($fill)
                 ->addIndexColumn()
