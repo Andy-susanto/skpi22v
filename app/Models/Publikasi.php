@@ -27,7 +27,7 @@ class Publikasi extends Model
     ];
 
     protected $append = [
-        'nama'
+        'nama', 'tahun'
     ];
 
     protected function nama(): Attribute
@@ -36,6 +36,14 @@ class Publikasi extends Model
             get: fn () => $this->judul,
         );
     }
+
+    protected function tahun(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->tgl_terbit,
+        );
+    }
+
 
     public function jenis_publikasi()
     {

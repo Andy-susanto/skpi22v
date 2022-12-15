@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,6 +14,11 @@ class DaftarKegiatanController extends Controller
     public function index(Request $request)
     {
         $this->authorize('akses-kegiatan-mahasiswa');
+
+        $this->data['unit_kerjas'] = UnitKerja::whereHas('ref_unit', function ($q) {
+            $q->where('jenis_unit_kerja_id', 12);
+        })->get();
+
         if ($request->ajax()) {
 
             $data = Kegiatan::query();
@@ -22,7 +28,24 @@ class DaftarKegiatanController extends Controller
                 })
                 ->when($request->status_validasi, function ($q) use ($request) {
                     $q->whereIn('validasi', $request->status_validasi);
+                })
+                ->when($request->tahun, function ($q) use ($request) {
+                    $q->whereIn('tahun', $request->tahun);
+                })
+                ->whereHas('mhs_pt', function ($qp) use ($request) {
+                    $qp->when($request->prodi, function ($q) use ($request) {
+                        $q->whereIn('id_prodi', $request->prodi);
+                    })
+                        ->when($request->prodi == '', function ($q) {
+                            $q->whereIn('id_prodi', $this->data['unit_kerjas']->pluck('id_unit_kerja_siakad')->toArray());
+                        });
                 });
+            // ->whereHas('relasi', function ($qp) use ($request) {
+            //     $qp->when($request->tahun, function ($q) use ($request) {
+            //         $q->whereIn('tahun', $request->tahun);
+            //     });
+            // });
+
             return DataTables::eloquent($fill)
                 ->addIndexColumn()
                 ->addColumn("nama_mahasiswa", function ($row) {
@@ -40,6 +63,9 @@ class DaftarKegiatanController extends Controller
                 ->addColumn("nama_kegiatan", function ($row) {
                     return $row->relasi->nama ?? '';
                 })
+                ->addColumn("tahun_kegiatan", function ($row) {
+                    return $row->relasi->tahun ? date('Y', strtotime($row->relasi->tahun)) : '-';
+                })
                 ->addColumn("bukti_kegiatan", function ($row) {
                     return view('validasi-rekam-kegiatan.file', compact('row'));
                 })
@@ -53,6 +79,7 @@ class DaftarKegiatanController extends Controller
                 ->toJson();
         }
 
-        return view('daftar-kegiatan.index');
+
+        return view('daftar-kegiatan.index', $this->data);
     }
 }

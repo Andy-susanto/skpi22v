@@ -18,6 +18,7 @@ class Kegiatan extends Model
         'file_id',
         'detail_id',
         'validasi',
+        'tahun',
         'pesan',
     ];
 

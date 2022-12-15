@@ -95,25 +95,51 @@ class KegiatanMigrate extends Command
     protected function get_data(object $model, $jenis)
     {
         $datas = $model->get();
-            foreach ($datas as $data) {
-                $this->line('Insert data ');
-                if ($this->cek_data($data, $jenis)) {
-                    $this->error('Data Exists ! SKIP !! ');
-                    $this->newLine();
-                    continue;
-                }else {
-                    Kegiatan::create([
-                        'kegiatan_id'           => $data->{$data->getKeyName()},
-                        'ref_jenis_kegiatan_id' => $jenis,
-                        'siakad_mhspt_id'       => $data->siakad_mhspt_id,
-                        'file_id'               => $data->file_kegiatan_id ?? $data->file_bukti_id,
-                        'validasi'              => $data->status_validasi,
-                        'pesan'                 => $data->pesan,
-                    ]);
-                    $this->info('Sukses Insert data ');
-                }
+        $bar = $this->output->createProgressBar(count($datas));
+        $this->newLine();
+        $this->line('Insert data [Jenis =' . $jenis . ']');
+        $this->newLine();
+        $bar->start();
+        foreach ($datas as $data) {
+            // $this->performTask($data);
+            $bar->advance();
+            $tgl = date('Y');
 
+            if ($data->tgl_mulai) {
+                $tgl = date('Y', strtotime($data->tgl_mulai));
+            } else if ($data->tgl_mulai_berlaku) {
+                $tgl = date('Y', strtotime($data->tgl_mulai_berlaku));
+            } else if ($data->tgl_terbit) {
+                $tgl = date('Y', strtotime($data->tgl_terbit));
             }
+
+            if ($this->cek_data($data, $jenis)) {
+                // $this->error('Data Exists ! SKIP !! ');
+                kegiatan::where('kegiatan_id', $data->{$data->getKeyName()})->where('siakad_mhspt_id', $data->siakad_mhspt_id)->where('ref_jenis_kegiatan_id', $jenis)->update([
+                    'validasi' => $data->status_validasi,
+                    'tahun' => $tgl,
+                    'pesan' => $data->pesan
+                ]);
+
+                // $this->line('Updated !');
+                // $this->newLine();
+                continue;
+            } else {
+
+
+                Kegiatan::create([
+                    'kegiatan_id'           => $data->{$data->getKeyName()},
+                    'ref_jenis_kegiatan_id' => $jenis,
+                    'siakad_mhspt_id'       => $data->siakad_mhspt_id,
+                    'file_id'               => $data->file_kegiatan_id ?? $data->file_bukti_id,
+                    'validasi'              => $data->status_validasi,
+                    'tahun'                 => $tgl,
+                    'pesan'                 => $data->pesan,
+                ]);
+                // $this->info('Sukses Insert data ');
+            }
+        }
+        $bar->finish();
     }
 
     protected function cek_data($data, $jenis)

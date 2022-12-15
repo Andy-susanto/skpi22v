@@ -28,12 +28,19 @@ class Hki extends Model
         'status_validasi'
     ];
 
-    protected $append = ['nama'];
+    protected $append = ['nama', 'tahun'];
 
     protected function nama(): Attribute
     {
         return new Attribute(
             get: fn () => $this->nama_hki,
+        );
+    }
+
+    protected function tahun(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->tgl_mulai_berlaku,
         );
     }
 

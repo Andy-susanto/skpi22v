@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Magang extends Model
 {
@@ -12,23 +13,37 @@ class Magang extends Model
     protected $primaryKey = 'id_magang';
     protected $guarded    = [];
 
-    public function kepeg_pegawai(){
-        return $this->belongsTo(KepegPegawai::class,'kepeg_pegawai_id');
+    protected $append = ['tahun'];
+
+    protected function tahun(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->tgl_mulai,
+        );
     }
 
-    public function mhspt(){
-        return $this->belongsTo(SiakadMhspt::class,'siakad_mhspt_id');
+    public function kepeg_pegawai()
+    {
+        return $this->belongsTo(KepegPegawai::class, 'kepeg_pegawai_id');
     }
 
-    public function files(){
-        return $this->belongsTo(Files::class,'file_kegiatan_id','id_files');
+    public function mhspt()
+    {
+        return $this->belongsTo(SiakadMhspt::class, 'siakad_mhspt_id');
     }
 
-    public function bidang(){
-        return $this->belongsTo(Bidang::class,'ref_bidang_id');
+    public function files()
+    {
+        return $this->belongsTo(Files::class, 'file_kegiatan_id', 'id_files');
     }
 
-    public function divisi(){
-        return $this->belongsTo(Divisi::class,'ref_divisi_id');
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'ref_bidang_id');
+    }
+
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class, 'ref_divisi_id');
     }
 }

@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\Concerns\UuidTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Beasiswa extends Model
 {
-    use HasFactory,UuidTrait;
+    use HasFactory, UuidTrait;
     protected $table        = 'beasiswa';
     protected $primaryKey   = 'id_beasiswa';
     public    $incrementing = false;
@@ -29,20 +31,32 @@ class Beasiswa extends Model
         'tgl_selesai'
     ];
 
-    public function kategori(){
-        return $this->belongsTo(Kategori::class,'ref_kategori_id');
+    protected $append = ['tahun'];
+
+    protected function tahun(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->tgl_mulai,
+        );
     }
 
-    public function cakupan_beasiswa(){
-        return $this->belongsTo(CakupanBeasiswa::class,'ref_cakupan_beasiswa_id');
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'ref_kategori_id');
     }
 
-    public function mhspt(){
-        return $this->belongsTo(SiakadMhspt::class,'siakad_mhspt_id');
+    public function cakupan_beasiswa()
+    {
+        return $this->belongsTo(CakupanBeasiswa::class, 'ref_cakupan_beasiswa_id');
     }
 
-    public function files(){
-        return $this->belongsTo(Files::class,'file_kegiatan_id','id_files');
+    public function mhspt()
+    {
+        return $this->belongsTo(SiakadMhspt::class, 'siakad_mhspt_id');
     }
 
+    public function files()
+    {
+        return $this->belongsTo(Files::class, 'file_kegiatan_id', 'id_files');
+    }
 }

@@ -120,30 +120,7 @@ class ValidasiRekamKegiatanController extends Controller
     public function show($id, $jenis, $type)
     {
         $this->authorize('read-validasi-rekam-kegiatan');
-        $data = [];
-        if ($jenis == 'penghargaan') {
-            $data = PenghargaanKejuaraan::find($id);
-        } elseif ($jenis == 'seminar') {
-            $data = SeminarPelatihan::find($id);
-        } elseif ($jenis == 'hibah') {
-            $data = PenerimaHibah::find($id);
-        } elseif ($jenis == 'pengabdian') {
-            $data = PengabdianMasyarakat::find($id);
-        } elseif ($jenis == 'organisasi') {
-            $data = Organisasi::find($id);
-        } elseif ($jenis == 'magang') {
-            $data = Magang::find($id);
-        } elseif ($jenis == 'beasiswa') {
-            $data = Beasiswa::find($id);
-        } elseif ($jenis == 'bahasa') {
-            $data = KemampuanBahasaAsing::find($id);
-        } elseif ($jenis == 'kewirausahaan') {
-            $data = Kewirausahaan::find($id);
-        } elseif ($jenis == 'karya') {
-            $data = KaryaMahasiswa::find($id);
-        } elseif ($jenis == 'publikasi') {
-            $data = Publikasi::find($id);
-        }
+        $data = Kegiatan::find($id);
         return view('validasi-rekam-kegiatan.detail', compact('data', 'jenis', 'type'));
     }
 
@@ -165,54 +142,13 @@ class ValidasiRekamKegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $type, $id)
+    public function update(Request $request, $id)
     {
         $this->authorize('update-validasi-rekam-kegiatan');
-        if ($type == 'penghargaan') {
-            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'seminar') {
-            SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'hibah') {
-            PenerimaHibah::where('id_penerima_hibah_pendanaan', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'pengabdian') {
-            PengabdianMasyarakat::where('id_pengabdian_masyarakat', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'organisasi') {
-            Organisasi::where('id_organisasi', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'magang') {
-            Magang::where('id_magang', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'beasiswa') {
-            Beasiswa::where('id_beasiswa', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'bahasa') {
-            KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'kewirausahaan') {
-            Kewirausahaan::where('id_kewirausahaan', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } else if ($type == 'karya') {
-            Hki::where('id_hki_mahasiswa', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        } elseif ($type == 'publikasi') {
-            Publikasi::where('id_publikasi', $id)->update([
-                'status_validasi' => '1'
-            ]);
-        }
+        $data = Kegiatan::find($id);
+        $data->update([
+            'validasi' => '4'
+        ]);
         toastr()->success('Berhasil menvalidasi data');
         return back();
     }
@@ -223,65 +159,13 @@ class ValidasiRekamKegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $type, $id)
+    public function destroy(Request $request, $id)
     {
         $this->authorize('delete-validasi-rekam-kegiatan');
-        if ($type == 'penghargaan') {
-            PenghargaanKejuaraan::where('id_penghargaan_kejuaraan_kompetensi', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'seminar') {
-            SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'hibah') {
-            PenerimaHibah::where('id_penerima_hibah_pendanaan', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'pengabdian') {
-            PengabdianMasyarakat::where('id_pengabdian_masyarakat', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'organisasi') {
-            Organisasi::where('id_organisasi', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'magang') {
-            Magang::where('id_magang', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'beasiswa') {
-            Beasiswa::where('id_beasiswa', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'bahasa') {
-            KemampuanBahasaAsing::where('id_kemampuan_bahasa_asing', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'kewirausahaan') {
-            Kewirausahaan::where('id_kewirausahaan', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } else if ($type == 'karya') {
-            Hki::where('id_hki_mahasiswa', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        } elseif ($type == 'publikasi') {
-            Publikasi::where('id_publikasi', $id)->update([
-                'status_validasi' => '2',
-                'pesan'           => $request->pesan
-            ]);
-        }
+        $data = Kegiatan::find($id);
+        $data->update([
+            'validasi' => '2'
+        ]);
 
         toastr()->success('Berhasil menvalidasi data');
         return back();

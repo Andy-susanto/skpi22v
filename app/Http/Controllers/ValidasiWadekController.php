@@ -38,7 +38,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                    $q->whereYear('tgl_mulai',$request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $penghargaanMap = $penghargaan->map(function ($item) {
@@ -51,7 +51,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'   => $item->nama,
                         'path'            => $item->files->path,
                         'validasi'        => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'           => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -79,7 +79,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -107,7 +107,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -121,7 +121,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai', $request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $pengabdianMasyarakatMap = $pengabdianMasyarakat->map(function ($item) {
@@ -134,7 +134,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -149,7 +149,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai', $request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $organisasiMap = $organisasi->map(function ($item) {
@@ -162,7 +162,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -176,7 +176,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai', $request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $magangMap = $magang->map(function ($item) {
@@ -189,7 +189,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -204,7 +204,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai', $request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $beasiswaMap = $beasiswa->map(function ($item) {
@@ -217,7 +217,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -232,7 +232,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai', $request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
                 $bahasaMap = $bahasa->map(function ($item) {
                     return [
@@ -244,7 +244,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->bahasa->nama,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -259,7 +259,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai', $request->tahun);
+                    $q->whereYear('tgl_mulai', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $kewirausahaanMap = $kewirausahaan->map(function ($item) {
@@ -272,7 +272,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama_usaha,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                         'pesan'         => $item->pesan,
                         'siakad_mhspt_id' => $item->siakad_mhspt_id,
                     ];
@@ -287,7 +287,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_mulai_berlaku', $request->tahun);
+                    $q->whereYear('tgl_mulai_berlaku', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $hkiMap = $hki->map(function ($item) {
@@ -300,7 +300,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->nama_hki,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_mulai_berlaku)),
+                        'tahun'           => date('Y', strtotime($item->tgl_mulai_berlaku)),
                         'pesan'         => $item->pesan
                     ];
                 });
@@ -312,7 +312,7 @@ class ValidasiWadekController extends Controller
                 })->when($request->status_validasi, function ($q) use ($request) {
                     $q->where('status_validasi', $request->status_validasi);
                 })->when($request->tahun, function ($q) use ($request) {
-                   $q->whereYear('tgl_terbit', $request->tahun);
+                    $q->whereYear('tgl_terbit', $request->tahun);
                 })->orderBy('status_validasi', 'asc')->get();
 
                 $publikasiMap = $publikasi->map(function ($item) {
@@ -325,7 +325,7 @@ class ValidasiWadekController extends Controller
                         'nama_kegiatan'  => $item->judul,
                         'path'           => $item->files->path,
                         'validasi'       => $item->status_validasi,
-                        'tahun'           => date('Y',strtotime($item->tgl_terbit)),
+                        'tahun'           => date('Y', strtotime($item->tgl_terbit)),
                         'pesan'         => $item->pesan
                     ];
                 });
@@ -595,14 +595,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $penghargaanMap = $penghargaan->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)),
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)),
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'penghargaan',
                     'nama_kegiatan'  => $item->nama,
@@ -618,14 +618,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $seminarMap = $seminar->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'seminar',
                     'nama_kegiatan'  => $item->nama,
@@ -641,14 +641,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $penerimaHibahMap = $penerimaHibah->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'hibah',
                     'nama_kegiatan'  => $item->nama,
@@ -663,14 +663,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $pengabdianMasyarakatMap = $pengabdianMasyarakat->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'pengabdian',
                     'nama_kegiatan'  => $item->nama,
@@ -686,14 +686,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $organisasiMap = $organisasi->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'organisasi',
                     'nama_kegiatan'  => $item->nama,
@@ -708,14 +708,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $magangMap = $magang->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'magang',
                     'nama_kegiatan'  => $item->nama,
@@ -731,14 +731,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $beasiswaMap = $beasiswa->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'beasiswa',
                     'nama_kegiatan'  => $item->nama,
@@ -754,13 +754,13 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
             $bahasaMap = $bahasa->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'bahasa',
                     'nama_kegiatan'  => $item->bahasa->nama,
@@ -776,14 +776,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai', $request->tahun);
+                $q->whereYear('tgl_mulai', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $kewirausahaanMap = $kewirausahaan->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'kewirausahaan',
                     'nama_kegiatan'  => $item->nama_usaha,
@@ -799,14 +799,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_mulai_berlaku', $request->tahun);
+                $q->whereYear('tgl_mulai_berlaku', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $hkiMap = $hki->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_mulai_berlaku)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_mulai_berlaku)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'HKI',
                     'nama_kegiatan'  => $item->nama_hki,
@@ -820,14 +820,14 @@ class ValidasiWadekController extends Controller
             })->when($request->status_validasi, function ($q) use ($request) {
                 $q->where('status_validasi', $request->status_validasi);
             })->when($request->tahun, function ($q) use ($request) {
-               $q->whereYear('tgl_terbit', $request->tahun);
+                $q->whereYear('tgl_terbit', $request->tahun);
             })->orderBy('status_validasi', 'asc')->get();
 
             $publikasiMap = $publikasi->map(function ($item) {
                 return [
                     'nama_mahasiswa' => $item->mhspt->mahasiswa->nama_mahasiswa,
                     'nim'            => $item->mhspt->no_mhs,
-                    'tahun'           => date('Y',strtotime($item->tgl_terbit)) ?? '-',
+                    'tahun'           => date('Y', strtotime($item->tgl_terbit)) ?? '-',
                     'prodi'          => $item->mhspt->prodi->nama_prodi,
                     'jenis_kegiatan' => 'publikasi',
                     'nama_kegiatan'  => $item->judul,
@@ -837,6 +837,6 @@ class ValidasiWadekController extends Controller
             $data = $data->merge($publikasiMap);
         }
 
-        return Excel::download(new KegiatanExport($data), 'Export Data Kegiatan SKPI Tahun '.$request->tahun.'.xlsx');
+        return Excel::download(new KegiatanExport($data), 'Export Data Kegiatan SKPI Tahun ' . $request->tahun . '.xlsx');
     }
 }

@@ -11,6 +11,22 @@
             <div class="card">
                 <div class="card-header bg-white">
                     <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Tahun</label>
+                                <select class="form-control" multiple name="tahun[]" id="tahun" onchange="load_data()">
+                                    @php
+                                    $tahun_sekarang = date('Y');
+                                    $tahun_minimal = $tahun_sekarang - 15;
+                                        @endphp
+                                    @for ($i = $tahun_minimal; $i <= $tahun_sekarang; $i++)
+                                        <option value="{{ $i }}" {{ $i == $tahun_sekarang ? 'selected' : '' }}>{{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Jenis Kegiatan</label>
@@ -35,6 +51,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Prodi</label>
+                                <select class="form-control" multiple name="prodi[]" id="prodi" onchange="load_data()">
+                                    @foreach ($unit_kerjas as $unit_kerja)
+                                        <option value="{{$unit_kerja->id_unit_kerja_siakad}}">{{$unit_kerja->ref_unit->nama_ref_unit_kerja}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body table-responsive">
@@ -42,6 +68,7 @@
                         <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                             <tr>
                                 <th>#</th>
+                                <th>Tahun</th>
                                 <th>Nama Mahasiswa</th>
                                 <th>NIM</th>
                                 <th>Program Studi</th>
@@ -122,8 +149,10 @@
                 paging: true,
                 ajax: {
                     data: {
-                        jenis_kegiatan: $('#jenis_kegiatan').val(),
-                        status_validasi: $('#status_validasi').val()
+                        jenis_kegiatan : $('#jenis_kegiatan').val(),
+                        status_validasi: $('#status_validasi').val(),
+                        prodi          : $('#prodi').val(),
+                        tahun          : $('#tahun').val(),
                     },
                     url: "{{ route('kegiatan.daftar') }}",
                 },
@@ -131,6 +160,10 @@
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable:false,searchable:false
+                    },
+                    {
+                        data: 'tahun_kegiatan',
+                        name: 'tahun_kegiatan'
                     },
                     {
                         data: 'nama_mahasiswa',
