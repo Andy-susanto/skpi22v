@@ -89,9 +89,9 @@ Route::middleware(['auth'])->group(function () {
     // show detail validasi
     Route::get('validasi-rekam-kegiatan/{id}/{jenis}/{type}', [ValidasiRekamKegiatanController::class, 'show'])->name('validasi.show');
 
-    Route::put('validasi-rekam-kegiatan/{type}/{id}/update', [ValidasiRekamKegiatanController::class, 'update'])->name('validasi.update');
+    Route::put('validasi-rekam-kegiatan/{id}/update', [ValidasiRekamKegiatanController::class, 'update'])->name('validasi.update');
 
-    Route::delete('validasi-rekam-kegiatan/{type}/{id}/destroy', [ValidasiRekamKegiatanController::class, 'destroy'])->name('validasi.destroy');
+    Route::delete('validasi-rekam-kegiatan/{id}/destroy', [ValidasiRekamKegiatanController::class, 'destroy'])->name('validasi.destroy');
 
     Route::resource('validasi-rekam-kegiatan', ValidasiRekamKegiatanController
     ::class);
@@ -99,9 +99,9 @@ Route::middleware(['auth'])->group(function () {
     // Validasi Wadek
     Route::get('validasi-wadek/{id}/{jenis}', [ValidasiWadekController::class, 'show'])->name('validasi-wadek.show');
 
-    Route::put('validasi-wadek/{type}/{id}/{id_mhs_pt}/update', [ValidasiWadekController::class, 'update'])->name('validasi-wadek.update');
+    Route::put('validasi-wadek/{id}/{id_mhs_pt}/update', [ValidasiWadekController::class, 'update'])->name('validasi-wadek.update');
 
-    Route::delete('validasi-wadek/{type}/{id}/destroy', [ValidasiWadekController::class, 'destroy'])->name('validasi-wadek.destroy');
+    Route::delete('validasi-wadek/{id}/destroy', [ValidasiWadekController::class, 'destroy'])->name('validasi-wadek.destroy');
 
     Route::resource('validasi-wadek', ValidasiWadekController::class)->except(['update']);
     //
