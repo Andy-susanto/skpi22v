@@ -147,7 +147,7 @@ class ValidasiRekamKegiatanController extends Controller
         $this->authorize('update-validasi-rekam-kegiatan');
         $data = Kegiatan::find($id);
         $data->update([
-            'validasi' => '4'
+            'validasi' => '1'
         ]);
         toastr()->success('Berhasil menvalidasi data');
         return back();
