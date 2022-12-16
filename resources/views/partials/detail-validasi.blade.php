@@ -199,8 +199,7 @@
                                     <a name="" id="" class="btn btn-success btn-lg"
                                         onclick="konfirmasi('update{{ $data->id }}','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                                         href="#" role="button">Validasi</a>
-                                    <form
-                                        action="{{ route('validasi-wadek.update', $data->id_penghargaan_kejuaraan_kompetensi, $data->siakad_mhspt_id) }}"
+                                    <form action="{{ route('validasi-wadek.update', $data->id) }}"
                                         id="update{{ $data->id }}" method="post">
                                         @csrf
                                         @method('put')
@@ -208,7 +207,7 @@
                                 </div>
                                 <div class="col-2">
                                     <a name="" id="" onclick="tolakModal(this);"
-                                        data-url="{{ route('validasi-wadek.destroy', $data->id_penghargaan_kejuaraan_kompetensi) }}"
+                                        data-url="{{ route('validasi-wadek.destroy', $data->id) }}"
                                         class="btn btn-danger btn-lg" href="#" role="button">Tolak</a>
                                 </div>
                             @endif

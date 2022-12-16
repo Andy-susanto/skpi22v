@@ -6,27 +6,24 @@
     <div class="dropdown-menu z-50" aria-labelledby="triggerId">
 
         {{-- Validasi Form --}}
-            {{-- <a class="dropdown-item text-success"
-                onclick="konfirmasi('update'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
-                href="#"><i class="fa fa-check" aria-hidden="true"></i> Validasi</a>
-            <form action="{{ route('validasi-wadek.update', [$row['jenis_kegiatan'],$row['id'],$row['siakad_mhspt_id']]) }}"
-                id="update{{ $row['id'] . $row['jenis_kegiatan'] }}" method="post">
-                @csrf
-                @method('put')
-            </form> --}}
-
+        {{-- @if (in_array($row['validasi'], ['2', '3']))
+        <a class="dropdown-item text-success"
+            onclick="konfirmasi('update'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
+            href="#"><i class="fa fa-check" aria-hidden="true"></i> Validasi</a>
+        <form action="{{ route('validasi.update', [$row['jenis_kegiatan'], $row['id']]) }}"
+            id="update{{ $row['id'] . $row['jenis_kegiatan'] }}" method="post">
+            @csrf
+            @method('put')
+        </form>
+    @endif --}}
         {{-- Tolak Form --}}
-            {{-- <a class="dropdown-item text-danger"
-                onclick="tolak('hapus'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Bukti kegiatan tidak cocok dengan data yang di masukan');"
-                href="#"><i class="fa fa-times" aria-hidden="true"></i> Tolak</a>
-            <form action="{{ route('validasi-wadek.destroy', [$row['jenis_kegiatan'], $row['id']]) }}"
-                id="hapus{{ $row['id'] . $row['jenis_kegiatan'] }}" method="post">
-                @csrf
-                @method('delete') --}}
-            {{-- </form> --}}
+        {{-- @if (in_array($row['validasi'], ['1', '3']))
+        <a class="dropdown-item tolak text-danger" onclick="tolakModal(this);" data-url="{{ route('validasi.destroy', [$row['jenis_kegiatan'], $row['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i> Tolak</a>
+    @endif --}}
 
         {{-- Detail Form --}}
-        <a class="dropdown-item" href="{{route('validasi.show',[$row['id'],$row['jenis_kegiatan'],'wadek'])}}">
+        <a class="dropdown-item" target="__blank"
+            href="{{ url('validasi-wadek') }}/{{ $row->id }}/{{ $row->ref_jenis_kegiatan_id }}/wadek">
             <i class="fa fa-info" aria-hidden="true"></i> Detail
         </a>
     </div>

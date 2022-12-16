@@ -38,6 +38,7 @@ class ValidasiRekamKegiatanController extends Controller
     public function index(Request $request)
     {
         $this->authorize('read-validasi-rekam-kegiatan');
+        $this->data['unit_kerjas'] = UnitKerja::whereIn('id_unit_kerja_siakad', $this->UnitKerja(Auth::user()))->get();
         if ($request->ajax()) {
 
             $data = Kegiatan::query();
@@ -84,8 +85,6 @@ class ValidasiRekamKegiatanController extends Controller
                 ->rawColumns(['action', 'validasi', 'bukti_kegiatan'])
                 ->toJson();
         }
-
-        $this->data['unit_kerjas'] = UnitKerja::whereIn('id_unit_kerja_siakad', $this->UnitKerja(Auth::user()))->get();
 
         return view('validasi-rekam-kegiatan.index', $this->data);
     }

@@ -97,9 +97,10 @@ Route::middleware(['auth'])->group(function () {
     ::class);
 
     // Validasi Wadek
-    Route::get('validasi-wadek/{id}/{jenis}', [ValidasiWadekController::class, 'show'])->name('validasi-wadek.show');
 
-    Route::put('validasi-wadek/{id}/{id_mhs_pt}/update', [ValidasiWadekController::class, 'update'])->name('validasi-wadek.update');
+    Route::get('validasi-wadek/{id}/{jenis}/{type}', [ValidasiWadekController::class, 'show'])->name('validasi-wadek.show');
+
+    Route::put('validasi-wadek/{id}/update', [ValidasiWadekController::class, 'update'])->name('validasi-wadek.update');
 
     Route::delete('validasi-wadek/{id}/destroy', [ValidasiWadekController::class, 'destroy'])->name('validasi-wadek.destroy');
 

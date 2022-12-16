@@ -1,13 +1,12 @@
-@if(Auth::user()->can('update-kegiatan-mahasiswa'))
-<div class="dropdown z-0">
-    <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Proses
-    </button>
-    <div class="dropdown-menu z-50" aria-labelledby="triggerId">
+    <div class="dropdown z-0">
+        <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Proses
+        </button>
+        <div class="dropdown-menu z-50" aria-labelledby="triggerId">
 
-        {{-- Validasi Form --}}
-        {{-- @if (in_array($row['validasi'], ['2', '3']))
+            {{-- Validasi Form --}}
+            {{-- @if (in_array($row['validasi'], ['2', '3']))
             <a class="dropdown-item text-success"
                 onclick="konfirmasi('update'+{{ $row['id'] }}+'{{ $row['jenis_kegiatan'] }}','Apakah Anda Yakin ingin Menvalidasi data ini ?');"
                 href="#"><i class="fa fa-check" aria-hidden="true"></i> Validasi</a>
@@ -17,15 +16,15 @@
                 @method('put')
             </form>
         @endif --}}
-        {{-- Tolak Form --}}
-        {{-- @if (in_array($row['validasi'], ['1', '3']))
+            {{-- Tolak Form --}}
+            {{-- @if (in_array($row['validasi'], ['1', '3']))
             <a class="dropdown-item tolak text-danger" onclick="tolakModal(this);" data-url="{{ route('validasi.destroy', [$row['jenis_kegiatan'], $row['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i> Tolak</a>
         @endif --}}
 
-        {{-- Detail Form --}}
-        <a class="dropdown-item" target="__blank" href="{{route('validasi.show',[$row->id,$row->ref_jenis_kegiatan_id,'operator'])}}">
-            <i class="fa fa-info" aria-hidden="true"></i> Detail
-        </a>
+            {{-- Detail Form --}}
+            <a class="dropdown-item" target="__blank"
+                href="{{ route('validasi.show', [$row->id, $row->ref_jenis_kegiatan_id, 'operator']) }}">
+                <i class="fa fa-info" aria-hidden="true"></i> Detail
+            </a>
+        </div>
     </div>
-</div>
-@endif
