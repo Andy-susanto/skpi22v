@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Kegiatan;
 use App\Repositories\BeasiswaRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\HkiRepository;
 use App\Repositories\Interfaces\CrudInterface;
 use App\Repositories\KBAsingRepository;
+use App\Repositories\KegiatanRepository;
 use App\Repositories\KewirausahaanRepository;
 use App\Repositories\PublikasiRepository;
 use Illuminate\Support\ServiceProvider;
@@ -44,6 +46,10 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(
             CrudInterface::class,
             KewirausahaanRepository::class
+        );
+        $this->app->bind(
+            CrudInterface::class,
+            KegiatanRepository::class
         );
     }
 

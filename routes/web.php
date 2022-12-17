@@ -7,6 +7,7 @@ use App\Http\Controllers\CetakSementaraController;
 use App\Http\Controllers\DaftarKegiatanController;
 use App\Http\Controllers\FungsiAjaxController;
 use App\Http\Controllers\KaryaMahasiswaController;
+use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KemampuanBahasaAsingController;
 use App\Http\Controllers\KewirausahaanController;
 use App\Http\Controllers\LoadDataController;
@@ -79,6 +80,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('menus', MenuController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('user', UserController::class);
+
+    Route::get('kegiatan/{jenis}', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('kegiatan/{jenis}/edit', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::resource('kegiatan', KegiatanController::class);
 
     // Daftar kegiatan mahasiswa
     Route::get('daftar-kegiatan-mahasiswa', [DaftarKegiatanController::class, 'index'])->name('kegiatan.daftar');

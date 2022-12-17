@@ -2,32 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BeasiswaRequest;
-use App\Models\Files;
-use App\Models\Beasiswa;
+use App\Traits\RelasiTrait;
 use Illuminate\Http\Request;
-use App\Models\KegiatanMahasiswa;
-use App\Models\PenghargaanKejuaraan;
-use App\Repositories\repository;
 use App\Repositories\FileRepository;
-use App\Repositories\KegiatanRepository;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Repositories\KegiatanRepository;
 
-class BeasiswaController extends Controller
+class KegiatanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    use RelasiTrait;
+
     private $repository, $fileRepository, $jenis;
     public function __construct(KegiatanRepository $repository, FileRepository $fileRepository)
     {
         parent::__construct();
         $this->repository = $repository;
         $this->fileRepository = $fileRepository;
-        $this->jenis = config('kegiatan.BEASISWA');
+    }
+
+    public function index($jenis)
+    {
+        $options = [
+            'mhspt' => $this->mhspt(),
+            'jenis' => $this->relasiView($jenis)['jenis']
+        ];
+
+        $this->data['data'] = $this->repository->findAll($options);
+        return view($this->relasiView($jenis)['view'], $this->data);
     }
 
     protected function mhspt()
@@ -35,37 +37,13 @@ class BeasiswaController extends Controller
         return Auth::user()->siakad_mhspt()->exists() ? Auth::user()->siakad_mhspt->id_mhs_pt : '';
     }
 
-    public function index()
+    public function store(Request $request)
     {
-        $options = [
-            'mhspt' => $this->mhspt(),
-            'jenis' => $this->jenis
-        ];
-        $this->data['data'] = $this->repository->findAll($options);
-        return view('beasiswa.index', $this->data);
-    }
+        $params = $request->validate($this->relasiRequest($request->ref_jenis_kegiatan_id)->rules());
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(BeasiswaRequest $request)
-    {
-        $params = $request->validated();
         $adt = [
             'siakad_mhspt_id' => $this->mhspt(),
+            'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id
         ];
         $params = array_merge($params, $adt);
         $BuktiKegiatanParams = [
@@ -91,41 +69,16 @@ class BeasiswaController extends Controller
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $this->data['data'] = $this->repository->findById(decrypt($id));
-        return view('beasiswa.show', $this->data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $this->data['utama'] = $this->repository->findById(decrypt($id));
         return view('beasiswa.edit', $this->data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(BeasiswaRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
-        $params = $request->validated();
+        $params = $request->validate($this->relasiRequest($request->ref_jenis_kegiatan_id)->rules());
         $data = $this->repository->findById(decrypt($id));
         $BuktiKegiatanParams = [
             'tag' => 'bukti-beasiswa',
@@ -134,6 +87,7 @@ class BeasiswaController extends Controller
         ];
         $adt = [
             'siakad_mhspt_id' => $this->mhspt(),
+            'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id
         ];
         $params = array_merge($params, $adt);
         $BuktiKegiatanParams = array_merge($params, $BuktiKegiatanParams);
