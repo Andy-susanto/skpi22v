@@ -21,182 +21,131 @@ use Illuminate\Support\Facades\View;
  */
 trait RelasiTrait
 {
-    public function relasiClass($jenis)
+
+    public function relasiData($jenis)
     {
         $data = '';
-        switch ($jenis) {
-            case config('kegiatan.PENGHARGAAN'):
-                $data = new PenghargaanKejuaraan();
-                break;
-            case config('kegiatan.SEMINAR'):
-                $data = new SeminarPelatihan();
-                break;
-            case config('kegiatan.HIBAH'):
-                $data = new PenerimaHibah();
-                break;
-            case config('kegiatan.PENGABDIAN'):
-                $data = new PengabdianMasyarakat();
-                break;
-            case config('kegiatan.ORGANISASI'):
-                $data = new Organisasi();
-                break;
-            case config('kegiatan.MAGANG'):
-                $data = new Magang();
-                break;
-            case config('kegiatan.BEASISWA'):
-                $data = new Beasiswa();
-                break;
-            case config('kegiatan.BAHASAASING'):
-                $data = new KemampuanBahasaAsing();
-                break;
-            case config('kegiatan.KEWIRAUSAHAAN'):
-                $data = new Kewirausahaan();
-                break;
-            case config('kegiatan.HKI'):
-                $data = new Hki();
-                break;
-            case config('kegiatan.PUBLIKASI'):
-                $data = new Publikasi();
-                break;
-            default:
-                break;
-        }
-
-        return $data;
-    }
-    public function relasiView($jenis)
-    {
-        $view = '';
-        switch ($jenis) {
-            case 'penghargaan':
-                $view = [
-                    'view' => 'penghargaan-kejuaraan.index',
+        switch (true) {
+            case ($jenis == 'penghargaan' || $jenis == config('kegiatan.PENGHARGAAN')):
+                $data = [
+                    'index' => 'penghargaan-kejuaraan.index',
                     'edit' => 'penghargaan-kejuaraan.edit',
                     'show' => 'penghargaan-kejuaraan.show',
-                    'jenis' => config('kegiatan.PENGHARGAAN')
+                    'jenis' => config('kegiatan.PENGHARGAAN'),
+                    'text' => 'penghargaan',
+                    'model' => new PenghargaanKejuaraan(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'seminar':
-                $view = [
-                    'view' => 'seminar-pelatihan.index',
+            case ($jenis == 'seminar' || $jenis == config('kegiatan.SEMINAR')):
+                $data = [
+                    'index' => 'seminar-pelatihan.index',
                     'edit' => 'seminar-pelatihan.edit',
                     'show' => 'seminar-pelatihan.show',
-                    'jenis' => config('kegiatan.SEMINAR')
+                    'jenis' => config('kegiatan.SEMINAR'),
+                    'text' => 'seminar',
+                    'model' => new SeminarPelatihan(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'hibah':
-                $view = [
-                    'view' => 'penerima-hibah.index',
+            case ($jenis == 'hibah' || $jenis == config('kegiatan.HIBAH')):
+                $data = [
+                    'index' => 'penerima-hibah.index',
                     'edit' => 'penerima-hibah.edit',
                     'show' => 'penerima-hibah.show',
-                    'jenis' => config('kegiatan.HIBAH')
+                    'jenis' => config('kegiatan.HIBAH'),
+                    'text' => 'hibah',
+                    'model' => new PenerimaHibah(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'pengabdian':
-                $view = [
-                    'view' => 'pengabdian-masyarakat.index',
+            case ($jenis == 'pengabdian' || $jenis == config('kegiatan.PENGABDIAN')):
+                $data = [
+                    'index' => 'pengabdian-masyarakat.index',
                     'edit' => 'pengabdian-masyarakat.edit',
                     'show' => 'pengabdian-masyarakat.show',
-                    'jenis' => config('kegiatan.PENGABDIAN')
+                    'jenis' => config('kegiatan.PENGABDIAN'),
+                    'text' => 'pengabdian',
+                    'model' => new PengabdianMasyarakat(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'organisasi':
-                $view = [
-                    'view' => 'organisasi.index',
+            case ($jenis == 'organisasi' || $jenis == config('kegiatan.ORGANISASI')):
+                $data = [
+                    'index' => 'organisasi.index',
                     'edit' => 'organisasi.edit',
                     'show' => 'organisasi.show',
-                    'jenis' => config('kegiatan.ORGANISASI')
+                    'jenis' => config('kegiatan.ORGANISASI'),
+                    'text' => 'organisasi',
+                    'model' => new Organisasi(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'magang':
-                $view = [
-                    'view' => 'magang.index',
+            case ($jenis == 'magang' || $jenis == config('kegiatan.MAGANG')):
+                $data = [
+                    'index' => 'magang.index',
                     'edit' => 'magang.edit',
                     'show' => 'magang.show',
-                    'jenis' => config('kegiatan.MAGANG')
+                    'jenis' => config('kegiatan.MAGANG'),
+                    'text' => 'magang',
+                    'model' => new Magang(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'beasiswa':
-                $view = [
-                    'view' => 'beasiswa.index',
+            case ($jenis == 'beasiswa' || $jenis == config('kegiatan.BEASISWA')):
+                $data = [
+                    'index' => 'beasiswa.index',
                     'edit' => 'beasiswa.edit',
                     'show' => 'beasiswa.show',
-                    'jenis' => config('kegiatan.BEASISWA')
+                    'jenis' => config('kegiatan.BEASISWA'),
+                    'text' => 'beasiswa',
+                    'model' => new Beasiswa(),
+                    'request' => new BeasiswaRequest()
                 ];
                 break;
-            case 'bahasa-asing':
-                $view = [
-                    'view' => 'kemampuan-bahasa-asing.index',
+            case ($jenis == 'bahasa-asing' || $jenis == config('kegiatan.BAHASAASING')):
+                $data = [
+                    'index' => 'kemampuan-bahasa-asing.index',
                     'edit' => 'kemampuan-bahasa-asing.edit',
                     'show' => 'kemampuan-bahasa-asing.show',
-                    'jenis' => config('kegiatan.BAHASAASING')
+                    'jenis' => config('kegiatan.BAHASAASING'),
+                    'text' => 'bahasaasing',
+                    'model' => new KemampuanBahasaAsing(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'kewirausahaan':
-                $view = [
-                    'view' => 'kewirausahaan.index',
+            case ($jenis == 'kewirausahaan' || $jenis == config('kegiatan.KEWIRAUSAHAAN')):
+                $data = [
+                    'index' => 'kewirausahaan.index',
                     'edit' => 'kewirausahaan.edit',
                     'show' => 'kewirausahaan.show',
-                    'jenis' => config('kegiatan.KEWIRAUSAHAAN')
+                    'jenis' => config('kegiatan.KEWIRAUSAHAAN'),
+                    'text' => 'kewirausahaan',
+                    'model' => new Kewirausahaan(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'hki':
-                $view = [
-                    'view' => 'hki.index',
+            case ($jenis == 'hki' || $jenis == config('kegiatan.HKI')):
+                $data = [
+                    'index' => 'hki.index',
                     'edit' => 'hki.edit',
                     'show' => 'hki.show',
-                    'jenis' => config('kegiatan.HKI')
+                    'jenis' => config('kegiatan.HKI'),
+                    'text' => 'seminar',
+                    'model' => new Hki(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
                 break;
-            case 'publikasi':
-                $view = [
-                    'view' => 'publikasi.index',
+            case ($jenis == 'publikasi' || $jenis == config('kegiatan.PUBLIKASI')):
+                $data = [
+                    'index' => 'publikasi.index',
                     'edit' => 'publikasi.edit',
                     'show' => 'publikasi.show',
-                    'jenis' => config('kegiatan.publikasi')
+                    'jenis' => config('kegiatan.publikasi'),
+                    'text' => 'publikasi',
+                    'model' => new Publikasi(),
+                    'request' => new PenghargaanKejuaraan()
                 ];
-                break;
-            default:
-                break;
-        }
-        return $view;
-    }
-    public function relasiRequest($jenis)
-    {
-        $data = '';
-        switch ($jenis) {
-            case config('kegiatan.PENGHARGAAN'):
-                $data = new PenghargaanKejuaraan();
-                break;
-            case config('kegiatan.SEMINAR'):
-                $data = new SeminarPelatihan();
-                break;
-            case config('kegiatan.HIBAH'):
-                $data = new PenerimaHibah();
-                break;
-            case config('kegiatan.PENGABDIAN'):
-                $data = new PengabdianMasyarakat();
-                break;
-            case config('kegiatan.ORGANISASI'):
-                $data = new Organisasi();
-                break;
-            case config('kegiatan.MAGANG'):
-                $data = new Magang();
-                break;
-            case config('kegiatan.BEASISWA'):
-                $data = new BeasiswaRequest();
-                break;
-            case config('kegiatan.BAHASAASING'):
-                $data = new KemampuanBahasaAsing();
-                break;
-            case config('kegiatan.KEWIRAUSAHAAN'):
-                $data = new Kewirausahaan();
-                break;
-            case config('kegiatan.HKI'):
-                $data = new Hki();
-                break;
-            case config('kegiatan.PUBLIKASI'):
-                $data = new Publikasi();
                 break;
             default:
                 break;

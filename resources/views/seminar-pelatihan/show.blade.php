@@ -16,7 +16,7 @@
                             <tr>
                                 <td>Nama Kegiatan</td>
                                 <td>:</td>
-                                <td>{{ $data->nama }}</td>
+                                <td>{{ $data->relasi->nama }}</td>
                             </tr>
                             <tr>
                                 <td>Penyelenggara Kegiatan</td>
@@ -64,8 +64,12 @@
                                 <td>:</td>
                                 <td>
                                     <div class="list-group">
-                                        <a href={{ asset('storage/' . $data->files->path) }} class="list-group-item list-group-item-action"><i class="fa fa-archive" aria-hidden="true"></i> File Sertifikat</a>
-                                        <a href="{{asset('storage/'.$data->file_sk->path)}}" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i> File SK</a>
+                                        <a href={{ asset('storage/' . $data->files->path) }}
+                                            class="list-group-item list-group-item-action"><i class="fa fa-archive"
+                                                aria-hidden="true"></i> File Sertifikat</a>
+                                        <a href="{{ asset('storage/' . $data->file_sk->path) }}"
+                                            class="list-group-item list-group-item-action"><i class="fa fa-book"
+                                                aria-hidden="true"></i> File SK</a>
                                     </div>
                                 </td>
                             </tr>

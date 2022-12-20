@@ -81,12 +81,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('user', UserController::class);
 
-    Route::get('kegiatan/{jenis}', [KegiatanController::class, 'index'])->name('kegiatan.index');
-    Route::get('kegiatan/{jenis}/edit', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('kegiatan/daftar', [KegiatanController::class, 'daftar'])->name('kegiatan.daftar');
+    Route::get('kegiatan/{jenis}/form', [KegiatanController::class, 'index'])->name('kegiatan.form');
+    Route::get('kegiatan/{id}/detail', [KegiatanController::class, 'show'])->name('kegiatan.lihat');
     Route::resource('kegiatan', KegiatanController::class);
 
     // Daftar kegiatan mahasiswa
-    Route::get('daftar-kegiatan-mahasiswa', [DaftarKegiatanController::class, 'index'])->name('kegiatan.daftar');
+    // Route::get('daftar-kegiatan-mahasiswa', [DaftarKegiatanController::class, 'index'])->name('kegiatan.daftar');
 
 
     // Validasi Rekam Kegiatan

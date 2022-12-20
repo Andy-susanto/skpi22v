@@ -163,12 +163,12 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('beasiswa.show', encrypt($loopUtama->id)) }}"><i
+                                                                    href="{{ route('kegiatan.lihat', encrypt($loopUtama->id)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
                                                                 @if (in_array($loopUtama->validasi, ['3', '2']))
                                                                     <a class="dropdown-item"
-                                                                        href="{{ route('beasiswa.edit', encrypt($loopUtama->id)) }}"><i
+                                                                        href="{{ route('kegiatan.edit', encrypt($loopUtama->id)) }}"><i
                                                                             class="fas fa-edit" aria-hidden="true"></i>
                                                                         Ubah</a>
                                                                     <a class="dropdown-item" href="#"
@@ -177,7 +177,7 @@
                                                                         Hapus
                                                                     </a>
                                                                     <form method="post"
-                                                                        action="{{ route('beasiswa.destroy', encrypt($loopUtama->id)) }}"
+                                                                        action="{{ route('kegiatan.destroy', encrypt($loopUtama->id)) }}"
                                                                         id="hapusData{{ $loopUtama->id }}">
                                                                         <input type="hidden" name="jenis"
                                                                             value="{{ config('kegiatan.BEASISWA') }}">

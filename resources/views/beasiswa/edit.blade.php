@@ -15,22 +15,22 @@
                     <h4 class="font-bold card-title">Ubah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('kegiatan.update', encrypt($utama->id)) }}" method="post"
+                    <form action="{{ route('kegiatan.update', encrypt($data->id)) }}" method="post"
                         enctype="multipart/form-data" id="form-seminar">
-                        <input type="hidden" name="ref_jenis_kegiatan_id" value="{{ $utama->ref_jenis_kegiatan_id }}">
+                        <input type="hidden" name="ref_jenis_kegiatan_id" value="{{ $data->ref_jenis_kegiatan_id }}">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
                             <label for="">Nama Beasiswa</label>
                             <input type="text" class="form-control" name="nama" id=""
-                                aria-describedby="helpId" placeholder="" value="{{ $utama->relasi->nama }}">
+                                aria-describedby="helpId" placeholder="" value="{{ $data->relasi->nama }}">
                         </div>
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">Nama Perusahaan / Industri / Instansi / Yayasan Pemberi
                                     Beasiswa ( Promotor )</label>
                                 <input type="text" class="form-control" name="nama_promotor" id=""
-                                    aria-describedby="helpId" placeholder="" value="{{ $utama->relasi->nama_promotor }}">
+                                    aria-describedby="helpId" placeholder="" value="{{ $data->relasi->nama_promotor }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -38,7 +38,7 @@
                             <select class="form-control" name="ref_kategori_id" id="beasiswa">
                                 @foreach (Helper::kategori(7) as $loopKategori)
                                     <option value="{{ $loopKategori->id_ref_kategori }}"
-                                        {{ $utama->relasi->ref_kategori_id == $loopKategori->id_ref_kategori ? 'selected' : '' }}>
+                                        {{ $data->relasi->ref_kategori_id == $loopKategori->id_ref_kategori ? 'selected' : '' }}>
                                         {{ $loopKategori->nama_kategori }}</option>
                                 @endforeach
                             </select>
@@ -48,7 +48,7 @@
                             <select class="form-control" name="ref_cakupan_beasiswa_id" id="cakupan_beasiswa">
                                 @foreach (Helper::cakupan_beasiswa() as $loopCakupan)
                                     <option value="{{ $loopCakupan->id_ref_cakupan_beasiswa }}"
-                                        {{ $utama->relasi->ref_cakupan_beasiswa_id == $loopCakupan->id_ref_cakupan_beasiswa ? 'selected' : '' }}>
+                                        {{ $data->relasi->ref_cakupan_beasiswa_id == $loopCakupan->id_ref_cakupan_beasiswa ? 'selected' : '' }}>
                                         {{ $loopCakupan->nama }}</option>
                                 @endforeach
                             </select>
@@ -57,9 +57,9 @@
                             <label for="">Bukti Kegiatan ( File Sertifikat ) </label>
                             <input type="file" class="form-control-file" name="file" id="" placeholder=""
                                 aria-describedby="fileHelpId">
-                            <input type="hidden" name="file_kegiatan_id" value="{{ $utama->file_id }}">
+                            <input type="hidden" name="file_kegiatan_id" value="{{ $data->file_id }}">
                             <small id="fileHelpId" class="form-text text-muted"><a
-                                    href="{{ asset('storage/' . $utama->file->path) }}"><i class="fa fa-paperclip"
+                                    href="{{ asset('storage/' . $data->file->path) }}"><i class="fa fa-paperclip"
                                         aria-hidden="true"></i> File Sertifikat</a></small>
                         </div>
                         <div class="row">

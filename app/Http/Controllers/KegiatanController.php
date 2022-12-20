@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisKegiatan;
+use App\Models\Kategori;
 use App\Traits\RelasiTrait;
 use Illuminate\Http\Request;
 use App\Repositories\FileRepository;
@@ -21,15 +23,23 @@ class KegiatanController extends Controller
         $this->fileRepository = $fileRepository;
     }
 
+    public function daftar()
+    {
+        $this->authorize('daftar-kegiatan-mahasiswa');
+        $this->data['datas'] = JenisKegiatan::all();
+        return view('kegiatan.daftar', $this->data);
+    }
+
     public function index($jenis)
     {
+        $this->authorize('read-kegiatan-mahasiswa');
         $options = [
             'mhspt' => $this->mhspt(),
-            'jenis' => $this->relasiView($jenis)['jenis']
+            'jenis' => $this->relasiData($jenis)['jenis']
         ];
 
         $this->data['data'] = $this->repository->findAll($options);
-        return view($this->relasiView($jenis)['view'], $this->data);
+        return view($this->relasiData($jenis)['index'], $this->data);
     }
 
     protected function mhspt()
@@ -39,7 +49,8 @@ class KegiatanController extends Controller
 
     public function store(Request $request)
     {
-        $params = $request->validate($this->relasiRequest($request->ref_jenis_kegiatan_id)->rules());
+        $this->authorize('create-kegiatan-mahasiswa');
+        $params = $request->validate($this->relasiData($request->ref_jenis_kegiatan_id)['request']->rules());
 
         $adt = [
             'siakad_mhspt_id' => $this->mhspt(),
@@ -71,14 +82,24 @@ class KegiatanController extends Controller
 
     public function edit($id)
     {
-        $this->data['utama'] = $this->repository->findById(decrypt($id));
-        return view('beasiswa.edit', $this->data);
+        $this->authorize('update-kegiatan-mahasiswa');
+        $this->data['data'] = $this->repository->findById(decrypt($id));
+        $jenis = $this->data['data']->ref_jenis_kegiatan_id;
+        return view($this->relasiData($jenis)['edit'], $this->data);
+    }
+
+    public function show($id)
+    {
+        $this->authorize('read-kegiatan-mahasiswa');
+        $this->data['data'] = $this->repository->findById(decrypt($id));
+        $jenis = $this->data['data']->ref_jenis_kegiatan_id;
+        return view($this->relasiData($jenis)['show'], $this->data);
     }
 
     public function update(Request $request, $id)
     {
-
-        $params = $request->validate($this->relasiRequest($request->ref_jenis_kegiatan_id)->rules());
+        $this->authorize('update-kegiatan-mahasiswa');
+        $params = $request->validate($this->relasiData($request->ref_jenis_kegiatan_id)['request']->rules());
         $data = $this->repository->findById(decrypt($id));
         $BuktiKegiatanParams = [
             'tag' => 'bukti-beasiswa',
@@ -114,6 +135,7 @@ class KegiatanController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete-kegiatan-mahasiswa');
         $data = $this->repository->findById(decrypt($id));
         $this->fileRepository->delete($data->file_id);
         if ($this->repository->delete(decrypt($id))) {
