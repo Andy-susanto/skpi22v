@@ -24,9 +24,10 @@
                             @foreach ($datas as $data)
                                 <tr>
                                     <td>{{ $data->nama }}</td>
-                                    <td><a target="__blank" name="" id="" class="btn btn-primary"
+                                    <td><a target="__blank" name="" id=""
+                                            class="btn btn-primary btn-sm shadow-xl"
                                             href="{{ route('kegiatan.form', $data->id_ref_jenis_kegiatan) }}"
-                                            role="button">Isi
+                                            role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Isi
                                             Form</a></td>
                                 </tr>
                             @endforeach
