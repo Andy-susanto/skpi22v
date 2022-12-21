@@ -216,7 +216,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data as$datas)
+                                            @forelse($data as $datas)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $datas->relasi->nama }}</td>

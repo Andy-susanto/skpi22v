@@ -70,8 +70,8 @@
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
-                            @include('karya-mahasiswa.include.show-hki',['hki'=>$hki])
-                            @include('karya-mahasiswa.include.show-publikasi',['publikasi'=>$publikasi])
+                            @include('karya-mahasiswa.include.show-hki', ['hki' => $hki])
+                            @include('karya-mahasiswa.include.show-publikasi', ['publikasi' => $publikasi])
                         </div>
                     </div>
                 </div>

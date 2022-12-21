@@ -11,7 +11,7 @@ class PengabdianMasyarakat extends Model
     use HasFactory;
     protected $table     = 'pengabdian_masyarakat';
     protected $primaryKey = 'id_pengabdian_masyarakat';
-    protected $guarded   = [];
+    protected $guarded   = ['file_id'];
 
     protected $append = ['tahun'];
 

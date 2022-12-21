@@ -1,5 +1,6 @@
-<div class="tab-pane fade" id="nav-profile2" role="tabpanel" aria-labelledby="nav-profile-tab">
-    <form action="{{ route('karya-mahasiswa.store') }}" method="POST" enctype="multipart/form-data">
+<div class="tab-pane fade show active" id="nav-profile2" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="ref_jenis_kegiatan_id" value="{{ config('kegiatan.PUBLIKASI') }}">
         @csrf
         <div class="card">
             <div class="card-body">
@@ -52,8 +53,7 @@
             </div>
             @if (Auth::user()->siakad_mhspt()->exists())
                 <div class="card-footer">
-                    <button type="submit"
-                        class="btn btn-wide btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-wide btn-success">Simpan</button>
                 </div>
             @endif
     </form>

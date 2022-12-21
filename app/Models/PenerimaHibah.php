@@ -11,7 +11,7 @@ class PenerimaHibah extends Model
     use HasFactory;
     protected $table      = 'penerima_hibah_pendanaan';
     protected $primaryKey = 'id_penerima_hibah_pendanaan';
-    protected $guarded    = [];
+    protected $guarded    = ['file_id'];
 
     protected $append = ['tahun'];
 

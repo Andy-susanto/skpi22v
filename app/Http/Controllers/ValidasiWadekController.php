@@ -155,6 +155,15 @@ class ValidasiWadekController extends Controller
         $data->update([
             'validasi' => '4'
         ]);
+
+        if (method_exists($data->relasi, 'bobot_nilai')) {
+            $bobot = $data->relasi->bobot_nilai->bobot;
+            $rekap = DB::table('rekap_bobot_mahasiswa', $data->siakad_mhspt_id);
+            $update = $rekap->update([
+                'bobot' => $rekap->first()->bobot + $bobot
+            ]);
+        }
+
         toastr()->success('Berhasil menvalidasi data');
         return back();
     }

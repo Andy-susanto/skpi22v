@@ -11,7 +11,7 @@ class Magang extends Model
     use HasFactory;
     protected $table      = 'magang';
     protected $primaryKey = 'id_magang';
-    protected $guarded    = [];
+    protected $guarded    = ['file_id'];
 
     protected $append = ['tahun'];
 

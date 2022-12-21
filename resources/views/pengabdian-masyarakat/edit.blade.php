@@ -27,10 +27,11 @@
                         </div>
                         <div class="form-group">
                             <label for="">Penyelenggara Kegiatan <span class="text-danger">*</span></label>
-                            <select class="form-control" name="penyelenggara" id="penyelenggara" onchange="load_bobot()">
+                            <select class="form-control" name="ref_penyelenggara_id" id="penyelenggara"
+                                onchange="load_bobot()">
                                 @forelse (Helper::penyelenggara(4) as $penyelenggara)
                                     <option value="{{ $penyelenggara->id_ref_penyelenggara }}"
-                                        {{ $data->penyelenggara->id_ref_penyelenggara == $penyelenggara->id_ref_penyelenggara ? 'selected' : '' }}>
+                                        {{ $data->relasi->penyelenggara->id_ref_penyelenggara == $penyelenggara->id_ref_penyelenggara ? 'selected' : '' }}>
                                         {{ $penyelenggara->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -39,10 +40,10 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tingkat Kegiatan <span class="text-danger">*</span></label>
-                            <select class="form-control" name="tingkat" id="tingkat" onchange="load_bobot()">
+                            <select class="form-control" name="ref_tingkat_id" id="tingkat" onchange="load_bobot()">
                                 @forelse (Helper::tingkat(4) as $tingkat)
                                     <option value="{{ $tingkat->id_ref_tingkat }}"
-                                        {{ $data->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
+                                        {{ $data->relasi->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
                                         {{ $tingkat->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -51,10 +52,11 @@
                         </div>
                         <div class="form-group">
                             <label for="">Peran <span class="text-danger">*</span></label>
-                            <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot()">
+                            <select class="form-control" name="ref_peran_prestasi_id" id="prestasi"
+                                onchange="load_bobot()">
                                 @forelse (Helper::prestasi(4) as $prestasi)
                                     <option value="{{ $prestasi->id_ref_peran_prestasi }}"
-                                        {{ $data->prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
+                                        {{ $data->relasi->prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
                                         {{ $prestasi->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -66,10 +68,10 @@
                             <input type="text" class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
                                 name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId" placeholder=""
                                 value="01/01/2022 - 01/12/2022">
-                            <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan"
-                                value="{{ $data->tgl_mulai }}">
-                            <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan"
-                                value="{{ $data->tgl_selesai }}">
+                            <input type="hidden" name="tgl_mulai" id="tanggal_mulai_kegiatan"
+                                value="{{ $data->relasi->tgl_mulai }}">
+                            <input type="hidden" name="tgl_selesai" id="tanggal_selesai_kegiatan"
+                                value="{{ $data->relasi->tgl_selesai }}">
                             @error('tanggal_kegiatan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -79,15 +81,15 @@
                         <div class="form-group">
                             <label for="">Bukti Kegiatan ( File Sertifikat ) <span
                                     class="text-danger">*</span></label>
-                            <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
-                                placeholder="" aria-describedby="fileHelpId">
+                            <input type="file" class="form-control-file" name="file_id" id="" placeholder=""
+                                aria-describedby="fileHelpId">
                             <small id="fileHelpId" class="form-text text-muted"><a
-                                    href="{{ asset('storage/' . $data->files->path) }}"><i class="fa fa-paperclip"
+                                    href="{{ asset('storage/' . $data->file->path) }}"><i class="fa fa-paperclip"
                                         aria-hidden="true"></i> File Sertifikat</a></small>
                         </div>
                         <div class="form-group">
                             <label for="">Bukti Kegiatan ( File SK ) <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control-file" name="file_sk" id="" placeholder=""
+                            <input type="file" class="form-control-file" name="file_sk_id" id="" placeholder=""
                                 aria-describedby="fileHelpId">
                             <small id="fileHelpId" class="form-text text-muted"><a
                                     href="{{ asset('storage/' . $data->file_sk->path) }}"><i class="fa fa-paperclip"
@@ -95,7 +97,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Dosen Pembimbing</label>
-                            <select class="form-control" name="dosen_pembimbing" id="dosen_pembimbing">
+                            <select class="form-control" name="kepeg_pegawai_id" id="dosen_pembimbing">
                                 @if ($data->kepeg_pegawai()->exists())
                                     <option value="{{ $data->kepeg_pegawai->id_pegawai }}">
                                         {{ $data->kepeg_pegawai->nip }} -
