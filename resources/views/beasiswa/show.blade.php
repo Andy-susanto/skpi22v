@@ -3,8 +3,9 @@
 @section('title', 'Penghargaan Kejuaraan')
 
 @section('content_header')
-    <h1 class="m-0 text-dark"><span><a class="btn btn-default btn-sm shadow-sm" href="{{ route('beasiswa.index') }}"
-                role="button">Kembali</a></span> Beasiswa Detail</h1>
+    <h1 class="m-0 text-dark"><span><a class="btn btn-default btn-sm shadow-sm"
+                href="{{ route('kegiatan.form', $data->ref_jenis_kegiatan_id) }}" role="button">Kembali</a></span> Beasiswa
+        Detail</h1>
 @stop
 @section('content')
     <div class="row">

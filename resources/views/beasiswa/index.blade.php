@@ -90,7 +90,7 @@
                                             <div class="form-group col-lg-4">
                                                 <label for="">Bukti Kegiatan</label><span
                                                     class="text-danger">*</span>
-                                                <input type="file" class="form-control-file" name="file"
+                                                <input type="file" class="form-control-file" name="file_id"
                                                     id="" placeholder="" aria-describedby="fileHelpId">
 
                                             </div>

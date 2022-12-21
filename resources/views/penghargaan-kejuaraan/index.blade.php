@@ -9,37 +9,37 @@
                 Kejuaraan</h1>
         </div>
         <div class="col-12">
-            @if(Auth::user()->siakad_mhspt()->exists())
-            <div class="card">
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
-                            <tr>
-                                <th>Bobot Minimum Wajib di Capai</th>
-                                <th>Total Bobot Saat Ini </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{ Helper::min_bobot() }}</td>
-                                <td>{{ Helper::hitung_bobot() }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                            role="progressbar" aria-valuenow="{{ Helper::hitung_bobot() }}"
-                                            aria-valuemin="0" aria-valuemax="100"
-                                            style="width: {{ (Helper::hitung_bobot() / Helper::min_bobot()) * 100 }}%">
-                                            Proses Bobot :
-                                            {{ Helper::hitung_bobot() }}/{{ Helper::min_bobot() }}</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            @if (Auth::user()->siakad_mhspt()->exists())
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
+                                <tr>
+                                    <th>Bobot Minimum Wajib di Capai</th>
+                                    <th>Total Bobot Saat Ini </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ Helper::min_bobot() }}</td>
+                                    <td>{{ Helper::hitung_bobot() }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                role="progressbar" aria-valuenow="{{ Helper::hitung_bobot() }}"
+                                                aria-valuemin="0" aria-valuemax="100"
+                                                style="width: {{ (Helper::hitung_bobot() / Helper::min_bobot()) * 100 }}%">
+                                                Proses Bobot :
+                                                {{ Helper::hitung_bobot() }}/{{ Helper::min_bobot() }}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>
@@ -62,8 +62,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <form action="{{ route('penghargaan-kejuaraan.store') }}" method="post"
-                                    enctype="multipart/form-data" id="form-penghargaan">
+                                <form action="{{ route('kegiatan.store') }}" method="post" enctype="multipart/form-data"
+                                    id="form-penghargaan">
+                                    <input type="hidden" name="ref_jenis_kegiatan_id"
+                                        value="{{ config('kegiatan.PENGHARGAAN') }}">
                                     @if ($errors->any())
                                         <div class="card-header">
                                             <div class="alert alert-danger">
@@ -80,7 +82,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
                                                 <label for="">Jenis</label>
-                                                <select class="form-control" name="jenis" id="">
+                                                <select class="form-control" name="ref_jenis_id" id="">
                                                     @foreach (Helper::jenis() as $jenis)
                                                         <option value="{{ $jenis->id_ref_jenis }}">{{ $jenis->nama }}
                                                         </option>
@@ -90,15 +92,16 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
-                                                <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control" name="nama_kegiatan" id=""
+                                                <label for="">Nama Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <input type="text" class="form-control" name="nama" id=""
                                                     aria-describedby="helpId" placeholder="Nama Kegiatan">
                                             </div>
                                             <div class="form-group col-lg-4">
                                                 <label for="">Penyelenggara Kegiatan</label><span
                                                     class="text-danger">*</span>
-                                                <select class="form-control" name="penyelenggara_kegiatan"
-                                                    id="penyelenggara" onchange="load_bobot();">
+                                                <select class="form-control" name="ref_penyelenggara_id" id="penyelenggara"
+                                                    onchange="load_bobot();">
                                                     @forelse(Helper::penyelenggara(1) as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                                             {{ $penyelenggara->nama }}</option>
@@ -107,8 +110,9 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-lg-4">
-                                                <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="tingkat_kegiatan" id="tingkat"
+                                                <label for="">Tingkat Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <select class="form-control" name="ref_tingkat_id" id="tingkat"
                                                     onchange="load_bobot();">
                                                     @forelse(Helper::tingkat(1) as $tingkat)
                                                         <option value="{{ $tingkat->id_ref_tingkat }}">
@@ -124,12 +128,11 @@
                                                     class="text-danger">*</span>
                                                 <input type="text"
                                                     class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
-                                                    name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
-                                                    placeholder="" value="01/01/2022 - 01/12/2022">
-                                                <input type="hidden" name="tanggal_mulai_kegiatan"
-                                                    id="tanggal_mulai_kegiatan">
-                                                <input type="hidden" name="tanggal_selesai_kegiatan"
-                                                    id="tanggal_selesai_kegiatan">
+                                                    name="tanggal_kegiatan" id="tanggal_kegiatan"
+                                                    aria-describedby="helpId" placeholder=""
+                                                    value="01/01/2022 - 01/12/2022">
+                                                <input type="hidden" name="tgl_mulai" id="tanggal_mulai_kegiatan">
+                                                <input type="hidden" name="tgl_selesai" id="tanggal_selesai_kegiatan">
                                                 @error('tanggal_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -138,7 +141,7 @@
                                             </div>
                                             <div class="form-group col-lg-4">
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="prestasi" id="prestasi"
+                                                <select class="form-control" name="ref_peran_prestasi_id" id="prestasi"
                                                     onchange="load_bobot();">
                                                     @forelse(Helper::prestasi(1) as $prestasi)
                                                         <option value="{{ $prestasi->id_ref_peran_prestasi }}">
@@ -151,7 +154,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
                                                 <label for="">Dosen Pembimbing</label>
-                                                <select class="form-control" name="dosen_pembimbing"
+                                                <select class="form-control" name="kepeg_pegawai_id"
                                                     id="dosen_pembimbing">
                                                 </select>
                                             </div>
@@ -160,7 +163,7 @@
                                                     class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
-                                                    name="bukti_kegiatan" id="" placeholder=""
+                                                    name="file_id" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
                                                 <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('bukti_kegiatan')
@@ -174,7 +177,8 @@
                                                     class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('file_sk') is-invalid @enderror"
-                                                    name="file_sk" id="" placeholder="" aria-describedby="fileHelpId">
+                                                    name="file_sk_id" id="" placeholder=""
+                                                    aria-describedby="fileHelpId">
                                                 <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('file_sk')
                                                     <span class="invalid-feedback" role="alert">
@@ -196,11 +200,11 @@
                                         </p>
                                     </div>
                                     @if (Auth::user()->siakad_mhspt()->exists())
-                                    <div class="text-center mb-2">
-                                        <button type="button" onclick="confirmation('form-penghargaan')"
-                                            class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
-                                                class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
-                                    </div>
+                                        <div class="text-center mb-2">
+                                            <button type="button" onclick="confirmation('form-penghargaan')"
+                                                class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
+                                                    class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                        </div>
                                     @endif
                             </div>
                             </form>
@@ -225,33 +229,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data['utama'] as $data)
+                                            @forelse ($data as $datas)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ $datas->relasi->nama }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($datas->relasi->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($datas->relasi->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->kepeg_pegawai) }}
+                                                        @if ($datas->relasi->kepeg_pegawai()->exists())
+                                                            {{ Helper::nama_gelar($datas->relasi->kepeg_pegawai) }}
                                                         @else
                                                             -
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_validasi == '3')
+                                                        @if ($datas->validasi == '3')
                                                             <span class="badge badge-warning"><i>Menunggu Verifikasi
                                                                     Operator</i></span>
-                                                        @elseif($data->status_validasi == '1')
+                                                        @elseif($datas->validasi == '1')
                                                             <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
                                                                     Dekan</i></span>
-                                                        @elseif($data->status_validasi == '4')
+                                                        @elseif($datas->validasi == '4')
                                                             <span class="badge badge-success">diValidasi</span>
-                                                        @elseif($data->status_validasi == '2')
+                                                        @elseif($datas->validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                            <p class="italic"> Pesan : {{$data->pesan}}</p>
+                                                            <p class="italic"> Pesan : {{ $datas->pesan }}</p>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -264,21 +268,21 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('kegiatan.lihat', encrypt($datas->id)) }}"><i
                                                                         sele class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                @if (in_array($data->status_validasi, ['3','2']))
+                                                                @if (in_array($datas->validasi, ['3', '2']))
                                                                     <a class="dropdown-item"
-                                                                        href="{{ route('penghargaan-kejuaraan.edit', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                        href="{{ route('kegiatan.edit', encrypt($datas->id)) }}"><i
                                                                             class="fas fa-edit" aria-hidden="true"></i>
                                                                         Ubah</a>
                                                                     <a class="dropdown-item" href="#"
-                                                                        onclick="destroy('hapusData{{$data->id_penghargaan_kejuaraan_kompetensi }}')"><i
+                                                                        onclick="destroy('hapusData{{ $datas->id }}')"><i
                                                                             class="fas fa-trash" aria-hidden="true"></i>
                                                                         Hapus</a>
                                                                     <form method="post"
-                                                                        action="{{ route('penghargaan-kejuaraan.destroy', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"
-                                                                        id="hapusData{{$data->id_penghargaan_kejuaraan_kompetensi}}">
+                                                                        action="{{ route('kegiatan.destroy', encrypt($datas->id)) }}"
+                                                                        id="hapusData{{ $datas->id }}">
                                                                         @csrf
                                                                         @method('delete')
                                                                     </form>

@@ -31,10 +31,10 @@ class KegiatanRepository implements CrudInterface
     public  function create($params = [])
     {
         return DB::transaction(function () use ($params) {
-            $relasi = $this->relasiClass($params['ref_jenis_kegiatan_id']);
+            $relasi = $this->relasiData($params['ref_jenis_kegiatan_id'])['model'];
             $createRelasi = $relasi->create($params);
             $kegiatan_id = [
-                'kegiatan_id' => $createRelasi->{$this->relasiClass($params['ref_jenis_kegiatan_id'])->getKeyName()}
+                'kegiatan_id' => $createRelasi->{$this->relasiData($params['ref_jenis_kegiatan_id'])['model']->getKeyName()}
             ];
             $params = array_merge($params, $kegiatan_id);
             return Kegiatan::create($params);

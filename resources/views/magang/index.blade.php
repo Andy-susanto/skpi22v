@@ -14,11 +14,11 @@
             <div class="col-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                            aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right"
+                        <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                            role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right"
                                 aria-hidden="true"></i> Mendaftar</a>
-                        <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                            aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book"
+                        <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book"
                                 aria-hidden="true"></i> Daftar Magang</a>
                     </div>
                 </nav>
@@ -27,8 +27,10 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-                                    <form action="{{ route('magang.store') }}" method="post" enctype="multipart/form-data"
-                                        id="form-penghargaan">
+                                    <form action="{{ route('kegiatan.store') }}" method="post"
+                                        enctype="multipart/form-data" id="form-penghargaan">
+                                        <input type="hidden" name="ref_jenis_kegiatan_id"
+                                            value="{{ config('kegiatan.MAGANG') }}">
                                         @if ($errors->any())
                                             <div class="card-header">
                                                 <div class="alert alert-danger">
@@ -62,7 +64,8 @@
                                                 </div>
                                                 <div class="form-group col-lg-4">
                                                     <label for="">Divisi</label><span class="text-danger">*</span>
-                                                    <select class="form-control select2" name="ref_divisi_id" id="tingkat">
+                                                    <select class="form-control select2" name="ref_divisi_id"
+                                                        id="tingkat">
                                                         @foreach (Helper::divisi() as $loopDivisi)
                                                             <option value="{{ $loopDivisi->id_ref_divisi }}">
                                                                 {{ $loopDivisi->nama }}</option>
@@ -85,10 +88,8 @@
                                                         name="tanggal_kegiatan" id="tanggal_kegiatan"
                                                         aria-describedby="helpId" placeholder=""
                                                         value="01/01/2022 - 01/12/2022">
-                                                    <input type="hidden" name="tanggal_mulai_kegiatan"
-                                                        id="tanggal_mulai_kegiatan">
-                                                    <input type="hidden" name="tanggal_selesai_kegiatan"
-                                                        id="tanggal_selesai_kegiatan">
+                                                    <input type="hidden" name="tgl_mulai" id="tanggal_mulai_kegiatan">
+                                                    <input type="hidden" name="tgl_selesai" id="tanggal_selesai_kegiatan">
                                                     @error('tanggal_kegiatan')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -113,8 +114,8 @@
                                                 <div class="form-group col-lg-4">
                                                     <label for="">Bukti Kegiatan</label><span
                                                         class="text-danger">*</span>
-                                                    <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
-                                                        placeholder="" aria-describedby="fileHelpId">
+                                                    <input type="file" class="form-control-file" name="file_id"
+                                                        id="" placeholder="" aria-describedby="fileHelpId">
                                                     <span class="text-muted italic">File docx,pdf,jpg,png ( Maks.
                                                         5MB)</span>
                                                 </div>
@@ -122,7 +123,8 @@
                                                     <label for="">Tema / Judul Laporan Akhir Magang</label><span
                                                         class="text-danger">*</span>
                                                     <input type="text" class="form-control" name="judul_laporan_akhir"
-                                                        id="" aria-describedby="helpId" placeholder="ex: Pengembangan xxxx">
+                                                        id="" aria-describedby="helpId"
+                                                        placeholder="ex: Pengembangan xxxx">
                                                 </div>
                                             </div>
                                         </div>
@@ -133,12 +135,12 @@
                                             </ol>
                                             </p>
                                         </div>
-                                        @if(Auth::user()->siakad_mhspt()->exists())
-                                        <div class="text-center mb-2">
-                                            <button type="button" onclick="confirmation('form-penghargaan')"
-                                                class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
-                                                    class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
-                                        </div>
+                                        @if (Auth::user()->siakad_mhspt()->exists())
+                                            <div class="text-center mb-2">
+                                                <button type="button" onclick="confirmation('form-penghargaan')"
+                                                    class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
+                                                        class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                            </div>
                                         @endif
                                 </div>
                                 </form>
@@ -163,33 +165,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @forelse ($data['utama'] as $loopUtama)
+                                                @forelse ($data as $loopUtama)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $loopUtama->nama }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($loopUtama->tgl_mulai)->isoFormat('D MMMM Y') }}
+                                                        <td>{{ $loopUtama->relasi->nama }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($loopUtama->relasi->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($loopUtama->tgl_selesai)->isoFormat('D MMMM Y') }}
+                                                        <td>{{ \Carbon\Carbon::parse($loopUtama->relasi->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                         </td>
                                                         <td>
-                                                            @if ($loopUtama->kepeg_pegawai()->exists())
-                                                                {{ Helper::nama_gelar($loopUtama->kepeg_pegawai) }}
+                                                            @if ($loopUtama->relasi->kepeg_pegawai()->exists())
+                                                                {{ Helper::nama_gelar($loopUtama->relasi->kepeg_pegawai) }}
                                                             @else
                                                                 -
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if ($loopUtama->status_validasi == '3')
+                                                            @if ($loopUtama->validasi == '3')
                                                                 <span class="badge badge-warning"><i>Menunggu Verifikasi
                                                                         Operator</i></span>
-                                                            @elseif($loopUtama->status_validasi == '1')
+                                                            @elseif($loopUtama->validasi == '1')
                                                                 <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
                                                                         Dekan</i></span>
-                                                            @elseif($loopUtama->status_validasi == '4')
+                                                            @elseif($loopUtama->validasi == '4')
                                                                 <span class="badge badge-success">diValidasi</span>
-                                                            @elseif($loopUtama->status_validasi == '2')
+                                                            @elseif($loopUtama->validasi == '2')
                                                                 <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                                <p class="italic"> Pesan : {{$loopUtama->pesan}}</p>
+                                                                <p class="italic"> Pesan : {{ $loopUtama->pesan }}</p>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -197,29 +199,30 @@
                                                                 <button class="btn btn-info btn-sm dropdown-toggle"
                                                                     type="button" id="triggerId" data-toggle="dropdown"
                                                                     aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                                                                    <i class="fa fa-hourglass-start"
+                                                                        aria-hidden="true"></i>
                                                                     Proses
                                                                 </button>
                                                                 <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                     <a class="dropdown-item"
-                                                                        href="{{ route('magang.show', encrypt($loopUtama->id_magang)) }}"><i
+                                                                        href="{{ route('kegiatan.lihat', encrypt($loopUtama->id)) }}"><i
                                                                             class="fa fa-info" aria-hidden="true"></i>
                                                                         Detail</a>
-                                                                    @if (in_array($loopUtama->status_validasi, ['3', '2']))
+                                                                    @if (in_array($loopUtama->validasi, ['3', '2']))
                                                                         <a class="dropdown-item"
-                                                                            href="{{ route('magang.edit', encrypt($loopUtama->id_magang)) }}"><i
+                                                                            href="{{ route('kegiatan.edit', encrypt($loopUtama->id)) }}"><i
                                                                                 class="fas fa-edit"
                                                                                 aria-hidden="true"></i>
                                                                             Ubah</a>
                                                                         <a class="dropdown-item" href="#"
-                                                                            onclick="destroy('hapusData{{ $loopUtama->id_magang }}')"><i
+                                                                            onclick="destroy('hapusData{{ $loopUtama->id }}')"><i
                                                                                 class="fas fa-trash"
                                                                                 aria-hidden="true"></i>
                                                                             Hapus
                                                                         </a>
                                                                         <form method="post"
-                                                                            action="{{ route('magang.destroy', encrypt($loopUtama->id_magang)) }}"
-                                                                            id="hapusData{{ $loopUtama->id_magang }}">
+                                                                            action="{{ route('kegiatan.destroy', encrypt($loopUtama->id)) }}"
+                                                                            id="hapusData{{ $loopUtama->id }}">
                                                                             @csrf
                                                                             @method('delete')
                                                                         </form>
@@ -294,12 +297,13 @@
 
                 })
             }
-            function destroy(id){
-            alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
-                $('#' + id).submit();
-            }, function() {
 
-            })
-        }
+            function destroy(id) {
+                alertify.confirm("Konfirmasi!", "Hapus data ini ?", function() {
+                    $('#' + id).submit();
+                }, function() {
+
+                })
+            }
         </script>
     @endsection

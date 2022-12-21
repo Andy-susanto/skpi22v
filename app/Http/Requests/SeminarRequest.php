@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BeasiswaRequest extends FormRequest
+class SeminarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,16 +19,12 @@ class BeasiswaRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return [
             'nama' => [
-                'required',
-                'string'
-            ],
-            'nama_promotor' => [
                 'required',
                 'string'
             ],
@@ -40,28 +36,46 @@ class BeasiswaRequest extends FormRequest
                 'mimes:pdf,docs',
                 'max:5000'
             ],
-            'ref_kategori_id' => [
-                'required',
-                'numeric'
+            'file_sk_id' => [
+                'required_without:file_kegiatan_id',
+                'mimes:pdf,docs',
+                'max:5000'
             ],
-            'ref_cakupan_beasiswa_id' => [
-                'required',
-                'numeric'
-            ],
-            'file_kegiatan_id' => [
-                'numeric'
-            ],
-            'file_kegiatan_ref_jenis_kegiatan_id' => [
-                'numeric'
-            ],
-            'status_validasi' => [
-                'numeric'
-            ],
-            'pesan' => [
+            'kepeg_pegawai_id' => [
+                'nullable',
                 'string'
             ],
+            'ref_tingkat_id' => [
+                'required',
+                'string'
+            ],
+            'ref_peran_prestasi_id' => [
+                'required',
+                'string'
+            ],
+            'ref_penyelenggara_id' => [
+                'required',
+                'string'
+            ],
+            'file_kegiatan_id' => [
+                'string',
+                'nullable'
+            ],
+            'file_kegiatan_ref_jenis_kegiatan_id' => [
+                'string',
+                'nullable'
+            ],
+            'status_validasi' => [
+                'string',
+                'nullable'
+            ],
+            'pesan' => [
+                'string',
+                'nullable'
+            ],
             'validator_id' => [
-                'numeric'
+                'string',
+                'nullable'
             ],
             'tgl_mulai' => [
                 'date',
@@ -70,13 +84,6 @@ class BeasiswaRequest extends FormRequest
                 'date',
                 'after_or_equal:tgl_mulai'
             ]
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'file.required_without' => 'Anda Belum mengupload dokumen'
         ];
     }
 }

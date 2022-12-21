@@ -2,7 +2,10 @@
 @section('title', 'Ubah Program Magang')
 @section('content_header')
     <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm"
-                href="{{ route('magang.index') }}" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a></span> Ubah Magang <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
+                href="{{ route('kegiatan.form', $data->ref_jenis_kegiatan_id) }}" role="button"><i class="fa fa-arrow-left"
+                    aria-hidden="true"></i>
+                Kembali</a></span> Ubah Magang <button type="button" class="btn btn-outline-primary btn-sm"><i
+                class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
 @endsection
 
 @section('content')
@@ -23,20 +26,22 @@
                     @endif
                 </div>
                 <div class="card-body">
-                    <form action="{{route('magang.update',encrypt($data['utama']->id_magang))}}" method="post" enctype="multipart/form-data" id="form-seminar">
+                    <form action="{{ route('kegiatan.update', encrypt($data->id)) }}" method="post"
+                        enctype="multipart/form-data" id="form-seminar">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="">Nama Perusahaan / Industri / Instansi <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
-                                placeholder="" value="{{ $data['utama']->nama }}">
+                            <label for="">Nama Perusahaan / Industri / Instansi <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="nama" id=""
+                                aria-describedby="helpId" placeholder="" value="{{ $data->relasi->nama }}">
                         </div>
                         <div class="form-group">
-                            <label for="">Bergerak di bidang </label><span
-                                class="text-danger">*</span>
+                            <label for="">Bergerak di bidang </label><span class="text-danger">*</span>
                             <select class="form-control select" name="ref_bidang_id" id="bidang">
                                 @foreach (Helper::bidang() as $loopBidang)
-                                    <option value="{{ $loopBidang->id_ref_bidang }}" {{$data['utama']->ref_bidang_id == $loopBidang->id_ref_bidang ? 'selected' : ''}}>
+                                    <option value="{{ $loopBidang->id_ref_bidang }}"
+                                        {{ $data->relasi->ref_bidang_id == $loopBidang->id_ref_bidang ? 'selected' : '' }}>
                                         {{ $loopBidang->nama }}</option>
                                 @endforeach
                             </select>
@@ -45,7 +50,8 @@
                             <label for="">Divisi</label><span class="text-danger">*</span>
                             <select class="form-control select2" name="ref_divisi_id" id="tingkat">
                                 @foreach (Helper::divisi() as $loopDivisi)
-                                    <option value="{{ $loopDivisi->id_ref_divisi }}" {{$data['utama']->ref_divisi_id == $loopDivisi->id_ref_divisi ? 'selected' : ''}}>
+                                    <option value="{{ $loopDivisi->id_ref_divisi }}"
+                                        {{ $data->relasi->ref_divisi_id == $loopDivisi->id_ref_divisi ? 'selected' : '' }}>
                                         {{ $loopDivisi->nama }}</option>
                                 @endforeach
                             </select>
@@ -53,18 +59,18 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">Alamat Perusahaan <span class="text-danger">*</span></label>
-                                <textarea class="form-control" name="alamat" id="" rows="1" placeholder="Jalan xxxx">{{$data['utama']->alamat}}</textarea>
+                                <textarea class="form-control" name="alamat" id="" rows="1" placeholder="Jalan xxxx">{{ $data->relasi->alamat }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="">Tanggal Mulai - Selesai Kegiatan</label><span
-                                class="text-danger">*</span>
-                            <input type="text"
-                                class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
-                                name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
-                                placeholder="" value="01/01/2022 - 01/12/2022">
-                            <input type="hidden" name="tanggal_mulai_kegiatan" id="tanggal_mulai_kegiatan"  value="{{$data['utama']->tgl_mulai}}">
-                            <input type="hidden" name="tanggal_selesai_kegiatan" id="tanggal_selesai_kegiatan" value="{{$data['utama']->tgl_selesai}}">
+                            <label for="">Tanggal Mulai - Selesai Kegiatan</label><span class="text-danger">*</span>
+                            <input type="text" class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
+                                name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId" placeholder=""
+                                value="01/01/2022 - 01/12/2022">
+                            <input type="hidden" name="tgl_mulai" id="tanggal_mulai_kegiatan"
+                                value="{{ $data->tgl_mulai }}">
+                            <input type="hidden" name="tgl_selesai" id="tanggal_selesai_kegiatan"
+                                value="{{ $data->tgl_selesai }}">
                             @error('tanggal_kegiatan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -75,32 +81,40 @@
                             <div class="form-group">
                                 <label for="">Tugas Utama Magang <span class="text-danger">*</span></label>
                                 <textarea class="form-control" name="tugas_utama_magang" id="" rows="1"
-                                    placeholder="Tugas Saya sebagai ....">{{$data['utama']->tugas_utama_magang}}</textarea>
+                                    placeholder="Tugas Saya sebagai ....">{{ $data->tugas_utama_magang }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="">Tema / Judul Laporan Akhir Magang</label><span
                                 class="text-danger">*</span>
-                            <input type="text" class="form-control" name="judul_laporan_akhir"
-                                id="" aria-describedby="helpId" placeholder="ex: Pengembangan xxxx" value="{{$data['utama']->judul_laporan_akhir}}">
+                            <input type="text" class="form-control" name="judul_laporan_akhir" id=""
+                                aria-describedby="helpId" placeholder="ex: Pengembangan xxxx"
+                                value="{{ $data->relasi->judul_laporan_akhir }}">
                         </div>
                         <div class="form-group">
-                          <label for="">Bukti Kegiatan <span class="text-danger">*</span></label>
-                          <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
-                          <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> Bukti Kegiatan</a></small>
+                            <label for="">Bukti Kegiatan <span class="text-danger">*</span></label>
+                            <input type="hidden" name="file_kegiatan_id" value="{{ $data->file_id }}">
+                            <input type="file" class="form-control-file" name="file_id" id=""
+                                placeholder="" aria-describedby="fileHelpId">
+                            <small id="fileHelpId" class="form-text text-muted"><a
+                                    href="{{ asset('storage/' . $data->file->path) }}"><i class="fa fa-paperclip"
+                                        aria-hidden="true"></i> Bukti Kegiatan</a></small>
                         </div>
                         <div class="form-group">
                             <label for="">Dosen Pembimbing</label>
-                            <select class="form-control" name="dosen_pembimbing"
-                                id="dosen_pembimbing">
-                                @if ($data['utama']->kepeg_pegawai()->exists())
-                                <option value="{{$data['utama']->kepeg_pegawai->id_pegawai}}">{{$data['utama']->kepeg_pegawai->nip}} - {{Helper::nama_gelar($data['utama']->kepeg_pegawai)}}</option>
+                            <select class="form-control" name="kepeg_pegawai_id" id="dosen_pembimbing">
+                                @if ($data->relasi->kepeg_pegawai()->exists())
+                                    <option value="{{ $data->relasi->kepeg_pegawai->id_pegawai }}">
+                                        {{ $data->relasi->kepeg_pegawai->nip }} -
+                                        {{ Helper::nama_gelar($data->relasi->kepeg_pegawai) }}</option>
                                 @endif
                             </select>
                         </div>
                         <div class="row">
                             <div class="col-12 offset-5">
-                                <button type="button" onclick="confirmation('form-seminar')" class="btn btn-outline-primary"><i class="fas fa-save" aria-hidden="true"></i> Simpan Data</button>
+                                <button type="button" onclick="confirmation('form-seminar')"
+                                    class="btn btn-outline-primary"><i class="fas fa-save" aria-hidden="true"></i> Simpan
+                                    Data</button>
                             </div>
                         </div>
                     </form>
@@ -115,12 +129,12 @@
 @include('plugins.alertify')
 @section('js')
     <script>
-         $(function() {
+        $(function() {
             $('#tanggal_kegiatan').daterangepicker({
                 opens: 'left',
-                startDate: "{{\Carbon\Carbon::parse($data['utama']->tgl_mulai)->format('d M Y')}}",
-                endDate: "{{\Carbon\Carbon::parse($data['utama']->tgl_selesai)->format('d M Y')}}",
-                locale:{
+                startDate: "{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d M Y') }}",
+                endDate: "{{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d M Y') }}",
+                locale: {
                     format: 'DD MMMM YYYY'
                 }
             }, function(start, end, label) {

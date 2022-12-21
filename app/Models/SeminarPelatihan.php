@@ -12,7 +12,7 @@ class SeminarPelatihan extends Model
     use HasFactory;
     protected $table      = 'seminar_pelatihan_workshop_diklat';
     protected $primaryKey = 'id_seminar_pelatihan_workshop_diklat';
-    protected $guarded    = [];
+    protected $guarded    = ['file_id'];
 
 
     protected $append = ['tahun'];

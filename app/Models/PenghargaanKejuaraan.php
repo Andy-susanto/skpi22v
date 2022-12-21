@@ -12,7 +12,7 @@ class PenghargaanKejuaraan extends Model
 {
     use HasFactory;
     protected $table      = 'penghargaan_kejuaraan_kompetensi';
-    protected $guarded    = [];
+    protected $guarded    = ['file_id'];
     protected $primaryKey = 'id_penghargaan_kejuaraan_kompetensi';
 
 

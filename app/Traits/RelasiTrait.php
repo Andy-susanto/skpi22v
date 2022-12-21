@@ -3,6 +3,8 @@
 namespace App\Traits;
 
 use App\Http\Requests\BeasiswaRequest;
+use App\Http\Requests\PenghargaanRequest;
+use App\Http\Requests\SeminarRequest;
 use App\Models\Beasiswa;
 use App\Models\Hki;
 use App\Models\KemampuanBahasaAsing;
@@ -34,7 +36,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.PENGHARGAAN'),
                     'text' => 'penghargaan',
                     'model' => new PenghargaanKejuaraan(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new PenghargaanRequest()
                 ];
                 break;
             case ($jenis == 'seminar' || $jenis == config('kegiatan.SEMINAR')):
@@ -45,7 +47,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.SEMINAR'),
                     'text' => 'seminar',
                     'model' => new SeminarPelatihan(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new SeminarRequest()
                 ];
                 break;
             case ($jenis == 'hibah' || $jenis == config('kegiatan.HIBAH')):

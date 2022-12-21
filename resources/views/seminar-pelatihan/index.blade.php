@@ -62,8 +62,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <form action="{{ route('seminar-pelatihan.store') }}" method="post"
-                                    enctype="multipart/form-data" id="form-seminar">
+                                <form action="{{ route('kegiatan.store') }}" method="post" enctype="multipart/form-data"
+                                    id="form-seminar">
+                                    <input type="hidden" name="ref_jenis_kegiatan_id"
+                                        value="{{ config('kegiatan.SEMINAR') }}">
                                     @if ($errors->any())
                                         <div class="card-header">
                                             <div class="alert alert-danger">
@@ -82,10 +84,9 @@
                                                 <label for="">Nama Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <input type="text"
-                                                    class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                                    name="nama_kegiatan" id="" aria-describedby="helpId"
-                                                    placeholder="Nama Kegiatan">
-                                                @error('nama_kegiatan')
+                                                    class="form-control @error('nama') is-invalid @enderror" name="nama"
+                                                    id="" aria-describedby="helpId" placeholder="Nama Kegiatan">
+                                                @error('nama')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -96,8 +97,7 @@
                                                     class="text-danger">*</span>
                                                 <select
                                                     class="form-control @error('penyelenggara_kegiatan') is-invalid @enderror"
-                                                    name="penyelenggara_kegiatan" id="penyelenggara"
-                                                    onchange="load_bobot();">
+                                                    name="ref_penyelenggara_id" id="penyelenggara" onchange="load_bobot();">
                                                     @forelse(Helper::penyelenggara(2) as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                                             {{ $penyelenggara->nama }}</option>
@@ -114,7 +114,7 @@
                                                 <label for="">Tingkat Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
-                                                    name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
+                                                    name="ref_tingkat_id" id="tingkat" onchange="load_bobot();">
                                                     @forelse(Helper::tingkat(2) as $tingkat)
                                                         <option value="{{ $tingkat->id_ref_tingkat }}">
                                                             {{ $tingkat->nama }}</option>
@@ -136,10 +136,10 @@
                                                     class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
                                                     name="tanggal_kegiatan" id="tanggal_kegiatan" aria-describedby="helpId"
                                                     placeholder="" value="01/01/2022 - 01/12/2022">
-                                                <input type="hidden" name="tanggal_mulai_kegiatan"
-                                                    id="tanggal_mulai_kegiatan" value="2022-01-01">
-                                                <input type="hidden" name="tanggal_selesai_kegiatan"
-                                                    id="tanggal_selesai_kegiatan" value="2022-12-01">
+                                                <input type="hidden" name="tgl_mulai" id="tanggal_mulai_kegiatan"
+                                                    value="2022-01-01">
+                                                <input type="hidden" name="tgl_selesai" id="tanggal_selesai_kegiatan"
+                                                    value="2022-12-01">
                                                 @error('tanggal_kegiatan')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -149,7 +149,7 @@
                                             <div class="form-group col-lg-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('peran') is-invalid @enderror"
-                                                    name="prestasi" id="peran" onchange="load_bobot();">
+                                                    name="ref_peran_prestasi_id" id="peran" onchange="load_bobot();">
                                                     @forelse(Helper::prestasi(2) as $peran)
                                                         <option value="{{ $peran->id_ref_peran_prestasi }}">
                                                             {{ $peran->nama }}</option>
@@ -168,7 +168,7 @@
                                                 <label for="">Dosen Pembimbing</label>
                                                 <select
                                                     class="form-control @error('dosen_pembimbing') is-invalid @enderror"
-                                                    name="dosen_pembimbing" id="dosen_pembimbing">
+                                                    name="kepeg_pegawai_id" id="dosen_pembimbing">
                                                 </select>
                                                 @error('dosen_pembimbing')
                                                     <span class="invalid-feedback" role="alert">
@@ -181,7 +181,7 @@
                                                     class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
-                                                    name="bukti_kegiatan" id="" placeholder=""
+                                                    name="file_id" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
                                                 <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('bukti_kegiatan')
@@ -195,7 +195,7 @@
                                                     Tugas/Undangan/Flyer)</label><span class="text-danger">*</span>
                                                 <input type="file"
                                                     class="form-control-file @error('file_sk') is-invalid @enderror"
-                                                    name="file_sk" id="" placeholder=""
+                                                    name="file_sk_id" id="" placeholder=""
                                                     aria-describedby="fileHelpId">
                                                 <span class="text-muted italic">File docx,pdf,jpg,png ( Maks. 5MB)</span>
                                                 @error('file_sk')

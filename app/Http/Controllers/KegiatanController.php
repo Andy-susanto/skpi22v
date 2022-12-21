@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisKegiatan;
 use App\Models\Kategori;
+use App\Models\BobotNilai;
 use App\Traits\RelasiTrait;
 use Illuminate\Http\Request;
+use App\Models\JenisKegiatan;
 use App\Repositories\FileRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\KegiatanRepository;
@@ -49,27 +50,50 @@ class KegiatanController extends Controller
 
     public function store(Request $request)
     {
+
         $this->authorize('create-kegiatan-mahasiswa');
         $params = $request->validate($this->relasiData($request->ref_jenis_kegiatan_id)['request']->rules());
 
+        $cekFiles = array_intersect($request->allFiles(), $params);
+        if (count($cekFiles) > 0) {
+
+            foreach ($request->allFiles() as $key => $value) {
+                $BuktiKegiatanParams = [
+                    'jenis_kegiatan' => $request->ref_jenis_kegiatan_id,
+                    'id_mhspt' => $this->mhspt(),
+                    'file' => $value
+                ];
+                $createBuktiKegiatanParams = array_merge($BuktiKegiatanParams);
+                $CreateFileBukti = $this->fileRepository->create($createBuktiKegiatanParams);
+                if ($CreateFileBukti) {
+                    $FileBuktiParams = array(
+                        $key => $CreateFileBukti->id_files,
+                    );
+                    $params = array_merge($params, $FileBuktiParams);
+                }
+            }
+        }
+
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 2)
+            ->when($request->ref_penyelenggara_id, function ($q) use ($request) {
+                $q->where('ref_penyelenggara_id', $request->ref_penyelenggara_id);
+            })
+
+            ->when($request->ref_tingkat_id, function ($q) use ($request) {
+                $q->where('ref_tingkat_id', $request->ref_tingkat_id);
+            })
+
+            ->when($request->ref_peran_prestasi_id, function ($q) use ($request) {
+                $q->where('ref_peran_prestasi_id', $request->peran_prestasi_id);
+            })
+            ->first();
+
         $adt = [
             'siakad_mhspt_id' => $this->mhspt(),
-            'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id
+            'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id,
+            'bobot_nilai_id' => $bobot_nilai->id_bobot_nilai ?? 0
         ];
         $params = array_merge($params, $adt);
-        $BuktiKegiatanParams = [
-            'tag' => 'bukti-beasiswa',
-            'jenis_kegiatan' => $request->ref_jenis_kegiatan_id,
-            'id_mhspt' => $this->mhspt()
-        ];
-        $createBuktiKegiatanParams = array_merge($params, $BuktiKegiatanParams);
-        $CreateFileBukti = $this->fileRepository->create($createBuktiKegiatanParams);
-        if ($CreateFileBukti) {
-            $FileBuktiParams = array(
-                'file_id' => $CreateFileBukti->id_files,
-            );
-            $params = array_merge($params, $FileBuktiParams);
-        }
 
         if ($this->repository->create($params)) {
             toastr()->success('Berhasil Tambah Data');
@@ -99,26 +123,56 @@ class KegiatanController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('update-kegiatan-mahasiswa');
-        $params = $request->validate($this->relasiData($request->ref_jenis_kegiatan_id)['request']->rules());
         $data = $this->repository->findById(decrypt($id));
+        $params = $request->validate($this->relasiData($data->ref_jenis_kegiatan_id)['request']->rules());
+        $cekFiles = array_intersect($request->allFiles(), $params);
+        if (count($cekFiles) > 0) {
+
+            foreach ($request->allFiles() as $key => $value) {
+                $BuktiKegiatanParams = [
+                    'jenis_kegiatan' => $request->ref_jenis_kegiatan_id,
+                    'id_mhspt' => $this->mhspt(),
+                    'file' => $value
+                ];
+                $createBuktiKegiatanParams = array_merge($BuktiKegiatanParams);
+                $FileBukti = $this->fileRepository->update($data->file_id, $BuktiKegiatanParams);
+                if ($FileBukti) {
+                    $FileBuktiParams = array(
+                        $key => $FileBukti->id_files,
+                    );
+                    $params = array_merge($params, $FileBuktiParams);
+                }
+            }
+        }
+
         $BuktiKegiatanParams = [
             'tag' => 'bukti-beasiswa',
             'jenis_kegiatan' => $request->ref_jenis_kegiatan_id,
             'id_mhspt' => $this->mhspt()
         ];
+
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 2)
+            ->when($request->ref_penyelenggara_id, function ($q) use ($request) {
+                $q->where('ref_penyelenggara_id', $request->ref_penyelenggara_id);
+            })
+
+            ->when($request->ref_tingkat_id, function ($q) use ($request) {
+                $q->where('ref_tingkat_id', $request->ref_tingkat_id);
+            })
+
+            ->when($request->ref_peran_prestasi_id, function ($q) use ($request) {
+                $q->where('ref_peran_prestasi_id', $request->peran_prestasi_id);
+            })
+            ->first();
+
         $adt = [
             'siakad_mhspt_id' => $this->mhspt(),
-            'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id
+            'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id,
+            'bobot_nilai_id' => $bobot_nilai->id_bobot_nilai ?? 0
         ];
         $params = array_merge($params, $adt);
+
         $BuktiKegiatanParams = array_merge($params, $BuktiKegiatanParams);
-        $FileBukti = $this->fileRepository->update($data->file_id, $BuktiKegiatanParams);
-        if ($FileBukti) {
-            $FileBuktiParams = array(
-                'file_id'               => $FileBukti->id_files,
-            );
-            $params = array_merge($params, $FileBuktiParams);
-        }
         if ($this->repository->update(decrypt($id), $params)) {
             toastr()->success('Berhasil Tambah Data');
         } else {

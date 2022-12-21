@@ -15,9 +15,11 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i> Mendaftar</a>
+                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        Mendaftar</a>
                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i> Daftar Kewirausahaan</a>
+                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i>
+                        Daftar Kewirausahaan</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -25,9 +27,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <form action="{{ route('kewirausahaan.store') }}" method="post"
-                                    enctype="multipart/form-data" id="form-penghargaan">
-                                        @if ($errors->any())
+                                <form action="{{ route('kegiatan.store') }}" method="post" enctype="multipart/form-data"
+                                    id="form-penghargaan">
+                                    <input type="hidden" name="ref_jenis_kegiatan_id"
+                                        value="{{ config('kegiatan.KEWIRAUSAHAAN') }}">
+                                    @if ($errors->any())
                                         <div class="card-header">
                                             <div class="alert alert-danger">
                                                 <ul>
@@ -37,22 +41,23 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        @endif
+                                    @endif
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
-                                                <label for="">Nama Usaha Mandiri</label><span class="text-danger">*</span>
+                                                <label for="">Nama Usaha Mandiri</label><span
+                                                    class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama_usaha" id=""
                                                     aria-describedby="helpId" placeholder="Nama Usaha Mandiri">
                                             </div>
                                             <div class="form-group col-lg-4">
                                                 <label for="">Kategori Usaha Mandiri </label><span
                                                     class="text-danger">*</span>
-                                                <select class="form-control select" name="ref_kategori_id"
-                                                    id="bidang">
+                                                <select class="form-control select" name="ref_kategori_id" id="bidang">
                                                     @foreach (Helper::kategori(9) as $loopKategori)
-                                                        <option value="{{$loopKategori->id_ref_kategori}}">{{$loopKategori->nama_kategori}}</option>
+                                                        <option value="{{ $loopKategori->id_ref_kategori }}">
+                                                            {{ $loopKategori->nama_kategori }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -60,19 +65,21 @@
                                         <div class="form-row">
                                             <div class="form-group col-lg-4">
                                                 <div class="form-group">
-                                                  <label for="">Alamat Usaha Mandiri</label>
-                                                  <textarea class="form-control" name="alamat_usaha" placeholder="ex: Jalan gajahmada ..." id="" rows="1"></textarea>
+                                                    <label for="">Alamat Usaha Mandiri</label>
+                                                    <textarea class="form-control" name="alamat_usaha" placeholder="ex: Jalan gajahmada ..." id="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group col-lg-4">
-                                                <label for="">No Izin Usaha Mandiri</label><span class="text-danger">*</span>
+                                                <label for="">No Izin Usaha Mandiri</label><span
+                                                    class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="no_izin" id=""
                                                     aria-describedby="helpId" placeholder="ex : 10/ad/xxx">
                                             </div>
                                             <div class="form-group col-lg-4">
-                                                <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
-                                                <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
-                                                    placeholder="" aria-describedby="fileHelpId">
+                                                <label for="">Bukti Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <input type="file" class="form-control-file" name="file_id"
+                                                    id="" placeholder="" aria-describedby="fileHelpId">
                                             </div>
                                         </div>
                                     </div>
@@ -84,11 +91,11 @@
                                         </p>
                                     </div>
                                     @if (Auth::user()->siakad_mhspt()->exists())
-                                    <div class="text-center mb-2">
-                                        <button type="button" onclick="confirmation('form-penghargaan')"
-                                            class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
-                                                class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
-                                    </div>
+                                        <div class="text-center mb-2">
+                                            <button type="button" onclick="confirmation('form-penghargaan')"
+                                                class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
+                                                    class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                        </div>
                                     @endif
                             </div>
                             </form>
@@ -116,21 +123,23 @@
                                             @forelse ($data['utama'] as $loopUtama)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $loopUtama->nama_usaha }}</td>
-                                                    <td>{{$loopUtama->alamat_usaha}}</td>
-                                                    <td>{{$loopUtama->kategori->nama_kategori}}</td>
-                                                    <td>{{$loopUtama->no_izin}}</td>
+                                                    <td>{{ $loopUtama->relasi->nama_usaha }}</td>
+                                                    <td>{{ $loopUtama->relasi->alamat_usaha }}</td>
+                                                    <td>{{ $loopUtama->relasi->kategori->nama_kategori }}</td>
+                                                    <td>{{ $loopUtama->relasi->no_izin }}</td>
                                                     <td>
-                                                        @if ($loopUtama->status_validasi == '3')
-                                                        <span class="badge badge-warning"><i>Menunggu Verifikasi Operator</i></span>
-                                                    @elseif($loopUtama->status_validasi == '1')
-                                                        <span class="badge badge-info"><i>Menunggu Verifikasi Wakil Dekan</i></span>
-                                                    @elseif($loopUtama->status_validasi == '4')
-                                                        <span class="badge badge-success">diValidasi</span>
-                                                    @elseif($loopUtama->status_validasi == '2')
-                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
-                                                        <p class="italic"> Pesan : {{$loopUtama->pesan}}</p>
-                                                    @endif
+                                                        @if ($loopUtama->validasi == '3')
+                                                            <span class="badge badge-warning"><i>Menunggu Verifikasi
+                                                                    Operator</i></span>
+                                                        @elseif($loopUtama->validasi == '1')
+                                                            <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
+                                                                    Dekan</i></span>
+                                                        @elseif($loopUtama->validasi == '4')
+                                                            <span class="badge badge-success">diValidasi</span>
+                                                        @elseif($loopUtama->validasi == '2')
+                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                            <p class="italic"> Pesan : {{ $loopUtama->pesan }}</p>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
@@ -141,29 +150,31 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('kewirausahaan.show', encrypt($loopUtama->id_kewirausahaan)) }}"><i
+                                                                    href="{{ route('kegiatan.lihat', encrypt($loopUtama->id)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                @if (in_array($loopUtama->status_validasi,['3','2']))
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('kewirausahaan.edit', encrypt($loopUtama->id_kewirausahaan)) }}"><i
-                                                                        class="fas fa-edit" aria-hidden="true"></i>
-                                                                    Ubah</a>
-                                                                <a class="dropdown-item"
-                                                                    href="#" onclick="destroy('hapusData{{$loopUtama->id_kewirausahaan}}')"><i class="fas fa-trash" aria-hidden="true"></i>
-                                                                    Hapus
-                                                                </a>
-                                                                <form method="post" action="{{route('kewirausahaan.destroy',encrypt($loopUtama->id_kewirausahaan))}}" id="hapusData{{$loopUtama->id_kewirausahaan}}">
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                </form>
+                                                                @if (in_array($loopUtama->validasi, ['3', '2']))
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('kegiatan.edit', encrypt($loopUtama->id)) }}"><i
+                                                                            class="fas fa-edit" aria-hidden="true"></i>
+                                                                        Ubah</a>
+                                                                    <a class="dropdown-item" href="#"
+                                                                        onclick="destroy('hapusData{{ $loopUtama->id }}')"><i
+                                                                            class="fas fa-trash" aria-hidden="true"></i>
+                                                                        Hapus
+                                                                    </a>
+                                                                    <form method="post"
+                                                                        action="{{ route('kegiatan.destroy', encrypt($loopUtama->id)) }}"
+                                                                        id="hapusData{{ $loopUtama->id }}">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                    </form>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @empty
-
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -234,6 +245,5 @@
 
             })
         }
-
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use DB;
 use App\Models\Files;
+use App\Models\JenisKegiatan;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Interfaces\CrudInterface;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class FileRepository implements CrudInterface
 
     public function findById($id)
     {
-        return Files::findOrFail($id );
+        return Files::findOrFail($id);
     }
 
     public function create($params = [])
@@ -27,12 +28,14 @@ class FileRepository implements CrudInterface
                 return true;
             }
 
-            $name = time() . '_' . $params['tag'] . '_' . Auth::user()->username . '.' . $params['file']->getclientOriginalExtension();
-            $path = $file->storeAs('uploads',$name,'public');
+            $jenisKegiatan = JenisKegiatan::where('id_ref_jenis_kegiatan', $params['jenis_kegiatan'])->first();
+
+            $name = time() . '_' . $jenisKegiatan->nama . '_' . Auth::user()->username . '.' . $params['file']->getclientOriginalExtension();
+            $path = $file->storeAs('uploads', $name, 'public');
             $fileParams = [
                 'nama' => $name,
                 'path' => $path,
-                'tag' => $params['tag'],
+                'tag' => $jenisKegiatan->nama,
                 'ref_jenis_kegiatan_id' => $params['jenis_kegiatan'],
                 'siakad_mhspt_id' => $params['id_mhspt']
             ];
@@ -53,8 +56,8 @@ class FileRepository implements CrudInterface
                 if (empty($file)) {
                     return true;
                 }
-                $name = time() . '_' . $params['tag'] . '_' . Auth::user()->username . '.' . $params['file']->getclientOriginalExtension();
-                $path = $file->storeAs('uploads',$name,'public');
+                $name = time() . '_' . $jenisKegiatan->nama . '_' . Auth::user()->username . '.' . $params['file']->getclientOriginalExtension();
+                $path = $file->storeAs('uploads', $name, 'public');
                 $fileParams = [
                     'nama' => $name,
                     'path' => $path,
