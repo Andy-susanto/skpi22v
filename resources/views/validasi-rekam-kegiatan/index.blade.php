@@ -159,7 +159,9 @@
                     },
                     {
                         data: 'program_studi',
-                        name: 'program_studi'
+                        name: 'program_studi',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'jenis_kegiatan',

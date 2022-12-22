@@ -36,14 +36,16 @@
                                             <td>:</td>
                                             <td>{{ $data->mhs_pt->prodi->nama_prodi }}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Judul Kegiatan</th>
-                                            <td>:</td>
-                                            <td>
-                                                {{ $data->relasi->nama }}
-                                            </td>
-                                        </tr>
-                                        @if ($data->relasi->nama_promotor)
+                                        @if (isset($data->relasi->nama))
+                                            <tr>
+                                                <th>Judul Kegiatan</th>
+                                                <td>:</td>
+                                                <td>
+                                                    {{ $data->relasi->nama }}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        @if (isset($data->relasi->nama_promotor))
                                             <th>Nama Promotor</th>
                                             <td>:</td>
                                             <td>
@@ -107,28 +109,28 @@
                                             <tr>
                                                 <th>Penyelenggara</th>
                                                 <td>:</td>
-                                                <td>{{ $data->relasi->penyelenggara->nama }}</td>
+                                                <td>{{ $data->relasi->penyelenggara->nama ?? '-' }}</td>
                                             </tr>
                                         @endif
                                         @if (method_exists($data->relasi, 'tingkat'))
                                             <tr>
                                                 <th>Tingkat</th>
                                                 <td>:</td>
-                                                <td>{{ $data->relasi->tingkat->nama }}</td>
+                                                <td>{{ $data->relasi->tingkat->nama ?? '-' }}</td>
                                             </tr>
                                         @endif
                                         @if (method_exists($data->relasi, 'prestasi'))
                                             <tr>
                                                 <th>Prestasi</th>
                                                 <td>:</td>
-                                                <td>{{ $data->relasi->prestasi->nama }}</td>
+                                                <td>{{ $data->relasi->prestasi->nama ?? '-' }}</td>
                                             </tr>
                                         @endif
                                         @if (method_exists($data->relasi, 'bobot_nilai'))
                                             <tr>
                                                 <th>Bobot</th>
                                                 <td>:</td>
-                                                <td>{{ $data->relasi->bobot_nilai->bobot }}</td>
+                                                <td>{{ $data->relasi->bobot_nilai->bobot ?? '-' }}</td>
                                             </tr>
                                         @endif
                                         <tr>
