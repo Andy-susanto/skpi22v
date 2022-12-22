@@ -29,7 +29,7 @@ class Kegiatan extends Model
     const ORGANISASI    = Organisasi::class;
     const MAGANG        = Magang::class;
     const BEASISWA      = Beasiswa::class;
-    const BAHASAASING   = Bahasa::class;
+    const BAHASAASING   = KemampuanBahasaAsing::class;
     const KEWIRAUSAHAAN = Kewirausahaan::class;
     const HKI           = Hki::class;
     const PUBLIKASI     = Publikasi::class;

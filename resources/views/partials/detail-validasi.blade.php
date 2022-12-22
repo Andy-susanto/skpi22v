@@ -64,6 +64,7 @@
                                             <td>{{ \Carbon\Carbon::parse($data->selesai)->isoFormat('dddd, D MMMM Y') }}
                                             </td>
                                         </tr>
+
                                         @if (method_exists($data->relasi, 'kepeg_pegawai'))
                                             <tr>
                                                 <th>Dosen Pembimbing</th>
