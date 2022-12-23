@@ -11,7 +11,24 @@ class PenerimaHibah extends Model
     use HasFactory;
     protected $table      = 'penerima_hibah_pendanaan';
     protected $primaryKey = 'id_penerima_hibah_pendanaan';
-    protected $guarded    = ['file_id'];
+    protected $fillable    = [
+        'siakad_mhspt_id',
+        'kepeg_pegawai_id',
+        'ref_penyelenggara_id',
+        'ref_tingkat_id',
+        'ref_peran_prestasi_id',
+        'bobot_nilai_id',
+        'file_kegiatan_id',
+        'file_sk_id',
+        'file_kegiatan_ref_jenis_kegiatan_id',
+        'validator_id',
+        'nama',
+        'nama_eng',
+        'tgl_mulai',
+        'tgl_selesai',
+        'status_validasi',
+        'pesan',
+    ];
 
     protected $append = ['tahun'];
 

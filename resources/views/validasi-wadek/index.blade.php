@@ -143,11 +143,15 @@
                     },
                     {
                         data: 'program_studi',
-                        name: 'program_studi'
+                        name: 'program_studi',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'tahun',
-                        name: 'tahun'
+                        name: 'tahun',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'jenis_kegiatan',
@@ -161,7 +165,9 @@
                     },
                     {
                         data: 'validasi',
-                        name: 'validasi'
+                        name: 'validasi',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',

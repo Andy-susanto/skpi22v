@@ -3,7 +3,15 @@
 namespace App\Traits;
 
 use App\Http\Requests\BeasiswaRequest;
+use App\Http\Requests\HibahRequest;
+use App\Http\Requests\HkiRequest;
+use App\Http\Requests\KBAsingRequest;
+use App\Http\Requests\KewirausahaanRequest;
+use App\Http\Requests\MagangRequest;
+use App\Http\Requests\OrganisasiRequest;
+use App\Http\Requests\PengabdianRequest;
 use App\Http\Requests\PenghargaanRequest;
+use App\Http\Requests\PublikasiRequest;
 use App\Http\Requests\SeminarRequest;
 use App\Models\Beasiswa;
 use App\Models\Hki;
@@ -58,7 +66,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.HIBAH'),
                     'text' => 'hibah',
                     'model' => new PenerimaHibah(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new HibahRequest()
                 ];
                 break;
             case ($jenis == 'pengabdian' || $jenis == config('kegiatan.PENGABDIAN')):
@@ -69,7 +77,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.PENGABDIAN'),
                     'text' => 'pengabdian',
                     'model' => new PengabdianMasyarakat(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new PengabdianRequest()
                 ];
                 break;
             case ($jenis == 'organisasi' || $jenis == config('kegiatan.ORGANISASI')):
@@ -80,7 +88,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.ORGANISASI'),
                     'text' => 'organisasi',
                     'model' => new Organisasi(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new OrganisasiRequest()
                 ];
                 break;
             case ($jenis == 'magang' || $jenis == config('kegiatan.MAGANG')):
@@ -91,7 +99,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.MAGANG'),
                     'text' => 'magang',
                     'model' => new Magang(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new MagangRequest()
                 ];
                 break;
             case ($jenis == 'beasiswa' || $jenis == config('kegiatan.BEASISWA')):
@@ -113,7 +121,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.BAHASAASING'),
                     'text' => 'bahasaasing',
                     'model' => new KemampuanBahasaAsing(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new KBAsingRequest()
                 ];
                 break;
             case ($jenis == 'kewirausahaan' || $jenis == config('kegiatan.KEWIRAUSAHAAN')):
@@ -124,7 +132,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.KEWIRAUSAHAAN'),
                     'text' => 'kewirausahaan',
                     'model' => new Kewirausahaan(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new KewirausahaanRequest()
                 ];
                 break;
             case ($jenis == 'hki' || $jenis == config('kegiatan.HKI')):
@@ -135,7 +143,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.HKI'),
                     'text' => 'seminar',
                     'model' => new Hki(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new HkiRequest()
                 ];
                 break;
             case ($jenis == 'publikasi' || $jenis == config('kegiatan.PUBLIKASI')):
@@ -146,7 +154,7 @@ trait RelasiTrait
                     'jenis' => config('kegiatan.publikasi'),
                     'text' => 'publikasi',
                     'model' => new Publikasi(),
-                    'request' => new PenghargaanKejuaraan()
+                    'request' => new PublikasiRequest()
                 ];
                 break;
             default:
