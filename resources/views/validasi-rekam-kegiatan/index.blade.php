@@ -150,22 +150,22 @@
                         searchable: false
                     },
                     {
-                        data: 'nama_mahasiswa',
-                        name: 'nama_mahasiswa'
+                        data: 'mhs_pt.mahasiswa.nama_mahasiswa',
+                        name: 'mhs_pt.mahasiswa.nama_mahasiswa'
                     },
                     {
-                        data: 'nim',
-                        name: 'nim'
+                        data: 'mhs_pt.no_mhs',
+                        name: 'mhs_pt.no_mhs'
                     },
                     {
-                        data: 'program_studi',
-                        name: 'program_studi',
+                        data: 'mhs_pt.prodi.nama_prodi',
+                        name: 'mhs_pt.prodi.nama_prodi',
                         orderable: false,
                         searchable: false
                     },
                     {
-                        data: 'jenis_kegiatan',
-                        name: 'jenis_kegiatan',
+                        data: 'jenis_kegiatan.nama',
+                        name: 'jenis_kegiatan.nama',
                         orderable: false,
                         searchable: false
                     },
