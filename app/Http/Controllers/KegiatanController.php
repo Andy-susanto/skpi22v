@@ -74,7 +74,7 @@ class KegiatanController extends Controller
             }
         }
 
-        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 2)
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', $request->ref_jenis_kegiatan_id)
             ->when($request->ref_penyelenggara_id, function ($q) use ($request) {
                 $q->where('ref_penyelenggara_id', $request->ref_penyelenggara_id);
             })
