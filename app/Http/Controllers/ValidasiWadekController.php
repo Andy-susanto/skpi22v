@@ -146,11 +146,13 @@ class ValidasiWadekController extends Controller
         ]);
 
         if (method_exists($data->relasi, 'bobot_nilai')) {
-            $bobot = $data->relasi->bobot_nilai->bobot;
-            $rekap = DB::table('rekap_bobot_mahasiswa', $data->siakad_mhspt_id);
-            $update = $rekap->update([
-                'bobot' => $rekap->first()->bobot + $bobot
-            ]);
+            if ($data->relasi->bobot_nilai) {
+                $bobot = $data->relasi->bobot_nilai->bobot;
+                $rekap = DB::table('rekap_bobot_mahasiswa', $data->siakad_mhspt_id);
+                $update = $rekap->update([
+                    'bobot' => $rekap->first()->bobot + $bobot
+                ]);
+            }
         }
 
         toastr()->success('Berhasil menvalidasi data');
