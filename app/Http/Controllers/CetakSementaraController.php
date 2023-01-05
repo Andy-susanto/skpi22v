@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class CetakSementaraController extends Controller
 {
@@ -22,21 +22,12 @@ class CetakSementaraController extends Controller
     {
         $min_bobot = PengaturanUmum::where('id', 1)->first();
         if ($request->ajax()) {
-            $data = RekapBobot::with('mhspt')->whereHas('mhspt', function ($q) {
+            $data = RekapBobot::with('mhspt', 'mhspt.prodi', 'mhspt.mahasiswa')->whereHas('mhspt', function ($q) {
                 $q->FilterUnit();
             })->where('bobot', '>=', $min_bobot->value);
 
-            return DataTables::of($data)
+            return DataTables::eloquent($data)
                 ->addIndexColumn()
-                ->addColumn("nama_mahasiswa", function ($row) {
-                    return $row->mhspt->mahasiswa->nama_mahasiswa;
-                })
-                ->addColumn("nim", function ($row) {
-                    return $row->mhspt->no_mhs;
-                })
-                ->addColumn('nama_prodi', function ($row) {
-                    return $row->mhspt->prodi->nama_prodi;
-                })
                 ->addColumn('total_bobot', function ($row) {
                     return $row->bobot;
                 })

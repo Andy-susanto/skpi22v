@@ -78,13 +78,11 @@ class KegiatanController extends Controller
             ->when($request->ref_penyelenggara_id, function ($q) use ($request) {
                 $q->where('ref_penyelenggara_id', $request->ref_penyelenggara_id);
             })
-
             ->when($request->ref_tingkat_id, function ($q) use ($request) {
                 $q->where('ref_tingkat_id', $request->ref_tingkat_id);
             })
-
             ->when($request->ref_peran_prestasi_id, function ($q) use ($request) {
-                $q->where('ref_peran_prestasi_id', $request->peran_prestasi_id);
+                $q->where('ref_peran_prestasi_id', $request->ref_peran_prestasi_id);
             })
             ->first();
 
@@ -93,6 +91,7 @@ class KegiatanController extends Controller
             'ref_jenis_kegiatan_id' => $request->ref_jenis_kegiatan_id,
             'bobot_nilai_id' => $bobot_nilai->id_bobot_nilai ?? 0
         ];
+
         $params = array_merge($params, $adt);
 
         if ($this->repository->create($params)) {
@@ -161,7 +160,7 @@ class KegiatanController extends Controller
             })
 
             ->when($request->ref_peran_prestasi_id, function ($q) use ($request) {
-                $q->where('ref_peran_prestasi_id', $request->peran_prestasi_id);
+                $q->where('ref_peran_prestasi_id', $request->ref_peran_prestasi_id);
             })
             ->first();
 

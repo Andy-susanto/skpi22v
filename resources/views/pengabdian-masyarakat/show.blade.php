@@ -49,7 +49,7 @@
                             <tr>
                                 <td class="text-bold">Bobot Nilai Kegiatan</td>
                                 <td>:</td>
-                                <td>{{ $data->relasi->bobot_nilai->bobot }}</td>
+                                <td>{{ $data->relasi->bobot_nilai->bobot ?? '' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-bold">Dosen Pembimbing</td>
