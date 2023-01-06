@@ -35,7 +35,7 @@ class CetakSementaraController extends Controller
         $min_bobot = PengaturanUmum::where('id', 1)->first();
         $listMahasiswa = Kegiatan::with(['mhs_pt', 'mhs_pt.prodi', 'mhs_pt.mahasiswa'])->whereHas('mhs_pt', function ($q) {
             $q->FilterUnit();
-        })->get();
+        })->where('validasi', 4)->get();
         if ($request->ajax()) {
             $data = RekapBobot::with('mhspt', 'mhspt.prodi', 'mhspt.mahasiswa')->whereHas('mhspt', function ($q) {
                 $q->FilterUnit();
