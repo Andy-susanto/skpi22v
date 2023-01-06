@@ -61,7 +61,7 @@
                                 <td>:</td>
                                 <td>
                                     @if ($data->relasi->kepeg_pegawai()->exists())
-                                        {{ $data->kepeg_pegawai->nip }} - {{ Helper::nama_gelar($data->kepeg_pegawai) }}
+                                        {{ $data->relasi->kepeg_pegawai->nip }} - {{ Helper::nama_gelar($data->kepeg_pegawai) }}
                                     @else
                                         -
                                     @endif
