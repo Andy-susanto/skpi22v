@@ -78,7 +78,7 @@ class CetakSementaraController extends Controller
 
     public function cekBobot($mhspt)
     {
-        $kegiatan = Kegiatan::where('siakad_mhspt_id', $mhspt)->get();
+        $kegiatan = Kegiatan::where('siakad_mhspt_id', $mhspt)->where('validasi', 4)->get();
         foreach ($kegiatan as $data) {
             $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', $data->ref_jenis_kegiatan_id)
                 ->when($data->relasi->ref_penyelenggara_id, function ($q) use ($data) {
