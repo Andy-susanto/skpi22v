@@ -32,9 +32,46 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Hitung Bobot Mahasiswa</div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <table class="table table-hover table-stripped" id="listMahasiswa">
+                            <thead>
+                                <tr>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>NIM</th>
+                                    <th>Prodi</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($listMahasiswa->unique('siakad_mhspt_id') as $data)
+                                    <tr>
+                                        <td>{{ $data->mhs_pt->mahasiswa->nama_mahasiswa }}</td>
+                                        <td>{{ $data->mhs_pt->no_mhs }}</td>
+                                        <td>{{ $data->mhs_pt->prodi->nama_prodi }}</td>
+                                        <td><a name="" id="" class="btn btn-primary btn-sm bg-white"
+                                                href="{{ route('hitung.bobot', $data->siakad_mhspt_id) }}"
+                                                role="button">Hitung Ulang Bobot</a></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 @section('plugins.Datatables', true)
 @push('js')
+    <script>
+        $('#listMahasiswa').DataTable()
+    </script>
     <script>
         var table = $('#table').DataTable({
             bAutoWidth: false,

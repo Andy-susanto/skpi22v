@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\Helpers;
-use App\Models\PengaturanUmum;
-use App\Models\RekapBobot;
 use Carbon\Carbon;
+use App\Helper\Helpers;
+use App\Models\Kegiatan;
+use App\Models\BobotNilai;
+use App\Models\RekapBobot;
 use Illuminate\Http\Request;
+use App\Models\PengaturanUmum;
+use App\Repositories\KegiatanRepository;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -18,9 +21,21 @@ class CetakSementaraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $repository;
+
+    public function __construct(KegiatanRepository $repository)
+    {
+        parent::__construct();
+        $this->repository = $repository;
+    }
+
     public function index(Request $request)
     {
         $min_bobot = PengaturanUmum::where('id', 1)->first();
+        $listMahasiswa = Kegiatan::with(['mhs_pt', 'mhs_pt.prodi', 'mhs_pt.mahasiswa'])->whereHas('mhs_pt', function ($q) {
+            $q->FilterUnit();
+        })->get();
         if ($request->ajax()) {
             $data = RekapBobot::with('mhspt', 'mhspt.prodi', 'mhspt.mahasiswa')->whereHas('mhspt', function ($q) {
                 $q->FilterUnit();
@@ -37,7 +52,7 @@ class CetakSementaraController extends Controller
                 ->rawColumns(['action'])
                 ->toJson();
         }
-        return view('cetak.sementara');
+        return view('cetak.sementara', compact('listMahasiswa'));
     }
 
     /**
@@ -58,6 +73,50 @@ class CetakSementaraController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+
+    public function cekBobot($mhspt)
+    {
+        $kegiatan = Kegiatan::where('siakad_mhspt_id', $mhspt)->get();
+        foreach ($kegiatan as $data) {
+            $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', $data->ref_jenis_kegiatan_id)
+                ->when($data->relasi->ref_penyelenggara_id, function ($q) use ($data) {
+                    $q->where('ref_penyelenggara_id', $data->relasi->ref_penyelenggara_id);
+                })
+                ->when($data->relasi->ref_tingkat_id, function ($q) use ($data) {
+                    $q->where('ref_tingkat_id', $data->relasi->ref_tingkat_id);
+                })
+                ->when($data->relasi->ref_peran_prestasi_id, function ($q) use ($data) {
+                    $q->where('ref_peran_prestasi_id', $data->relasi->ref_peran_prestasi_id);
+                })
+                ->first();
+            $adt = [
+                'siakad_mhspt_id' => $mhspt,
+                'ref_jenis_kegiatan_id' => $data->ref_jenis_kegiatan_id,
+                'bobot_nilai_id' => $bobot_nilai->id_bobot_nilai ?? 0
+            ];
+
+            $this->repository->update($data->id, $adt);
+            if (method_exists($data->relasi, 'bobot_nilai')) {
+                if ($data->relasi->bobot_nilai) {
+                    $bobot = $data->relasi->bobot_nilai->bobot;
+                    $rekap = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id', $mhspt);
+                    if ($rekap->first()) {
+                        $rekap->update([
+                            'bobot' => ($rekap->first()->bobot + $bobot)
+                        ]);
+                    } else {
+                        RekapBobot::create([
+                            'siakad_mhspt_id' => $mhspt,
+                            'bobot' => $bobot
+                        ]);
+                    }
+                }
+            }
+        }
+        toastr()->success('Hitung Bobot Selesai');
+        return back();
     }
 
     /**

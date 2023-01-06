@@ -149,6 +149,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('print', CetakController::class)->except([
         'update'
     ]);
+    Route::get('hitung/bobot/{mhspt}', [CetakSementaraController::class, 'cekBobot'])->name('hitung.bobot');
     Route::resource('cetak-surat-keterangan', CetakSementaraController::class);
 
     Route::get('exportExcel', [ValidasiWadekController::class, 'exportExcel'])->name('exportExcel');

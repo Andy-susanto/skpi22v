@@ -10,17 +10,18 @@ use App\Models\Kegiatan;
 use App\Models\Publikasi;
 use App\Models\UnitKerja;
 use App\Models\Organisasi;
+use App\Models\RekapBobot;
 use Illuminate\Http\Request;
 use App\Models\Kewirausahaan;
 use App\Models\PenerimaHibah;
 use App\Exports\KegiatanExport;
 use App\Models\SeminarPelatihan;
-use Yajra\DataTables\Facades\DataTables;
 use App\Models\KemampuanBahasaAsing;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 class ValidasiWadekController extends Controller
 {
@@ -148,10 +149,17 @@ class ValidasiWadekController extends Controller
         if (method_exists($data->relasi, 'bobot_nilai')) {
             if ($data->relasi->bobot_nilai) {
                 $bobot = $data->relasi->bobot_nilai->bobot;
-                $rekap = DB::table('rekap_bobot_mahasiswa', $data->siakad_mhspt_id);
-                $update = $rekap->update([
-                    'bobot' => $rekap->first()->bobot + $bobot
-                ]);
+                $rekap = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id', $data->siakad_mhspt_id);
+                if ($rekap->first()) {
+                    $rekap->update([
+                        'bobot' => ($rekap->first()->bobot + $bobot)
+                    ]);
+                } else {
+                    RekapBobot::create([
+                        'siakad_mhspt_id' => $data->siakad_mhspt_id,
+                        'bobot' => $bobot
+                    ]);
+                }
             }
         }
 
