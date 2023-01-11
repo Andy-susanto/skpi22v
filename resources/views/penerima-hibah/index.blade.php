@@ -220,27 +220,27 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $datas->relasi->nama }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->relasi->tgl_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($datas->relasi->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->relasi->tgl_selesai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($datas->relasi->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->relasi->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->relasi->kepeg_pegawai) }}
+                                                        @if ($datas->relasi->kepeg_pegawai()->exists())
+                                                            {{ Helper::nama_gelar($datas->relasi->kepeg_pegawai) }}
                                                         @else
                                                             -
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->validasi == '3')
+                                                        @if ($datas->validasi == '3')
                                                             <span class="badge badge-warning"><i>Menunggu Verifikasi
                                                                     Operator</i></span>
-                                                        @elseif($data->validasi == '1')
+                                                        @elseif($datas->validasi == '1')
                                                             <span class="badge badge-info"><i>Menunggu Verifikasi Wakil
                                                                     Dekan</i></span>
-                                                        @elseif($data->validasi == '4')
+                                                        @elseif($datas->validasi == '4')
                                                             <span class="badge badge-success">diValidasi</span>
-                                                        @elseif($data->validasi == '2')
+                                                        @elseif($datas->validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                             <p class="italic"> Pesan : {{ $datas->pesan }}</p>
                                                         @endif
@@ -255,12 +255,12 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('kegiatan.lihat', encrypt($data->id)) }}"><i
+                                                                    href="{{ route('kegiatan.lihat', encrypt($datas->id)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                @if (in_array($data->validasi, ['3', '2']))
+                                                                @if (in_array($datas->validasi, ['3', '2']))
                                                                     <a class="dropdown-item"
-                                                                        href="{{ route('kegiatan.edit', encrypt($data->id)) }}"><i
+                                                                        href="{{ route('kegiatan.edit', encrypt($datas->id)) }}"><i
                                                                             class="fas fa-edit" aria-hidden="true"></i>
                                                                         Ubah</a>
                                                                     <a class="dropdown-item" href="#"
@@ -269,7 +269,7 @@
                                                                         Hapus
                                                                     </a>
                                                                     <form method="post"
-                                                                        action="{{ route('kegiatan.destroy', encrypt($data->id)) }}"
+                                                                        action="{{ route('kegiatan.destroy', encrypt($datas->id)) }}"
                                                                         id="hapusData{{ $datas->id }}">
                                                                         @csrf
                                                                         @method('delete')
