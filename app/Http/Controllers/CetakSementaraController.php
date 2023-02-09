@@ -79,6 +79,7 @@ class CetakSementaraController extends Controller
     public function cekBobot($mhspt)
     {
         $kegiatan = Kegiatan::where('siakad_mhspt_id', $mhspt)->where('validasi', 4)->get();
+        $tempBobot = 0;
         foreach ($kegiatan as $data) {
             $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', $data->ref_jenis_kegiatan_id)
                 ->when($data->relasi->ref_penyelenggara_id, function ($q) use ($data) {
@@ -101,20 +102,25 @@ class CetakSementaraController extends Controller
             if (method_exists($data->relasi, 'bobot_nilai')) {
                 if ($data->relasi->bobot_nilai) {
                     $bobot = $data->relasi->bobot_nilai->bobot;
-                    $rekap = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id', $mhspt);
-                    if ($rekap->first()) {
-                        $rekap->update([
-                            'bobot' => ($rekap->first()->bobot + $bobot)
-                        ]);
-                    } else {
-                        RekapBobot::create([
-                            'siakad_mhspt_id' => $mhspt,
-                            'bobot' => $bobot
-                        ]);
-                    }
+                    $tempBobot = $tempBobot + $bobot;
                 }
             }
         }
+
+        $rekap = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id', $mhspt);
+        if ($rekap->first()) {
+            $rekap->delete();
+            RekapBobot::create([
+                'siakad_mhspt_id' => $mhspt,
+                'bobot' => $tempBobot
+            ]);
+        } else {
+            RekapBobot::create([
+                'siakad_mhspt_id' => $mhspt,
+                'bobot' => $tempBobot
+            ]);
+        }
+
         toastr()->success('Hitung Bobot Selesai');
         return back();
     }

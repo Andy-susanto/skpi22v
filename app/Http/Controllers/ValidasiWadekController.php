@@ -148,7 +148,7 @@ class ValidasiWadekController extends Controller
 
         if (method_exists($data->relasi, 'bobot_nilai')) {
             if ($data->relasi->bobot_nilai) {
-                $bobot = $data->relasi->bobot_nilai->bobot;
+                $bobot = $data->relasi->bobot_nilai->bobot; // nilai bobot dari tabel bobot nilai
                 $rekap = DB::table('rekap_bobot_mahasiswa')->where('siakad_mhspt_id', $data->siakad_mhspt_id);
                 if ($rekap->first()) {
                     $rekap->update([

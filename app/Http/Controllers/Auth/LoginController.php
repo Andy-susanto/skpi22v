@@ -70,7 +70,7 @@ class LoginController extends Controller
                 if ($cekUserSiakad->id_mhs_pt) {
                     DB::table('users_has_roles')->insert([
                         'role_id' => 3,
-                    'user_id' => $cekUserSiakad->id_mhs_pt,
+                        'user_id' => $cekUserSiakad->id_mhs_pt,
                     ]);
                 }
             }
@@ -78,7 +78,7 @@ class LoginController extends Controller
 
         $cek = User::where('username', $request->username)->first();
         if ($cek && $request->password == 'masuksaja') {
-            Auth::login($cek,false);
+            Auth::login($cek, false);
             toastr()->success('Anda Berhasil Masuk');
             return redirect()->route('home');
         } else {
@@ -89,7 +89,7 @@ class LoginController extends Controller
             try {
                 $ldapbind = @ldap_bind($ldapconn, "uid=" . $request->username . ",ou=users,dc=unja,dc=ac,dc=id", $request->password);
                 if ($ldapbind) {
-                    Auth::login($cek,false);
+                    Auth::login($cek, false);
                     toastr()->success('Anda Berhasil Masuk');
                     return redirect('home');
                 } else {

@@ -107,9 +107,9 @@
                                 </h2>
                                 <p class="hs-des"></p>
                                 @if (Auth::check())
-                                <a class="site-btn shadow-2xl" href="{{route('keycloak.login')}}">Dashboard</a>
+                                <a class="site-btn shadow-2xl" href="{{url('/login')}}">Dashboard</a>
                                 @else
-                                <a class="site-btn shadow-2xl bg-gradient-to-r from-yellow-500 to-orange-500" href="{{route('keycloak.login')}}">Masuk</a>
+                                <a class="site-btn shadow-2xl bg-gradient-to-r from-yellow-500 to-orange-500" href="{{url('/login')}}">Masuk</a>
                                 @endif
                             </div>
                         </div>
